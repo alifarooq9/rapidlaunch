@@ -28,6 +28,7 @@ export default function ThemeToggle() {
         {themes.map((t) => (
           <DropdownMenuCheckboxItem
             key={t}
+            checked={theme === t}
             onClick={() => setTheme(t)}
             className="text-sm capitalize"
           >
