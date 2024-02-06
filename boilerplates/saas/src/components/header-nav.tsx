@@ -1,24 +1,28 @@
 "use client";
 
 import Link from "next/link";
-import { buttonVariants } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { siteConfig } from "@/config/site";
+import { cn } from "@/lib/utils";
+import ThemeToggle from "@/components/theme-toggle";
 
 export default function HeaderNav() {
   const pathname = usePathname();
 
   return (
     <nav className="flex items-center justify-center">
-      <ul className="flex items-center space-x-1">
+      <ul className="flex items-center space-x-3">
         {siteConfig.headerNav.map((item) => (
           <li key={item.id}>
             <Link
               href={item.href}
-              className={buttonVariants({
-                variant: isActive(item.href, pathname) ? "secondary" : "ghost",
-              })}
+              className={cn(
+                "px-2 text-sm font-medium hover:underline hover:underline-offset-4",
+                isActive(item.href, pathname)
+                  ? "underline underline-offset-4"
+                  : "",
+              )}
             >
               <span>{item.label}</span>
               {item.badge && (
@@ -29,6 +33,8 @@ export default function HeaderNav() {
             </Link>
           </li>
         ))}
+
+        <ThemeToggle />
       </ul>
     </nav>
   );
