@@ -11,7 +11,7 @@ export default function HeaderNav() {
 
   return (
     <nav className="flex items-center justify-center">
-      <ul className="flex items-center space-x-2">
+      <ul className="flex items-center space-x-1">
         {siteConfig.headerNav.map((item) => (
           <li key={item.id}>
             <Link
