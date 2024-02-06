@@ -7,7 +7,7 @@ import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 import ThemeToggle from "@/components/theme-toggle";
 
-export default function HeaderNav() {
+export default function WebHeaderNav() {
   const pathname = usePathname();
 
   return (

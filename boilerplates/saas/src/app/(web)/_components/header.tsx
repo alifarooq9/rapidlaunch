@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
-import HeaderNav from "@/components/header-nav";
+import WebHeaderNav from "@/app/(web)/_components/header-nav";
 import { siteConfig } from "@/config/site";
 import { badgeVariants } from "@/components/ui/badge";
 import { ChevronRightIcon } from "lucide-react";
 
-export default function Header() {
+export default function WebHeader() {
   return (
     <header className="flex h-20 w-screen items-center justify-between px-4 sm:px-12">
       <div className="flex items-center justify-center space-x-4">
@@ -33,7 +33,7 @@ export default function Header() {
         )}
       </div>
       <div className="flex items-center space-x-6">
-        <HeaderNav />
+        <WebHeaderNav />
 
         <section className="flex items-center space-x-2">
           <Link
