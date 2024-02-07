@@ -1,5 +1,4 @@
 import { Icons } from "@/components/ui/icons";
-import { promotions } from "@/config/promotions";
 import { siteConfig } from "@/config/site";
 import { siteUrls } from "@/config/urls";
 import Link from "next/link";
@@ -25,10 +24,11 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
                     Build and launch your SaaS this weekend
                 </h2>
                 <p className="font-light text-muted-foreground">
-                    {promotions.auth}{" "}
+                    Say goodbye to long development cycles. Build and launch
+                    your SaaS faster with our elite boilerplate. Start today!{" "}
                     <Link
                         href={siteUrls.rapidlaunch}
-                        className="font-medium text-foreground underline"
+                        className="font-medium text-foreground underline underline-offset-4"
                     >
                         Rapidlaunch.xyz
                     </Link>

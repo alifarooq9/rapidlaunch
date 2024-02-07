@@ -12,10 +12,6 @@ export function SocialLogins() {
                 <Icons.google className="h-3.5 w-3.5 fill-foreground" />
                 <span>Continue with Google</span>
             </Button>
-            <Button variant="outline" className="w-full gap-2">
-                <Icons.twitter className="h-3.5 w-3.5 fill-foreground" />
-                <span>Continue with X</span>
-            </Button>
         </div>
     );
 }

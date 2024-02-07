@@ -67,7 +67,7 @@ export function AuthForm({ type }: AuthFormProps) {
                                     ? siteUrls.auth.login
                                     : siteUrls.auth.signup
                             }
-                            className="text-center text-sm text-muted-foreground underline"
+                            className="text-center text-sm text-muted-foreground underline underline-offset-4"
                         >
                             {type === "signup"
                                 ? "Already have an account? Login"
