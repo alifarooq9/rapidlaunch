@@ -19,6 +19,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { SocialLogins } from "@/app/auth/_components/social-logins";
+import { useState } from "react";
+import { signIn } from "next-auth/react";
+import { toast } from "sonner";
 
 const formSchema = z.object({
     email: z.string().email("Please enter a valid email address"),
@@ -38,9 +41,26 @@ export function AuthForm({ type }: AuthFormProps) {
         },
     });
 
-    function onSubmit(data: formSchemaType) {
-        console.log(data);
-    }
+    const [isLoading, setIsLoading] = useState(false);
+
+    const onSubmit = async (data: formSchemaType) => {
+        setIsLoading(true);
+
+        try {
+            await signIn("email", {
+                email: data.email,
+                callbackUrl: siteUrls.dashboard.home,
+                redirect: false,
+            });
+            toast.success("Check your email for the magic link", {
+                description: "also check your spam folder if you don't see it.",
+            });
+        } catch (error) {
+            toast.error("An error occurred. Please try again later.");
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     return (
         <Form {...form}>
@@ -98,8 +118,9 @@ export function AuthForm({ type }: AuthFormProps) {
                         )}
                     />
 
-                    <Button type="submit" className="w-full">
-                        Continue with Email
+                    <Button type="submit" className="w-full gap-2">
+                        {isLoading && <Icons.loader className="h-4 w-4" />}
+                        <span>Continue with Email</span>
                     </Button>
                 </div>
 

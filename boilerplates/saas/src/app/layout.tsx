@@ -1,4 +1,5 @@
 import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
 import "@/styles/globals.css";
 import { TRPCReactProvider } from "@/trpc/react";
 import { Inter } from "next/font/google";
@@ -25,6 +26,11 @@ export default function RootLayout({
                 <TRPCReactProvider>
                     <ThemeProvider attribute="class" defaultTheme="system">
                         {children}
+                        <Toaster
+                            richColors={true}
+                            closeButton={true}
+                            position="top-right"
+                        />
                     </ThemeProvider>
                 </TRPCReactProvider>
             </body>
