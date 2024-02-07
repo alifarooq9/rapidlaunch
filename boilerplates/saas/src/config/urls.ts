@@ -10,4 +10,5 @@ export const siteUrls = {
     features: "/features",
     contact: "/contact",
     blog: "/blog",
+    rapidlaunch: "https://www.rapidlaunch.xyz",
 } as const;

@@ -1,3 +1,5 @@
+import { AuthForm } from "@/app/auth/_components/auth-form";
+
 export default function Login() {
-    return <main>Login</main>;
+    return <AuthForm type="login" />;
 }

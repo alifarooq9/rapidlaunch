@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
-import WebHeaderNav from "@/app/(web)/_components/header-nav";
+import { WebHeaderNav } from "@/app/(web)/_components/header-nav";
 import { siteConfig } from "@/config/site";
 import { badgeVariants } from "@/components/ui/badge";
 import { ChevronRightIcon } from "lucide-react";
@@ -8,7 +8,7 @@ import { Icons } from "@/components/ui/icons";
 import { siteUrls } from "@/config/urls";
 import { promotions } from "@/config/promotions";
 
-export default function WebHeader() {
+export function WebHeader() {
     return (
         <header className="flex h-20 w-screen items-center justify-between px-4 sm:px-12">
             <div className="flex items-center justify-center space-x-4">

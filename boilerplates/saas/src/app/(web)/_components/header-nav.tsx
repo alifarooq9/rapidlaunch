@@ -4,10 +4,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import ThemeToggle from "@/components/theme-toggle";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { webConfig } from "@/config/nav";
 
-export default function WebHeaderNav() {
+export function WebHeaderNav() {
     const pathname = usePathname();
 
     return (

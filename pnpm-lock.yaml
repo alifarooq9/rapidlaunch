@@ -188,6 +188,142 @@ importers:
         specifier: ^5.3.3
         version: 5.3.3
 
+  boilerplates/saas:
+    dependencies:
+      '@auth/drizzle-adapter':
+        specifier: ^0.6.2
+        version: 0.6.2
+      '@hookform/resolvers':
+        specifier: ^3.3.4
+        version: 3.3.4(react-hook-form@7.50.1)
+      '@radix-ui/react-dropdown-menu':
+        specifier: ^2.0.6
+        version: 2.0.6(@types/react-dom@18.2.18)(@types/react@18.2.55)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-icons':
+        specifier: ^1.3.0
+        version: 1.3.0(react@18.2.0)
+      '@radix-ui/react-label':
+        specifier: ^2.0.2
+        version: 2.0.2(@types/react-dom@18.2.18)(@types/react@18.2.55)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-separator':
+        specifier: ^1.0.3
+        version: 1.0.3(@types/react-dom@18.2.18)(@types/react@18.2.55)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-slot':
+        specifier: ^1.0.2
+        version: 1.0.2(@types/react@18.2.55)(react@18.2.0)
+      '@t3-oss/env-nextjs':
+        specifier: ^0.8.0
+        version: 0.8.0(typescript@5.3.3)(zod@3.22.4)
+      '@tanstack/react-query':
+        specifier: ^4.36.1
+        version: 4.36.1(react-dom@18.2.0)(react@18.2.0)
+      '@trpc/client':
+        specifier: ^10.45.1
+        version: 10.45.1(@trpc/server@10.45.1)
+      '@trpc/next':
+        specifier: ^10.45.1
+        version: 10.45.1(@tanstack/react-query@4.36.1)(@trpc/client@10.45.1)(@trpc/react-query@10.45.1)(@trpc/server@10.45.1)(next@14.1.0)(react-dom@18.2.0)(react@18.2.0)
+      '@trpc/react-query':
+        specifier: ^10.45.1
+        version: 10.45.1(@tanstack/react-query@4.36.1)(@trpc/client@10.45.1)(@trpc/server@10.45.1)(react-dom@18.2.0)(react@18.2.0)
+      '@trpc/server':
+        specifier: ^10.45.1
+        version: 10.45.1
+      class-variance-authority:
+        specifier: ^0.7.0
+        version: 0.7.0
+      clsx:
+        specifier: ^2.1.0
+        version: 2.1.0
+      drizzle-orm:
+        specifier: ^0.29.3
+        version: 0.29.3(@types/react@18.2.55)(postgres@3.4.3)(react@18.2.0)
+      lucide-react:
+        specifier: ^0.323.0
+        version: 0.323.0(react@18.2.0)
+      next:
+        specifier: ^14.1.0
+        version: 14.1.0(react-dom@18.2.0)(react@18.2.0)
+      next-auth:
+        specifier: ^4.24.5
+        version: 4.24.5(next@14.1.0)(react-dom@18.2.0)(react@18.2.0)
+      next-themes:
+        specifier: ^0.2.1
+        version: 0.2.1(next@14.1.0)(react-dom@18.2.0)(react@18.2.0)
+      postgres:
+        specifier: ^3.4.3
+        version: 3.4.3
+      react:
+        specifier: 18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: 18.2.0
+        version: 18.2.0(react@18.2.0)
+      react-hook-form:
+        specifier: ^7.50.1
+        version: 7.50.1(react@18.2.0)
+      server-only:
+        specifier: ^0.0.1
+        version: 0.0.1
+      superjson:
+        specifier: ^2.2.1
+        version: 2.2.1
+      tailwind-merge:
+        specifier: ^2.2.1
+        version: 2.2.1
+      tailwindcss-animate:
+        specifier: ^1.0.7
+        version: 1.0.7(tailwindcss@3.4.1)
+      zod:
+        specifier: ^3.22.4
+        version: 3.22.4
+    devDependencies:
+      '@types/eslint':
+        specifier: ^8.56.2
+        version: 8.56.2
+      '@types/node':
+        specifier: ^20.11.16
+        version: 20.11.16
+      '@types/react':
+        specifier: ^18.2.55
+        version: 18.2.55
+      '@types/react-dom':
+        specifier: ^18.2.18
+        version: 18.2.18
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^6.21.0
+        version: 6.21.0(@typescript-eslint/parser@6.21.0)(eslint@8.56.0)(typescript@5.3.3)
+      '@typescript-eslint/parser':
+        specifier: ^6.21.0
+        version: 6.21.0(eslint@8.56.0)(typescript@5.3.3)
+      autoprefixer:
+        specifier: ^10.4.17
+        version: 10.4.17(postcss@8.4.34)
+      drizzle-kit:
+        specifier: ^0.20.14
+        version: 0.20.14
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      eslint-config-next:
+        specifier: ^14.1.0
+        version: 14.1.0(eslint@8.56.0)(typescript@5.3.3)
+      postcss:
+        specifier: ^8.4.34
+        version: 8.4.34
+      prettier:
+        specifier: ^3.2.5
+        version: 3.2.5
+      prettier-plugin-tailwindcss:
+        specifier: ^0.5.11
+        version: 0.5.11(prettier@3.2.5)
+      tailwindcss:
+        specifier: ^3.4.1
+        version: 3.4.1
+      typescript:
+        specifier: ^5.3.3
+        version: 5.3.3
+
   packages/eslint-config:
     devDependencies:
       '@typescript-eslint/eslint-plugin':
@@ -474,13 +610,6 @@ packages:
       core-js-pure: 3.32.1
       regenerator-runtime: 0.14.0
     dev: true
-
-  /@babel/runtime@7.23.2:
-    resolution: {integrity: sha512-mM8eg4yl5D6i3lu2QKPuPH4FArvJ8KhTofbE7jwMUv9KX5mBvwPAqnV3MlyBNqdp9RyRKP6Yck8TrfYrPvX3bg==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      regenerator-runtime: 0.14.0
-    dev: false
 
   /@babel/runtime@7.23.9:
     resolution: {integrity: sha512-0CX6F+BI2s9dkUqr08KFrAIZgNFj75rdBU/DjCyYLIaV/quFjkk6T+EJ2LkZHyZTbEV4L5p97mNkUsHl2wLFAw==}
@@ -1021,6 +1150,14 @@ packages:
     resolution: {integrity: sha512-9TANp6GPoMtYzQdt54kfAyMmz1+osLlXdg2ENroU7zzrtflTLrrC/lgrIfaSe+Wu0b89GKccT7vxXA0MoAIO+Q==}
     dev: false
 
+  /@hookform/resolvers@3.3.4(react-hook-form@7.50.1):
+    resolution: {integrity: sha512-o5cgpGOuJYrd+iMKvkttOclgwRW86EsWJZZRC23prf0uU2i48Htq4PuT73AVb9ionFyZrwYEITuOFGF+BydEtQ==}
+    peerDependencies:
+      react-hook-form: ^7.0.0
+    dependencies:
+      react-hook-form: 7.50.1(react@18.2.0)
+    dev: false
+
   /@humanwhocodes/config-array@0.11.13:
     resolution: {integrity: sha512-JSBDMiDKSzQVngfRjOdFXgFfklaXI4K9nLF49Auh21lmBWRLIK3+xTErTWD4KU54pb6coM6ESE7Awz/FNU3zgQ==}
     engines: {node: '>=10.10.0'}
@@ -1524,6 +1661,27 @@ packages:
       react: 18.2.0
     dev: false
 
+  /@radix-ui/react-label@2.0.2(@types/react-dom@18.2.18)(@types/react@18.2.55)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-N5ehvlM7qoTLx7nWPodsPYPgMzA5WM8zZChQg8nyFJKnDO5WHdba1vv5/H6IO5LtJMfD2Q3wh1qHFGNtK0w3bQ==}
+    peerDependencies:
+      '@types/react': '*'
+      '@types/react-dom': '*'
+      react: ^16.8 || ^17.0 || ^18.0
+      react-dom: ^16.8 || ^17.0 || ^18.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      '@types/react-dom':
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.23.9
+      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.18)(@types/react@18.2.55)(react-dom@18.2.0)(react@18.2.0)
+      '@types/react': 18.2.55
+      '@types/react-dom': 18.2.18
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
   /@radix-ui/react-menu@2.0.6(@types/react-dom@18.2.18)(@types/react@18.2.55)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-BVkFLS+bUC8HcImkRKPSiVumA1VPOOEC5WBMiT+QAVsPzW1FJzI9KnqgGxVDPBcql5xXrHkD3JOVoXWEXD8SYA==}
     peerDependencies:
@@ -1679,6 +1837,27 @@ packages:
       '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.18)(@types/react@18.2.55)(react-dom@18.2.0)(react@18.2.0)
       '@radix-ui/react-use-callback-ref': 1.0.1(@types/react@18.2.55)(react@18.2.0)
       '@radix-ui/react-use-controllable-state': 1.0.1(@types/react@18.2.55)(react@18.2.0)
+      '@types/react': 18.2.55
+      '@types/react-dom': 18.2.18
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /@radix-ui/react-separator@1.0.3(@types/react-dom@18.2.18)(@types/react@18.2.55)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-itYmTy/kokS21aiV5+Z56MZB54KrhPgn6eHDKkFeOLR34HMN2s8PaN47qZZAGnvupcjxHaFZnW4pQEh0BvvVuw==}
+    peerDependencies:
+      '@types/react': '*'
+      '@types/react-dom': '*'
+      react: ^16.8 || ^17.0 || ^18.0
+      react-dom: ^16.8 || ^17.0 || ^18.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      '@types/react-dom':
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.23.9
+      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.18)(@types/react@18.2.55)(react-dom@18.2.0)(react@18.2.0)
       '@types/react': 18.2.55
       '@types/react-dom': 18.2.18
       react: 18.2.0
@@ -5379,7 +5558,7 @@ packages:
       nodemailer:
         optional: true
     dependencies:
-      '@babel/runtime': 7.23.2
+      '@babel/runtime': 7.23.9
       '@panva/hkdf': 1.1.1
       cookie: 0.5.0
       jose: 4.15.4
@@ -6116,6 +6295,15 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
+    dev: false
+
+  /react-hook-form@7.50.1(react@18.2.0):
+    resolution: {integrity: sha512-3PCY82oE0WgeOgUtIr3nYNNtNvqtJ7BZjsbxh6TnYNbXButaD5WpjOmTjdxZfheuHKR68qfeFnEDVYoSSFPMTQ==}
+    engines: {node: '>=12.22.0'}
+    peerDependencies:
+      react: ^16.8.0 || ^17 || ^18
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /react-is@16.13.1:
