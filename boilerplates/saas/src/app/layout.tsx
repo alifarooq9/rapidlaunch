@@ -24,7 +24,12 @@ export default function RootLayout({
         <html lang="en">
             <body className={`${inter.className}`}>
                 <TRPCReactProvider>
-                    <ThemeProvider attribute="class" defaultTheme="system">
+                    <ThemeProvider
+                        attribute="class"
+                        defaultTheme="system"
+                        enableSystem
+                        disableTransitionOnChange
+                    >
                         {children}
                         <Toaster
                             richColors={true}
