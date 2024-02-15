@@ -79,3 +79,13 @@ export const authOptions: NextAuthOptions = {
  * @see https://next-auth.js.org/configuration/nextjs
  */
 export const getServerAuthSession = () => getServerSession(authOptions);
+
+/**
+ * Get the current user from the session. This is a convenience function so that you don't need to import the `getServerSession` and `authOptions` in every file.
+ *
+ * @returns The user object or `null` if the user is not authenticated.
+ */
+export const getUser = async () => {
+    const session = await getServerAuthSession();
+    return session?.user ?? null;
+};

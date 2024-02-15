@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { buttonVariants } from "@/components/ui/button";
 import { WebHeaderNav } from "@/app/(web)/_components/header-nav";
 import { siteConfig } from "@/config/site";
 import { Icons } from "@/components/ui/icons";
 import { siteUrls } from "@/config/urls";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { HeaderAuth } from "./header-auth";
 
 export function WebHeader() {
     return (
@@ -21,23 +21,8 @@ export function WebHeader() {
             <WebHeaderNav />
             <div className="flex items-center space-x-2">
                 <ThemeToggle />
-                <section className="flex items-center space-x-2">
-                    <Link
-                        href={siteUrls.auth.login}
-                        className={buttonVariants({ variant: "secondary" })}
-                    >
-                        Login
-                    </Link>
-                    <Link
-                        href={siteUrls.auth.signup}
-                        className={buttonVariants({
-                            className: "flex items-center space-x-1",
-                        })}
-                    >
-                        <span>Sign Up</span>
-                        <span className="font-normal"> — it&apos;s free</span>
-                    </Link>
-                </section>
+
+                <HeaderAuth />
             </div>
         </header>
     );
