@@ -1,4 +1,8 @@
-// purpose: all site configuration for the app
+/**
+ * @purpose This file is used to store the site configuration.
+ *
+ * Add all the general site-wide configuration here.
+ */
 
 export const siteConfig = {
     name: "RapidLaunch",

@@ -12,7 +12,11 @@ import { siteUrls } from "@/config/urls";
 
 //Next Auth Providers
 import EmailProvider from "next-auth/providers/email";
+import GoogleProvider from "next-auth/providers/google";
+import GithubProvider from "next-auth/providers/github";
+
 import { sendVerificationEmail } from "@/server/actions/send-verification-email";
+import { env } from "@/env";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -60,6 +64,14 @@ export const authOptions: NextAuthOptions = {
             async sendVerificationRequest(params) {
                 return await sendVerificationEmail({ params });
             },
+        }),
+        GoogleProvider({
+            clientId: env.GOOGLE_CLIENT_ID,
+            clientSecret: env.GOOGLE_CLIENT_SECRET,
+        }),
+        GithubProvider({
+            clientId: env.GITHUB_CLIENT_ID,
+            clientSecret: env.GITHUB_CLIENT_SECRET,
         }),
         /**
          * ...add more providers here.
