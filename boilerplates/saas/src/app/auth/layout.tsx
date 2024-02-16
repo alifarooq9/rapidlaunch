@@ -3,7 +3,7 @@ import { siteConfig } from "@/config/site";
 import { siteUrls } from "@/config/urls";
 import Link from "next/link";
 
-interface AuthLayoutProps {
+type AuthLayoutProps = {
     children: React.ReactNode;
 }
 

@@ -9,7 +9,7 @@ import { buttonVariants } from "@/components/ui/button";
 
 /**
  *  For adding a new navigation item:
- * 
+ *
  *  - Add a new object to the headerNav array in the webConfig object in the nav.ts file located /config/web.ts.
  */
 
@@ -18,7 +18,7 @@ export function WebHeaderNav() {
 
     return (
         <nav className="flex items-center justify-center">
-            <ul className="flex items-center">
+            <ul className="flex items-center gap-1">
                 {webConfig.headerNav.map((item) => (
                     <li key={item.id}>
                         <Link

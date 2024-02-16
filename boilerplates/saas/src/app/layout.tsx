@@ -2,9 +2,9 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import "@/styles/globals.css";
 import { TRPCReactProvider } from "@/trpc/react";
-import { Inter } from "next/font/google";
+import { Bricolage_Grotesque } from "next/font/google";
 
-const inter = Inter({
+const bricolageGrotesque = Bricolage_Grotesque({
     subsets: ["latin"],
 });
 
@@ -21,23 +21,20 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     return (
-        <html lang="en">
-            <body className={`${inter.className}`}>
-                <TRPCReactProvider>
-                    <ThemeProvider
-                        attribute="class"
-                        defaultTheme="system"
-                        enableSystem
-                        disableTransitionOnChange
-                    >
+        <html lang="en" suppressHydrationWarning>
+            <body
+                className={`${bricolageGrotesque.className} overflow-x-hidden`}
+            >
+                <ThemeProvider>
+                    <TRPCReactProvider>
                         {children}
                         <Toaster
                             richColors={true}
                             closeButton={true}
                             position="top-right"
                         />
-                    </ThemeProvider>
-                </TRPCReactProvider>
+                    </TRPCReactProvider>
+                </ThemeProvider>
             </body>
         </html>
     );

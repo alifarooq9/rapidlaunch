@@ -29,7 +29,7 @@ const formSchema = z.object({
 
 type formSchemaType = z.infer<typeof formSchema>;
 
-interface AuthFormProps {
+type AuthFormProps = {
     type: "signup" | "login";
 }
 
