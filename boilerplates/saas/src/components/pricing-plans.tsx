@@ -46,7 +46,7 @@ function PricingCard({ pricing }: PricingCardProps) {
             )}
 
             <CardHeader>
-                <CardTitle className="font-medium">{pricing.title}</CardTitle>
+                <CardTitle>{pricing.title}</CardTitle>
                 <CardDescription>{pricing.description}</CardDescription>
             </CardHeader>
 

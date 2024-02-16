@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { webConfig } from "@/config/web";
+import { navigation } from "@/config/header";
 import { buttonVariants } from "@/components/ui/button";
 
 /**
@@ -19,7 +19,7 @@ export function WebHeaderNav() {
     return (
         <nav className="flex items-center justify-center">
             <ul className="flex items-center gap-1">
-                {webConfig.headerNav.map((item) => (
+                {navigation.map((item) => (
                     <li key={item.id}>
                         <Link
                             href={item.href}

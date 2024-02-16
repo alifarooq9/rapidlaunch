@@ -12,7 +12,7 @@ export function WebHeader() {
         <header className="relative flex h-24 w-screen items-center px-4 sm:px-12">
             <Link
                 href={siteUrls.home}
-                className="absolute left-4 z-10 flex items-center space-x-2 text-xl font-medium transition-transform hover:scale-90 sm:left-12"
+                className="absolute left-4 z-10 flex items-center space-x-2 text-2xl font-bold transition-transform hover:scale-90 sm:left-12"
             >
                 <Icons.logo className="h-6 w-6 fill-primary" />
                 <span>{siteConfig.name}</span>
@@ -35,14 +35,5 @@ export function WebHeader() {
                 </Suspense>
             </div>
         </header>
-    );
-}
-
-// This is the h1 heading used in all public web pages
-export function WebPageHeading({ children }: { children: React.ReactNode }) {
-    return (
-        <h1 className="max-w-2xl text-center text-5xl font-medium leading-none sm:text-7xl">
-            {children}
-        </h1>
     );
 }

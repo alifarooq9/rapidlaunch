@@ -14,14 +14,14 @@
 
 import { siteUrls } from "@/config/urls";
 
-interface HeaderNavItem {
+interface NavigationItem {
     id: string;
     href: string;
     label: string;
     badge?: string;
 }
 
-export const headerNav: HeaderNavItem[] = [
+export const navigation: NavigationItem[] = [
     {
         id: "pricing",
         href: siteUrls.pricing,
@@ -29,15 +29,9 @@ export const headerNav: HeaderNavItem[] = [
         badge: "Beta",
     },
     {
-        id: "features",
-        href: siteUrls.features,
-        label: "Features",
-        badge: "New",
-    },
-    {
-        id: "contact",
-        href: siteUrls.contact,
-        label: "Contact",
+        id: "support",
+        href: siteUrls.support,
+        label: "Support",
     },
     {
         id: "blog",
@@ -45,7 +39,3 @@ export const headerNav: HeaderNavItem[] = [
         label: "Blog",
     },
 ];
-
-export const webConfig = {
-    headerNav,
-} as const;
