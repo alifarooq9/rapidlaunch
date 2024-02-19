@@ -64,7 +64,66 @@ importers:
         specifier: ^5.3.3
         version: 5.3.3
 
-  boilerplates/saas:
+  packages/eslint-config:
+    devDependencies:
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^6.17.0
+        version: 6.17.0(@typescript-eslint/parser@6.17.0)(eslint@8.56.0)(typescript@5.3.3)
+      '@typescript-eslint/parser':
+        specifier: ^6.17.0
+        version: 6.17.0(eslint@8.56.0)(typescript@5.3.3)
+      '@vercel/style-guide':
+        specifier: ^5.1.0
+        version: 5.1.0(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
+      eslint-config-prettier:
+        specifier: ^9.1.0
+        version: 9.1.0(eslint@8.56.0)
+      eslint-config-turbo:
+        specifier: ^1.11.3
+        version: 1.11.3(eslint@8.56.0)
+      eslint-plugin-only-warn:
+        specifier: ^1.1.0
+        version: 1.1.0
+      typescript:
+        specifier: ^5.3.3
+        version: 5.3.3
+
+  packages/typescript-config: {}
+
+  packages/ui:
+    devDependencies:
+      '@repo/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@turbo/gen':
+        specifier: ^1.11.3
+        version: 1.11.3(@types/node@20.10.6)(typescript@5.3.3)
+      '@types/eslint':
+        specifier: ^8.56.1
+        version: 8.56.1
+      '@types/node':
+        specifier: ^20.10.6
+        version: 20.10.6
+      '@types/react':
+        specifier: ^18.2.46
+        version: 18.2.46
+      '@types/react-dom':
+        specifier: ^18.2.18
+        version: 18.2.18
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      typescript:
+        specifier: ^5.3.3
+        version: 5.3.3
+
+  starterkits/saas:
     dependencies:
       '@auth/drizzle-adapter':
         specifier: ^0.7.0
@@ -220,65 +279,6 @@ importers:
       tailwindcss:
         specifier: ^3.4.1
         version: 3.4.1
-      typescript:
-        specifier: ^5.3.3
-        version: 5.3.3
-
-  packages/eslint-config:
-    devDependencies:
-      '@typescript-eslint/eslint-plugin':
-        specifier: ^6.17.0
-        version: 6.17.0(@typescript-eslint/parser@6.17.0)(eslint@8.56.0)(typescript@5.3.3)
-      '@typescript-eslint/parser':
-        specifier: ^6.17.0
-        version: 6.17.0(eslint@8.56.0)(typescript@5.3.3)
-      '@vercel/style-guide':
-        specifier: ^5.1.0
-        version: 5.1.0(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
-      eslint-config-prettier:
-        specifier: ^9.1.0
-        version: 9.1.0(eslint@8.56.0)
-      eslint-config-turbo:
-        specifier: ^1.11.3
-        version: 1.11.3(eslint@8.56.0)
-      eslint-plugin-only-warn:
-        specifier: ^1.1.0
-        version: 1.1.0
-      typescript:
-        specifier: ^5.3.3
-        version: 5.3.3
-
-  packages/typescript-config: {}
-
-  packages/ui:
-    devDependencies:
-      '@repo/eslint-config':
-        specifier: workspace:*
-        version: link:../eslint-config
-      '@repo/typescript-config':
-        specifier: workspace:*
-        version: link:../typescript-config
-      '@turbo/gen':
-        specifier: ^1.11.3
-        version: 1.11.3(@types/node@20.10.6)(typescript@5.3.3)
-      '@types/eslint':
-        specifier: ^8.56.1
-        version: 8.56.1
-      '@types/node':
-        specifier: ^20.10.6
-        version: 20.10.6
-      '@types/react':
-        specifier: ^18.2.46
-        version: 18.2.46
-      '@types/react-dom':
-        specifier: ^18.2.18
-        version: 18.2.18
-      eslint:
-        specifier: ^8.56.0
-        version: 8.56.0
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
       typescript:
         specifier: ^5.3.3
         version: 5.3.3
@@ -4278,7 +4278,7 @@ packages:
       debug: 3.2.7
       eslint: 8.56.0
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@6.21.0)(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.0)(eslint@8.56.0)
+      eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@6.21.0)(eslint-plugin-import@2.29.0)(eslint@8.56.0)
     transitivePeerDependencies:
       - supports-color
     dev: true
