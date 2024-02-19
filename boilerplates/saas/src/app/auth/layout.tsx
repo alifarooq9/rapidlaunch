@@ -1,11 +1,10 @@
 import { Icons } from "@/components/ui/icons";
-import { siteConfig } from "@/config/site";
 import { siteUrls } from "@/config/urls";
 import Link from "next/link";
 
 type AuthLayoutProps = {
     children: React.ReactNode;
-}
+};
 
 export default function AuthLayout({ children }: AuthLayoutProps) {
     return (
@@ -14,12 +13,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
                 {children}
             </main>
             <aside className="col-span-1 flex flex-col items-start justify-center gap-6 border-l border-border bg-muted/30 p-10">
-                <h3 className="flex items-center justify-center space-x-2">
-                    <Icons.logo className="h-6 w-6 fill-primary" />
-                    <span className="text-xl font-semibold">
-                        {siteConfig.name}
-                    </span>
-                </h3>
+                <Icons.logo as="h3" />
                 <h2 className="text-3xl font-medium">
                     Build and launch your SaaS this weekend
                 </h2>

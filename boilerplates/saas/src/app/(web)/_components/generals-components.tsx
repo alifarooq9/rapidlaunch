@@ -1,15 +1,15 @@
 import { Badge } from "@/components/ui/badge";
-import { Slot } from "@radix-ui/react-slot";
+import { type ElementType } from "react";
 
 // This is a page wrapper used in all public web pages
 export function WebPageWrapper({
     children,
-    asChild,
+    as,
 }: {
     children: React.ReactNode;
-    asChild?: boolean;
+    as?: ElementType;
 }) {
-    const Comp = asChild ? Slot : "main";
+    const Comp: ElementType = as ?? "main";
 
     return (
         <Comp className="container flex flex-col items-center justify-center gap-24 py-10">

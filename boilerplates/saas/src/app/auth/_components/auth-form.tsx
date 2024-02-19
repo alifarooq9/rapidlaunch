@@ -31,7 +31,7 @@ type formSchemaType = z.infer<typeof formSchema>;
 
 type AuthFormProps = {
     type: "signup" | "login";
-}
+};
 
 export function AuthForm({ type }: AuthFormProps) {
     const form = useForm<formSchemaType>({
@@ -73,7 +73,7 @@ export function AuthForm({ type }: AuthFormProps) {
                         href={siteUrls.home}
                         className="flex w-fit items-center transition-transform hover:scale-90"
                     >
-                        <Icons.logo className="h-10 w-10 fill-primary" />
+                        <Icons.logoIcon className="h-10 w-10 fill-primary" />
                     </Link>
                     <div className="flex flex-col items-center space-y-1">
                         <h1 className="text-center text-2xl font-medium">

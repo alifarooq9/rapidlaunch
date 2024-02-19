@@ -1,5 +1,4 @@
 import { WebHeader } from "@/app/(web)/_components/header";
-import { Fragment } from "react";
 
 type WebLayoutProps = {
     children: React.ReactNode;
@@ -7,9 +6,9 @@ type WebLayoutProps = {
 
 export default function WebLayout({ children }: WebLayoutProps) {
     return (
-        <Fragment>
+        <div>
             <WebHeader />
             {children}
-        </Fragment>
+        </div>
     );
 }

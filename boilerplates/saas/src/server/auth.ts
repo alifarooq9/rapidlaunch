@@ -54,11 +54,11 @@ export const authOptions: NextAuthOptions = {
             },
         }),
     },
+    adapter: DrizzleAdapter(db, createTable) as Adapter,
     pages: {
         signIn: siteUrls.auth.login,
         error: siteUrls.auth.login,
     },
-    adapter: DrizzleAdapter(db, createTable) as Adapter,
     providers: [
         EmailProvider({
             async sendVerificationRequest(params) {

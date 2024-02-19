@@ -21,7 +21,25 @@ export const siteUrls = {
     rapidlaunch: "https://www.rapidlaunch.xyz",
     dashboard: {
         home: "/dashboard",
-        settings: "/dashboard/settings",
-        billing: "/dashboard/billing",
+        projects: {
+            home: "/dashboard/projects",
+            new: "/dashboard/projects/new",
+            project: (projectId: string) => `/dashboard/projects/${projectId}`,
+        },
+        tasks: {
+            home: "/dashboard/tasks",
+            new: "/dashboard/tasks/new",
+            task: (taskId: string) => `/dashboard/tasks/${taskId}`,
+        },
+        team: "/dashboard/team",
+        notifications: "/dashboard/notification",
+        database: "/dashboard/database",
+    },
+    profile: {
+        settings: "/profile/settings",
+        billing: "/profile/billing",
+    },
+    docs: {
+        home: "/docs",
     },
 } as const;

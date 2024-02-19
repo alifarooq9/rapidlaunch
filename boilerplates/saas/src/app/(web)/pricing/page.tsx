@@ -1,4 +1,4 @@
-import { PricingPlans } from "@/components/pricing-plans";
+import { PricingTable } from "@/app/(web)/pricing/components/pricing-table";
 import {
     WebPageHeading,
     WebPageWrapper,
@@ -8,7 +8,7 @@ import {
  * Customize the pricing page to your needs. You can use the `PricingPlans` component to display the pricing plans.
  * You can also use the `Badge` and `WebPageHeading` components to display the page title and any additional information.
  *
- * To customize the pricing plans, you can modify the `PricingPlans` component. @see /components/pricing-plans.tsx
+ * To customize the pricing plans, you can modify the `PricingPlans` component. @see /app/(web)/pricing/components/pricing-plans.tsx
  */
 
 export default function PricingPage() {
@@ -26,7 +26,7 @@ export default function PricingPage() {
                 </p>
             </WebPageHeading>
 
-            <PricingPlans />
+            <PricingTable />
         </WebPageWrapper>
     );
 }

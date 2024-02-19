@@ -1,9 +1,8 @@
 import Link from "next/link";
 import { WebHeaderNav } from "@/app/(web)/_components/header-nav";
-import { siteConfig } from "@/config/site";
 import { Icons } from "@/components/ui/icons";
 import { siteUrls } from "@/config/urls";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { ThemeToggle } from "@/app/(web)/_components/theme-toggle";
 import { HeaderAuth } from "@/app/(web)/_components/header-auth";
 import { Suspense } from "react";
 
@@ -12,10 +11,9 @@ export function WebHeader() {
         <header className="relative flex h-24 w-screen items-center px-4 sm:px-12">
             <Link
                 href={siteUrls.home}
-                className="absolute left-4 z-10 flex items-center space-x-2 text-2xl font-bold transition-transform hover:scale-90 sm:left-12"
+                className="absolute left-4 z-10 transition-transform  hover:scale-90 sm:left-12"
             >
-                <Icons.logo className="h-6 w-6 fill-primary" />
-                <span>{siteConfig.name}</span>
+                <Icons.logo />
             </Link>
 
             <div className="absolute left-0 right-0 mx-auto ">

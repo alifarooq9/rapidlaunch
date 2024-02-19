@@ -53,7 +53,8 @@ function SupportCard({
                 <Link
                     href={buttonHref}
                     className={buttonVariants({
-                        className: "w-fit gap-1 transition-[gap] hover:gap-3",
+                        className:
+                            "w-fit gap-1 transition-all duration-300 ease-in-out hover:gap-3",
                         variant: "outline",
                     })}
                 >

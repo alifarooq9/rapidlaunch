@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
+import { cn, isLinkActive } from "@/lib/utils";
 import { navigation } from "@/config/header";
 import { buttonVariants } from "@/components/ui/button";
 
@@ -25,7 +25,7 @@ export function WebHeaderNav() {
                             href={item.href}
                             className={cn(
                                 buttonVariants({
-                                    variant: isActive(item.href, pathname)
+                                    variant: isLinkActive(item.href, pathname)
                                         ? "secondary"
                                         : "ghost",
                                 }),
@@ -35,7 +35,7 @@ export function WebHeaderNav() {
                             {item.badge && (
                                 <Badge
                                     variant={
-                                        isActive(item.href, pathname)
+                                        isLinkActive(item.href, pathname)
                                             ? "background"
                                             : "secondary"
                                     }
@@ -51,9 +51,4 @@ export function WebHeaderNav() {
             </ul>
         </nav>
     );
-}
-
-// it tells you if the current link is active or not based on the pathname
-function isActive(href: string, pathname: string) {
-    return pathname === href;
 }

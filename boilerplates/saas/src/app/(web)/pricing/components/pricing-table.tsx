@@ -19,7 +19,7 @@ import { cn } from "@/lib/utils";
  * @introduce a new pricing plan, please refer to @see /config/pricing.ts
  */
 
-export function PricingPlans() {
+export function PricingTable() {
     return (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {pricings.map((pricing) => (
@@ -35,10 +35,15 @@ type PricingCardProps = {
 
 function PricingCard({ pricing }: PricingCardProps) {
     return (
-        <Card className={cn("relative py-20")}>
+        <Card
+            className={cn(
+                "relative py-20",
+                pricing.buttonHighlighted && "border-2 border-primary",
+            )}
+        >
             {pricing.badge && (
                 <Badge
-                    variant="outline"
+                    variant="secondary"
                     className="absolute inset-x-10 bottom-auto top-12 w-fit"
                 >
                     {pricing.badge}
@@ -66,14 +71,16 @@ function PricingCard({ pricing }: PricingCardProps) {
                 <Button
                     size="lg"
                     className="w-fit"
-                    variant={pricing.buttonHighlighted ? "default" : "outline"}
+                    variant={
+                        pricing.buttonHighlighted ? "default" : "secondary"
+                    }
                 >
                     Get Started
                 </Button>
 
                 <div className="flex flex-col gap-4 pt-10">
                     <p className="text-sm font-medium">
-                        What’s included in Free:
+                        What’s included in {pricing.title}:
                     </p>
                     <ul className="flex flex-col gap-2">
                         {pricing.uniqueFeatures?.map((feature, index) => (
@@ -82,9 +89,7 @@ function PricingCard({ pricing }: PricingCardProps) {
                                 className="flex items-start gap-3"
                             >
                                 <CheckIcon className="h-5 w-5 flex-shrink-0" />
-                                <span className="text-sm font-light">
-                                    {feature}
-                                </span>
+                                <span className="text-sm">{feature}</span>
                             </li>
                         ))}
 
@@ -100,7 +105,7 @@ function PricingCard({ pricing }: PricingCardProps) {
                                 )}
                                 <span
                                     className={cn(
-                                        "text-sm font-light",
+                                        "text-sm",
                                         !feature.inludedIn.includes(pricing.id)
                                             ? "text-muted-foreground/60"
                                             : "",

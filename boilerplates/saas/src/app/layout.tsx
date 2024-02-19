@@ -1,10 +1,9 @@
-import { ThemeProvider } from "@/components/theme-provider";
+import { Providers } from "@/components/providers";
 import { Toaster } from "@/components/ui/sonner";
 import "@/styles/globals.css";
-import { TRPCReactProvider } from "@/trpc/react";
-import { Bricolage_Grotesque } from "next/font/google";
+import { Inter } from "next/font/google";
 
-const bricolageGrotesque = Bricolage_Grotesque({
+const inter = Inter({
     subsets: ["latin"],
 });
 
@@ -22,19 +21,15 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en" suppressHydrationWarning>
-            <body
-                className={`${bricolageGrotesque.className} overflow-x-hidden`}
-            >
-                <ThemeProvider>
-                    <TRPCReactProvider>
-                        {children}
-                        <Toaster
-                            richColors={true}
-                            closeButton={true}
-                            position="top-right"
-                        />
-                    </TRPCReactProvider>
-                </ThemeProvider>
+            <body className={`${inter.className} overflow-x-hidden`}>
+                <Providers>
+                    {children}
+                    <Toaster
+                        richColors={true}
+                        closeButton={true}
+                        position="top-right"
+                    />
+                </Providers>
             </body>
         </html>
     );
