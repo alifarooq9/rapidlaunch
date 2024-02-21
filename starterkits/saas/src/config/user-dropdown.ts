@@ -67,7 +67,7 @@ const navigation: Nav[] = [
             {
                 label: "Admin Dashboard",
                 icon: LayoutDashboardIcon,
-                href: "/admin/dashboard",
+                href: siteUrls.admin.dashboard,
             },
         ],
     },

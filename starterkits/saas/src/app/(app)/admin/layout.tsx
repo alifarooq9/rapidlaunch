@@ -1,12 +1,12 @@
 import { cookies } from "next/headers";
-import { DashShell } from "@/app/(app)/_components/layouts";
+import { AdminShell } from "@/app/(app)/_components/layouts";
 import React from "react";
 
 type AppLayoutProps = {
     children: React.ReactNode;
 };
 
-export default function DasboardLayout({ children }: AppLayoutProps) {
+export default function AdminLayout({ children }: AppLayoutProps) {
     const collapsed = cookies().get("react-resizable-panels:collapsed");
 
     let defaultCollapsed;
@@ -15,8 +15,8 @@ export default function DasboardLayout({ children }: AppLayoutProps) {
     }
 
     return (
-        <DashShell defaultCollapsed={defaultCollapsed}>
+        <AdminShell defaultCollapsed={defaultCollapsed}>
             {React.Children.toArray(children)}
-        </DashShell>
+        </AdminShell>
     );
 }

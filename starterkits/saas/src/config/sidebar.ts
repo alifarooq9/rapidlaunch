@@ -3,18 +3,20 @@ import {
     BellIcon,
     BookTextIcon,
     CheckSquare2Icon,
+    CreditCardIcon,
     DatabaseIcon,
     HelpCircleIcon,
     LayoutDashboardIcon,
     ListChecksIcon,
     PenLineIcon,
     PlusCircleIcon,
+    Rows3Icon,
     UsersRoundIcon,
 } from "lucide-react";
 import { siteUrls } from "@/config/urls";
 
 /**
- * This file contains the configuration for the dashboard navigation
+ * This file contains the configuration for the @dashboard and @admin navigation
  * to add a new navigation item, you can add a new object to the navigation array
  * 1 id: a unique id for the navigation, add it to the navIds object
  * 2 label: the label for the navigation (it's a category label)
@@ -27,7 +29,6 @@ import { siteUrls } from "@/config/urls";
  *     > label: the label for the subMenu item
  *     > href: the href for the subMenu item
  *     > icon: the icon for the subMenu item
- *
  */
 
 type IconProps = React.HTMLAttributes<SVGElement>;
@@ -49,26 +50,29 @@ type NavItemWithSubMenu = NavItemBase & {
         label: string;
         href: string;
         icon: React.ComponentType<IconProps>;
+        disabled?: boolean;
     }[];
 };
 
 type NavItem = NavItemWithHref | NavItemWithSubMenu;
 
-type Nav = {
+export type SidebarNavItems = {
     id: string;
     label: string;
     showLabel?: boolean;
     items: NavItem[];
 };
 
-const navIds = {
+/** @Dashboard Nav Config */
+
+const dashNavIds = {
     general: "general",
     resources: "resources",
 } as const;
 
-const navigation: Nav[] = [
+const dashNav: SidebarNavItems[] = [
     {
-        id: navIds.general,
+        id: dashNavIds.general,
         label: "General",
         showLabel: true,
         items: [
@@ -127,7 +131,7 @@ const navigation: Nav[] = [
         ],
     },
     {
-        id: navIds.resources,
+        id: dashNavIds.resources,
         label: "Resources",
         showLabel: true,
         items: [
@@ -150,12 +154,65 @@ const navigation: Nav[] = [
     },
 ];
 
+/** @Admin Nav Config */
+const adminNavIds = {
+    admin: "admin",
+} as const;
+
+const adminNav: SidebarNavItems[] = [
+    {
+        id: adminNavIds.admin,
+        label: "Admin",
+        showLabel: true,
+        items: [
+            {
+                label: "Dashboard",
+                icon: LayoutDashboardIcon,
+                href: siteUrls.admin.dashboard,
+            },
+            {
+                label: "Users",
+                icon: UsersRoundIcon,
+                href: siteUrls.admin.users,
+            },
+            {
+                label: "Pricing Plans",
+                icon: CreditCardIcon,
+                subMenu: [
+                    {
+                        label: "See Plans",
+                        href: siteUrls.admin.pricingPlans.home,
+                        icon: Rows3Icon,
+                    },
+                    {
+                        label: "Create Plan",
+                        href: siteUrls.admin.pricingPlans.new,
+                        icon: PlusCircleIcon,
+                    },
+                ],
+            },
+            {
+                label: "Blog",
+                icon: PenLineIcon,
+                href: siteUrls.admin.blog,
+            },
+            {
+                label: "Settings",
+                icon: DatabaseIcon,
+                href: siteUrls.admin.settings,
+            },
+        ],
+    },
+];
+
 /**
  * The dashboardConfig is an object that contains the configuration for the dashboard
  * @export all the configuration for the dashboard in dashboardConfig
  */
 
-export const dashboardConfig = {
-    navigation,
-    navIds,
+export const sidebarConfig = {
+    dashNav,
+    dashNavIds,
+    adminNav,
+    adminNavIds,
 } as const;

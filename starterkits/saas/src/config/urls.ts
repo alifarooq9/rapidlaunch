@@ -35,6 +35,16 @@ export const siteUrls = {
         notifications: "/dashboard/notification",
         database: "/dashboard/database",
     },
+    admin: {
+        dashboard: "/admin/dashboard",
+        users: "/admin/users",
+        pricingPlans: {
+            home: "/admin/pricing-plans",
+            new: "/admin/pricing-plans/new",
+        },
+        blog: "/admin/blog",
+        settings: "/admin/settings",
+    },
     profile: {
         settings: "/profile/settings",
         billing: "/profile/billing",

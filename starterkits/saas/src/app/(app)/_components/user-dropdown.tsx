@@ -15,6 +15,7 @@ import { siteUrls } from "@/config/urls";
 import { userDropdownConfig } from "@/config/user-dropdown";
 import { cn } from "@/lib/utils";
 import { LogOutIcon } from "lucide-react";
+import { type Session } from "next-auth";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { Fragment } from "react";
@@ -39,6 +40,18 @@ export function UserDropdown({ isCollapsed }: UserDropdownProps) {
         );
     }
 
+    return <UserDropdownContent session={session} isCollapsed={isCollapsed} />;
+}
+
+type UserDropdownContentProps = {
+    session: Session | null;
+    isCollapsed?: boolean;
+};
+
+function UserDropdownContent({
+    session,
+    isCollapsed,
+}: UserDropdownContentProps) {
     return (
         <DropdownMenu modal>
             <DropdownMenuTrigger asChild>
@@ -125,9 +138,3 @@ export function UserDropdown({ isCollapsed }: UserDropdownProps) {
         </DropdownMenu>
     );
 }
-
-// This function is use to remove the navigation items from the user dropdown, enter the ids of the navigation items you want to remove.
-// you can use this to remove the specific navigation items from the user dropdown according to the user role or permissions.
-// function filteredNavItems(ids: string[]) {
-//     return userDropdownConfig.navigation.filter((nav) => !ids.includes(nav.id));
-// }

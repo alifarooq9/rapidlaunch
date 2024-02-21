@@ -1,76 +1,47 @@
 "use client";
 
-import {
-    ResizableHandle,
-    ResizablePanel,
-    ResizablePanelGroup,
-} from "@/components/ui/resizable";
-import { type ReactNode } from "node_modules/react-resizable-panels/dist/declarations/src/vendor/react";
-import React, { useState } from "react";
+import React from "react";
 import { Sidebar } from "@/app/(app)/_components/sidebar";
+import { sidebarConfig } from "@/config/sidebar";
 
-type DashboardLayoutProps = {
-    children: ReactNode;
-    defaultLayout?: number[];
+/**
+ * @purpose The dashboard layout component contain sidebar nav info and the main content of the dashboard
+ * to add a new component in dashboard layout and use it in the `DashboardLayout` component
+ */
+
+type DashShellProps = {
+    children: React.ReactNode;
     defaultCollapsed?: boolean;
 };
 
+export function DashShell({ children }: DashShellProps) {
+    return (
+        <div className="flex items-start">
+            <div className="w-80">
+                <Sidebar navItems={sidebarConfig.dashNav} />
+            </div>
+            <div>{children}</div>
+        </div>
+    );
+}
+
 /**
- * to @add new component in dashboard layout and use it in the `DashboardLayout` component
- * wrap the component with `ResizablePanel` to make it resizable, and all defaltLayout values should be in the `defaultLayoutValues` array between 0 and 100
+ * @purpose The admin layout component contain sidebar nav info and the main content of the admin
+ * to add a new component in admin layout and use it in the `AdminLayout` component
  */
 
-const defaultLayoutValues: number[] = [17, 83];
+type AdminShellProps = {
+    children: React.ReactNode;
+    defaultCollapsed?: boolean;
+};
 
-export function DashboardLayout({
-    children,
-    defaultLayout = defaultLayoutValues,
-    defaultCollapsed = false,
-}: DashboardLayoutProps) {
-    const [isCollapsed, setIsCollapsed] = useState<boolean>(defaultCollapsed);
-
-    const onLayout = (sizes: number[]) => {
-        document.cookie = `react-resizable-panels:layout=${JSON.stringify(
-            sizes,
-        )}`;
-    };
-
-    const onCollapse = () => {
-        setIsCollapsed(true);
-        document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
-            true,
-        )}`;
-    };
-
-    const onExpand = () => {
-        setIsCollapsed(false);
-        document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
-            false,
-        )}`;
-    };
-
+export function AdminShell({ children }: AdminShellProps) {
     return (
-        <ResizablePanelGroup
-            onLayout={onLayout}
-            direction="horizontal"
-            className="min-h-screen items-stretch"
-        >
-            <ResizablePanel
-                minSize={15}
-                maxSize={20}
-                defaultSize={defaultLayout[0]}
-                className="h-screen min-w-20"
-                order={1}
-                collapsible={true}
-                onCollapse={onCollapse}
-                onExpand={onExpand}
-            >
-                <Sidebar isCollapsed={isCollapsed} />
-            </ResizablePanel>
-            <ResizableHandle withHandle />
-            <ResizablePanel order={2} defaultSize={defaultLayout[1]}>
-                {children}
-            </ResizablePanel>
-        </ResizablePanelGroup>
+        <div className="flex items-start">
+            <div className="w-80">
+                <Sidebar navItems={sidebarConfig.adminNav} />
+            </div>
+            <div>{children}</div>
+        </div>
     );
 }
