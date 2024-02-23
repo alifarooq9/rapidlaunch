@@ -42,18 +42,18 @@ export function Sidebar({ isCollapsed, navItems }: SideNavProps) {
             </div>
             <Separator />
 
-            <div className="px-4 py-2">
-                <UserDropdown isCollapsed={isCollapsed} />
-            </div>
-
-            <Separator />
-
             <ScrollArea style={{ height: "calc(100vh - 8rem)" }}>
                 <div className="h-full w-full px-4 py-2">
                     <SidebarNav isCollapsed={isCollapsed} navItems={navItems} />
                     <ScrollBar orientation="vertical" />
                 </div>
             </ScrollArea>
+
+            <Separator />
+
+            <div className="px-4 py-2">
+                <UserDropdown isCollapsed={isCollapsed} />
+            </div>
         </aside>
     );
 }

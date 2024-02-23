@@ -7,7 +7,7 @@ import {
 import { type Adapter } from "next-auth/adapters";
 
 import { db } from "@/server/db";
-import { createTable } from "@/server/db/schema";
+import { createTable, users } from "@/server/db/schema";
 import { siteUrls } from "@/config/urls";
 
 //Next Auth Providers
@@ -17,6 +17,9 @@ import GithubProvider from "next-auth/providers/github";
 
 import { sendVerificationEmail } from "@/server/actions/send-verification-email";
 import { env } from "@/env";
+import { eq } from "drizzle-orm";
+
+type UserRole = typeof users.$inferSelect.role;
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -28,15 +31,15 @@ declare module "next-auth" {
     interface Session extends DefaultSession {
         user: {
             id: string;
+            role: UserRole;
             // ...other properties
-            // role: UserRole;
         } & DefaultSession["user"];
     }
 
-    // interface User {
-    //   // ...other properties
-    //   // role: UserRole;
-    // }
+    interface User {
+        role: UserRole;
+        // ...other properties
+    }
 }
 
 /**
@@ -46,13 +49,43 @@ declare module "next-auth" {
  */
 export const authOptions: NextAuthOptions = {
     callbacks: {
-        session: ({ session, user }) => ({
-            ...session,
-            user: {
-                ...session.user,
-                id: user.id,
-            },
-        }),
+        session({ token, session }) {
+            if (token) {
+                // Add the user id to the session, so it's available in the client app
+                session.user.id = token.id as string;
+                session.user.name = token.name;
+                session.user.email = token.email;
+                session.user.image = token.picture;
+                session.user.role = token.role as UserRole;
+            }
+
+            return session;
+        },
+        async jwt({ token, user }) {
+            const dbUser = await db.query.users.findFirst({
+                where: eq(users.email, token.email!),
+            });
+
+            if (!dbUser) {
+                if (user) {
+                    token.id = user?.id;
+                }
+                return token;
+            }
+
+            return {
+                id: dbUser.id,
+                name: dbUser.name,
+                email: dbUser.email,
+                picture: dbUser.image,
+                role: dbUser.role,
+            };
+        },
+    },
+
+    secret: env.NEXTAUTH_SECRET,
+    session: {
+        strategy: "jwt",
     },
     adapter: DrizzleAdapter(db, createTable) as Adapter,
     pages: {

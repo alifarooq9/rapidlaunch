@@ -12,13 +12,18 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Icons } from "@/components/ui/icons";
 import { siteUrls } from "@/config/urls";
-import { userDropdownConfig } from "@/config/user-dropdown";
+import {
+    type UserDropdownNavItems,
+    userDropdownConfig,
+} from "@/config/user-dropdown";
 import { cn } from "@/lib/utils";
+import { usersRoleEnum } from "@/server/db/schema";
 import { LogOutIcon } from "lucide-react";
 import { type Session } from "next-auth";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { Fragment } from "react";
+import { z } from "zod";
 
 /**
  * to @add more navigation items to the user dropdown, you can add more items to the `userDropdownConfig` object in the
@@ -28,6 +33,8 @@ import { Fragment } from "react";
 type UserDropdownProps = {
     isCollapsed?: boolean;
 };
+
+const userRoles = z.enum(usersRoleEnum.enumValues);
 
 export function UserDropdown({ isCollapsed }: UserDropdownProps) {
     const { data: session, status } = useSession();
@@ -40,17 +47,33 @@ export function UserDropdown({ isCollapsed }: UserDropdownProps) {
         );
     }
 
-    return <UserDropdownContent session={session} isCollapsed={isCollapsed} />;
+    const navItems =
+        session?.user?.role === userRoles.Values.ADMIN ||
+        session?.user?.role === userRoles.Values.SUPER_ADMIN
+            ? userDropdownConfig.navigation
+            : userDropdownConfig.filterNavItems({
+                  removeIds: [userDropdownConfig.navIds.admin],
+              });
+
+    return (
+        <UserDropdownContent
+            session={session}
+            isCollapsed={isCollapsed}
+            navItems={navItems}
+        />
+    );
 }
 
 type UserDropdownContentProps = {
     session: Session | null;
     isCollapsed?: boolean;
+    navItems: UserDropdownNavItems[];
 };
 
 function UserDropdownContent({
     session,
     isCollapsed,
+    navItems,
 }: UserDropdownContentProps) {
     return (
         <DropdownMenu modal>
@@ -71,9 +94,7 @@ function UserDropdownContent({
                         </AvatarFallback>
                     </Avatar>
                     {!isCollapsed && (
-                        <span className="truncate font-normal">
-                            {session?.user?.email}
-                        </span>
+                        <span className="truncate">{session?.user?.email}</span>
                     )}
 
                     <span className="sr-only">user menu</span>
@@ -103,7 +124,7 @@ function UserDropdownContent({
                  * to @add more navigation items to the user dropdown, you can add more items to the `userDropdownConfig` object in the
                  * @see /src/config/user-dropdown.ts file
                  */}
-                {userDropdownConfig.navigation.map((nav) => (
+                {navItems.map((nav) => (
                     <Fragment key={nav.id}>
                         <DropdownMenuLabel className="text-xs text-muted-foreground">
                             {nav.label}

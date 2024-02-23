@@ -8,5 +8,5 @@ export default {
     dbCredentials: {
         connectionString: env.DATABASE_URL,
     },
-    tablesFilter: ["rapidlaunch-boilerplate_*"],
+    tablesFilter: ["rapidlaunch-saas-starterkit_*"],
 } satisfies Config;

@@ -2,6 +2,7 @@ import { relations, sql } from "drizzle-orm";
 import {
     index,
     integer,
+    pgEnum,
     pgTableCreator,
     primaryKey,
     text,
@@ -17,8 +18,10 @@ import { type AdapterAccount } from "next-auth/adapters";
  * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
  */
 export const createTable = pgTableCreator(
-    (name) => `rapidlaunch-boilerplate_${name}`,
+    (name) => `rapidlaunch-saas-starterkit_${name}`,
 );
+
+export const usersRoleEnum = pgEnum("role", ["USER", "ADMIN", "SUPER_ADMIN"]);
 
 export const users = createTable("user", {
     id: varchar("id", { length: 255 }).notNull().primaryKey(),
@@ -28,6 +31,7 @@ export const users = createTable("user", {
         mode: "date",
     }).default(sql`CURRENT_TIMESTAMP`),
     image: varchar("image", { length: 255 }),
+    role: usersRoleEnum("role").notNull().default("USER"),
 });
 
 export const usersRelations = relations(users, ({ many }) => ({
