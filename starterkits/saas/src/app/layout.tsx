@@ -1,11 +1,7 @@
 import { Providers } from "@/components/providers";
 import { Toaster } from "@/components/ui/sonner";
 import "@/styles/globals.css";
-import { Inter } from "next/font/google";
-
-const inter = Inter({
-    subsets: ["latin"],
-});
+import { GeistSans } from "geist/font/sans";
 
 export const metadata = {
     title: "RapidLaunch - Next.js Boilerplate",
@@ -21,7 +17,7 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en" suppressHydrationWarning>
-            <body className={`${inter.className} overflow-x-hidden`}>
+            <body className={`${GeistSans.className} overflow-x-hidden`}>
                 <Providers>
                     {children}
                     <Toaster
