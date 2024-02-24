@@ -1,22 +1,18 @@
-import { cookies } from "next/headers";
-import { AdminShell } from "@/app/(app)/_components/layouts";
 import React from "react";
+import { AppLayoutShell } from "@/app/(app)/_components/layout-shell";
+import { sidebarConfig } from "@/config/sidebar";
 
 type AppLayoutProps = {
     children: React.ReactNode;
 };
 
 export default function AdminLayout({ children }: AppLayoutProps) {
-    const collapsed = cookies().get("react-resizable-panels:collapsed");
-
-    let defaultCollapsed;
-    if (collapsed) {
-        defaultCollapsed = JSON.parse(collapsed.value) as boolean;
-    }
+    // these are the ids of the sidebar nav items to include in the sidebar specifically @get ids from the sidebar config
+    const sideNavIncludedIds: string[] = [sidebarConfig.navIds.admin];
 
     return (
-        <AdminShell defaultCollapsed={defaultCollapsed}>
-            {React.Children.toArray(children)}
-        </AdminShell>
+        <AppLayoutShell sideNavIncludedIds={sideNavIncludedIds}>
+            {children}
+        </AppLayoutShell>
     );
 }

@@ -16,7 +16,7 @@ import {
 import { siteUrls } from "@/config/urls";
 
 /**
- * This file contains the configuration for the @dashboard and @admin navigation
+ * This file contains the configuration for the navigation items in the sidebar
  * to add a new navigation item, you can add a new object to the navigation array
  * 1 id: a unique id for the navigation, add it to the navIds object
  * 2 label: the label for the navigation (it's a category label)
@@ -29,6 +29,8 @@ import { siteUrls } from "@/config/urls";
  *     > label: the label for the subMenu item
  *     > href: the href for the subMenu item
  *     > icon: the icon for the subMenu item
+ *
+ * @use specific navigation items in the sidebar, you can use the filterNavItems function
  */
 
 type IconProps = React.HTMLAttributes<SVGElement>;
@@ -63,16 +65,58 @@ export type SidebarNavItems = {
     items: NavItem[];
 };
 
-/** @Dashboard Nav Config */
-
-const dashNavIds = {
+const navIds = {
+    admin: "admin",
     general: "general",
     resources: "resources",
-} as const;
+};
 
-const dashNav: SidebarNavItems[] = [
+const navigation: SidebarNavItems[] = [
     {
-        id: dashNavIds.general,
+        id: navIds.admin,
+        label: "Admin",
+        showLabel: true,
+        items: [
+            {
+                label: "Dashboard",
+                icon: LayoutDashboardIcon,
+                href: siteUrls.admin.dashboard,
+            },
+            {
+                label: "Users",
+                icon: UsersRoundIcon,
+                href: siteUrls.admin.users,
+            },
+            {
+                label: "Pricing Plans",
+                icon: CreditCardIcon,
+                subMenu: [
+                    {
+                        label: "See Plans",
+                        href: siteUrls.admin.pricingPlans.home,
+                        icon: Rows3Icon,
+                    },
+                    {
+                        label: "Create Plan",
+                        href: siteUrls.admin.pricingPlans.new,
+                        icon: PlusCircleIcon,
+                    },
+                ],
+            },
+            {
+                label: "Blog",
+                icon: PenLineIcon,
+                href: siteUrls.admin.blog,
+            },
+            {
+                label: "Settings",
+                icon: DatabaseIcon,
+                href: siteUrls.admin.settings,
+            },
+        ],
+    },
+    {
+        id: navIds.general,
         label: "General",
         showLabel: true,
         items: [
@@ -131,7 +175,7 @@ const dashNav: SidebarNavItems[] = [
         ],
     },
     {
-        id: dashNavIds.resources,
+        id: navIds.resources,
         label: "Resources",
         showLabel: true,
         items: [
@@ -154,65 +198,48 @@ const dashNav: SidebarNavItems[] = [
     },
 ];
 
-/** @Admin Nav Config */
-const adminNavIds = {
-    admin: "admin",
-} as const;
-
-const adminNav: SidebarNavItems[] = [
-    {
-        id: adminNavIds.admin,
-        label: "Admin",
-        showLabel: true,
-        items: [
-            {
-                label: "Dashboard",
-                icon: LayoutDashboardIcon,
-                href: siteUrls.admin.dashboard,
-            },
-            {
-                label: "Users",
-                icon: UsersRoundIcon,
-                href: siteUrls.admin.users,
-            },
-            {
-                label: "Pricing Plans",
-                icon: CreditCardIcon,
-                subMenu: [
-                    {
-                        label: "See Plans",
-                        href: siteUrls.admin.pricingPlans.home,
-                        icon: Rows3Icon,
-                    },
-                    {
-                        label: "Create Plan",
-                        href: siteUrls.admin.pricingPlans.new,
-                        icon: PlusCircleIcon,
-                    },
-                ],
-            },
-            {
-                label: "Blog",
-                icon: PenLineIcon,
-                href: siteUrls.admin.blog,
-            },
-            {
-                label: "Settings",
-                icon: DatabaseIcon,
-                href: siteUrls.admin.settings,
-            },
-        ],
-    },
-];
+type FilterNavItemsProps = {
+    removeIds?: string[];
+    includedIds?: string[];
+};
 
 /**
- * The dashboardConfig is an object that contains the configuration for the dashboard
- * @export all the configuration for the dashboard in dashboardConfig
+ * @purpose Filters the navigation items for the sidebar.
+ * The filterNavItems function filters the navigation items for the sidebar.
+ * @param removeIds An array of string identifiers to remove from the navigation items.
+ * @param includeIds An array of string identifiers to include in the navigation items.
+ *
+ * @returns The filtered navigation items for the sidebar.
+ * */
+
+export function filterNavItems({
+    removeIds = [],
+    includedIds = [],
+}: FilterNavItemsProps) {
+    let includedItems = sidebarConfig.navigation;
+
+    if (includedIds.length) {
+        includedItems = includedItems.filter((item) =>
+            includedIds.includes(item.id),
+        );
+    }
+
+    if (removeIds.length) {
+        includedItems = includedItems.filter(
+            (item) => !removeIds.includes(item.id),
+        );
+    }
+
+    return includedItems;
+}
+
+/**
+ * The sidebarConfig is an object that contains the configuration for the dashboard
+ * @export all the configuration for the sidebar in sidebarConfig
  */
 
 export const sidebarConfig = {
-    dashNav,
-    dashNavIds,
-    adminNav,
-    adminNavIds,
+    navIds,
+    navigation,
+    filterNavItems,
 } as const;

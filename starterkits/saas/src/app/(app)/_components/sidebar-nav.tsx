@@ -19,7 +19,7 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { ChevronDown } from "lucide-react";
-import { type SidebarNavItems } from "@/config/sidebar";
+import { sidebarConfig } from "@/config/sidebar";
 
 /**
  * SidebarNav is a component that renders the sidebar navigation for the dashboard
@@ -29,16 +29,26 @@ import { type SidebarNavItems } from "@/config/sidebar";
 
 type SidebarNavProps = {
     isCollapsed?: boolean;
-    navItems: SidebarNavItems[];
+    sidebarNavIncludeIds?: string[];
+    sidebarNavRemoveIds?: string[];
 };
 
-export function SidebarNav({ isCollapsed, navItems }: SidebarNavProps) {
+export function SidebarNav({
+    isCollapsed,
+    sidebarNavIncludeIds,
+    sidebarNavRemoveIds,
+}: SidebarNavProps) {
     const pathname = usePathname();
+
+    const sidebarNavitems = sidebarConfig.filterNavItems({
+        removeIds: sidebarNavRemoveIds,
+        includedIds: sidebarNavIncludeIds,
+    });
 
     return (
         <TooltipProvider disableHoverableContent delayDuration={0}>
             <nav>
-                {navItems.map((nav, index) => (
+                {sidebarNavitems.map((nav, index) => (
                     <div key={nav.id}>
                         {nav.showLabel && !isCollapsed && (
                             <h3 className="mb-2 px-2 pt-4 text-xs font-semibold uppercase text-muted-foreground">
@@ -206,7 +216,7 @@ export function SidebarNav({ isCollapsed, navItems }: SidebarNavProps) {
                             ))}
                         </ul>
 
-                        {index !== navItems.length - 1 && (
+                        {index !== sidebarNavitems.length - 1 && (
                             <Separator className="my-2" />
                         )}
                     </div>

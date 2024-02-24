@@ -1,5 +1,3 @@
-"use client";
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,20 +8,20 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Icons } from "@/components/ui/icons";
 import { siteUrls } from "@/config/urls";
 import {
     type UserDropdownNavItems,
     userDropdownConfig,
 } from "@/config/user-dropdown";
 import { cn } from "@/lib/utils";
+import { getUser } from "@/server/auth";
 import { usersRoleEnum } from "@/server/db/schema";
 import { LogOutIcon } from "lucide-react";
-import { type Session } from "next-auth";
-import { signOut, useSession } from "next-auth/react";
+import { type User } from "next-auth";
 import Link from "next/link";
 import { Fragment } from "react";
 import { z } from "zod";
+import { SignoutTrigger } from "@/components/signout-trigger";
 
 /**
  * to @add more navigation items to the user dropdown, you can add more items to the `userDropdownConfig` object in the
@@ -36,20 +34,12 @@ type UserDropdownProps = {
 
 const userRoles = z.enum(usersRoleEnum.enumValues);
 
-export function UserDropdown({ isCollapsed }: UserDropdownProps) {
-    const { data: session, status } = useSession();
-
-    if (status === "loading") {
-        return (
-            <Button variant="outline" disabled className="w-full">
-                <Icons.loader className="h-5 w-5" />
-            </Button>
-        );
-    }
+export async function UserDropdown({ isCollapsed }: UserDropdownProps) {
+    const user = await getUser();
 
     const navItems =
-        session?.user?.role === userRoles.Values.ADMIN ||
-        session?.user?.role === userRoles.Values.SUPER_ADMIN
+        user?.role === userRoles.Values.ADMIN ||
+        user?.role === userRoles.Values.SUPER_ADMIN
             ? userDropdownConfig.navigation
             : userDropdownConfig.filterNavItems({
                   removeIds: [userDropdownConfig.navIds.admin],
@@ -57,7 +47,7 @@ export function UserDropdown({ isCollapsed }: UserDropdownProps) {
 
     return (
         <UserDropdownContent
-            session={session}
+            user={user}
             isCollapsed={isCollapsed}
             navItems={navItems}
         />
@@ -65,18 +55,18 @@ export function UserDropdown({ isCollapsed }: UserDropdownProps) {
 }
 
 type UserDropdownContentProps = {
-    session: Session | null;
+    user: User | null;
     isCollapsed?: boolean;
     navItems: UserDropdownNavItems[];
 };
 
 function UserDropdownContent({
-    session,
+    user,
     isCollapsed,
     navItems,
 }: UserDropdownContentProps) {
     return (
-        <DropdownMenu modal>
+        <DropdownMenu modal={false}>
             <DropdownMenuTrigger asChild>
                 <Button
                     variant="outline"
@@ -87,34 +77,34 @@ function UserDropdownContent({
                     aria-label="user dropdown"
                 >
                     <Avatar className="h-6 w-6">
-                        <AvatarImage src={session?.user!.image ?? ""} />
+                        <AvatarImage src={user!.image ?? ""} />
 
                         <AvatarFallback className="text-xs">
-                            {session?.user?.email?.charAt(0).toUpperCase()}
+                            {user?.email?.charAt(0).toUpperCase()}
                         </AvatarFallback>
                     </Avatar>
                     {!isCollapsed && (
-                        <span className="truncate">{session?.user?.email}</span>
+                        <span className="truncate">{user?.email}</span>
                     )}
 
                     <span className="sr-only">user menu</span>
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56" align="start">
+            <DropdownMenuContent className="w-60" align="start">
                 <DropdownMenuLabel className="flex w-56 flex-col items-start gap-2">
                     <Avatar className="h-9 w-9">
-                        <AvatarImage src={session?.user!.image ?? ""} />
+                        <AvatarImage src={user!.image ?? ""} />
                         <AvatarFallback>
-                            {session?.user?.email?.charAt(0).toUpperCase()}
+                            {user?.email?.charAt(0).toUpperCase()}
                         </AvatarFallback>
                     </Avatar>
 
                     <div className="flex w-full flex-col">
                         <p className="truncate text-sm">
-                            {session?.user?.name ?? "Name not found"}
+                            {user?.name ?? "Name not found"}
                         </p>
                         <p className="w-full truncate text-sm font-light text-muted-foreground">
-                            {session?.user?.email}
+                            {user?.email}
                         </p>
                     </div>
                 </DropdownMenuLabel>
@@ -143,18 +133,14 @@ function UserDropdownContent({
                         <DropdownMenuSeparator />
                     </Fragment>
                 ))}
-
-                <DropdownMenuItem asChild>
-                    <button
-                        onClick={async () =>
-                            await signOut({ callbackUrl: siteUrls.home })
-                        }
-                        className="flex w-full cursor-pointer items-center gap-2 text-red-500 "
-                    >
-                        <LogOutIcon className="h-4 w-4" />
-                        <span>Logout</span>
-                    </button>
-                </DropdownMenuItem>
+                <SignoutTrigger callbackUrl={siteUrls.home} asChild>
+                    <DropdownMenuItem asChild>
+                        <button className="flex w-full cursor-pointer items-center gap-2 text-red-500 ">
+                            <LogOutIcon className="h-4 w-4" />
+                            <span>Logout</span>
+                        </button>
+                    </DropdownMenuItem>
+                </SignoutTrigger>
             </DropdownMenuContent>
         </DropdownMenu>
     );

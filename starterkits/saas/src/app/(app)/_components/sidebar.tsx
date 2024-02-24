@@ -6,11 +6,13 @@ import { UserDropdown } from "@/app/(app)/_components/user-dropdown";
 import { Separator } from "@/components/ui/separator";
 import { SidebarNav } from "@/app/(app)/_components/sidebar-nav";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { type SidebarNavItems } from "@/config/sidebar";
+import { Suspense } from "react";
+import { buttonVariants } from "@/components/ui/button";
 
 type SideNavProps = {
     isCollapsed?: boolean;
-    navItems: SidebarNavItems[];
+    sidebarNavIncludeIds?: string[];
+    sidebarNavRemoveIds?: string[];
 };
 
 /**
@@ -21,7 +23,11 @@ type SideNavProps = {
  * fell free to customize the sidebar component as you like
  */
 
-export function Sidebar({ isCollapsed, navItems }: SideNavProps) {
+export function Sidebar({
+    isCollapsed,
+    sidebarNavIncludeIds,
+    sidebarNavRemoveIds,
+}: SideNavProps) {
     return (
         <aside className={cn("h-full w-full border-r border-border")}>
             <div className={cn("p-4")}>
@@ -40,20 +46,40 @@ export function Sidebar({ isCollapsed, navItems }: SideNavProps) {
                     )}
                 </Link>
             </div>
-            <Separator />
-
-            <ScrollArea style={{ height: "calc(100vh - 8rem)" }}>
-                <div className="h-full w-full px-4 py-2">
-                    <SidebarNav isCollapsed={isCollapsed} navItems={navItems} />
-                    <ScrollBar orientation="vertical" />
-                </div>
-            </ScrollArea>
 
             <Separator />
 
             <div className="px-4 py-2">
-                <UserDropdown isCollapsed={isCollapsed} />
+                <Suspense
+                    fallback={
+                        <button
+                            aria-disabled
+                            disabled
+                            className={buttonVariants({
+                                variant: "outline",
+                                className: "w-full",
+                            })}
+                        >
+                            <Icons.loader />
+                        </button>
+                    }
+                >
+                    <UserDropdown isCollapsed={isCollapsed} />
+                </Suspense>
             </div>
+
+            <Separator />
+
+            <ScrollArea style={{ height: "calc(100vh - 8rem)" }}>
+                <div className="h-full w-full px-4 py-2">
+                    <SidebarNav
+                        isCollapsed={isCollapsed}
+                        sidebarNavIncludeIds={sidebarNavIncludeIds}
+                        sidebarNavRemoveIds={sidebarNavRemoveIds}
+                    />
+                    <ScrollBar orientation="vertical" />
+                </div>
+            </ScrollArea>
         </aside>
     );
 }
