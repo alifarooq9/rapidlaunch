@@ -3,14 +3,13 @@ import {
     BellIcon,
     BookTextIcon,
     CheckSquare2Icon,
-    CreditCardIcon,
     DatabaseIcon,
     HelpCircleIcon,
     LayoutDashboardIcon,
     ListChecksIcon,
     PenLineIcon,
     PlusCircleIcon,
-    Rows3Icon,
+    SettingsIcon,
     UsersRoundIcon,
 } from "lucide-react";
 import { siteUrls } from "@/config/urls";
@@ -88,30 +87,19 @@ const navigation: SidebarNavItems[] = [
                 href: siteUrls.admin.users,
             },
             {
-                label: "Pricing Plans",
-                icon: CreditCardIcon,
-                subMenu: [
-                    {
-                        label: "See Plans",
-                        href: siteUrls.admin.pricingPlans.home,
-                        icon: Rows3Icon,
-                    },
-                    {
-                        label: "Create Plan",
-                        href: siteUrls.admin.pricingPlans.new,
-                        icon: PlusCircleIcon,
-                    },
-                ],
-            },
-            {
                 label: "Blog",
                 icon: PenLineIcon,
                 href: siteUrls.admin.blog,
             },
             {
-                label: "Settings",
-                icon: DatabaseIcon,
+                label: "Application Settings",
+                icon: SettingsIcon,
                 href: siteUrls.admin.settings,
+            },
+            {
+                label: "Feedback List",
+                icon: HelpCircleIcon,
+                href: siteUrls.admin.feedback,
             },
         ],
     },

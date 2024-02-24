@@ -7,7 +7,8 @@ import { Separator } from "@/components/ui/separator";
 import { SidebarNav } from "@/app/(app)/_components/sidebar-nav";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Suspense } from "react";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { PanelRightOpenIcon } from "lucide-react";
 
 type SideNavProps = {
     isCollapsed?: boolean;
@@ -30,7 +31,11 @@ export function Sidebar({
 }: SideNavProps) {
     return (
         <aside className={cn("h-full w-full border-r border-border")}>
-            <div className={cn("p-4")}>
+            <div
+                className={cn(
+                    "relative flex h-14 items-center justify-between px-4",
+                )}
+            >
                 <Link
                     href={siteUrls.home}
                     className={cn(
@@ -45,6 +50,14 @@ export function Sidebar({
                         <Icons.logo />
                     )}
                 </Link>
+
+                <Button
+                    variant="outline"
+                    size="iconSm"
+                    className="absolute -right-4"
+                >
+                    <PanelRightOpenIcon className="h-5 w-5 text-muted-foreground" />
+                </Button>
             </div>
 
             <Separator />
@@ -70,7 +83,7 @@ export function Sidebar({
 
             <Separator />
 
-            <ScrollArea style={{ height: "calc(100vh - 8rem)" }}>
+            <ScrollArea style={{ height: "calc(100vh - 7.5rem)" }}>
                 <div className="h-full w-full px-4 py-2">
                     <SidebarNav
                         isCollapsed={isCollapsed}
