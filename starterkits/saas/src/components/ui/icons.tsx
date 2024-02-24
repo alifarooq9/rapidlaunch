@@ -19,12 +19,12 @@ export const Icons = {
         return (
             <Comp
                 className={cn(
-                    "flex items-center space-x-2 text-2xl font-bold",
+                    "flex items-center space-x-2 text-lg font-bold",
                     className,
                 )}
             >
                 <Icons.logoIcon
-                    className={cn("h-6 w-6 fill-primary", iconProps?.className)}
+                    className={cn("h-5 w-5 fill-primary", iconProps?.className)}
                     {...iconProps}
                 />
                 <span>{siteConfig.name}</span>

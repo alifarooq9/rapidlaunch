@@ -58,7 +58,8 @@ export function UserNameForm({ user }: UserNameFormProps) {
         },
         onError: (error: { message?: string } = {}) =>
             toast.error(
-                error.message ?? "Failed to update name, please try again later",
+                error.message ??
+                    "Failed to update name, please try again later",
             ),
     });
 
@@ -73,7 +74,7 @@ export function UserNameForm({ user }: UserNameFormProps) {
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-                <Card className="max-w-2xl">
+                <Card className="w-full">
                     <CardHeader>
                         <CardTitle>Your Name</CardTitle>
                         <CardDescription>

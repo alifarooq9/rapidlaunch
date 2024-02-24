@@ -21,10 +21,9 @@ export function AppLayoutShell({
     sideNavRemoveIds,
 }: AppLayoutProps) {
     return (
-        <div className="relative flex items-start">
-            <div className="sticky left-0 top-0 h-screen w-80 flex-shrink-0">
+        <div className="container relative flex items-start">
+            <div className="sticky left-0 top-0 h-screen w-72 flex-shrink-0">
                 <Sidebar
-                    isCollapsed={false}
                     sidebarNavIncludeIds={sideNavIncludedIds}
                     sidebarNavRemoveIds={sideNavRemoveIds}
                 />

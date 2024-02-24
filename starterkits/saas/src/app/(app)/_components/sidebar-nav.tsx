@@ -28,16 +28,16 @@ import { sidebarConfig } from "@/config/sidebar";
  */
 
 type SidebarNavProps = {
-    isCollapsed?: boolean;
     sidebarNavIncludeIds?: string[];
     sidebarNavRemoveIds?: string[];
 };
 
 export function SidebarNav({
-    isCollapsed,
     sidebarNavIncludeIds,
     sidebarNavRemoveIds,
 }: SidebarNavProps) {
+    const isCollapsed = false;
+
     const pathname = usePathname();
 
     const sidebarNavitems = sidebarConfig.filterNavItems({
@@ -50,7 +50,7 @@ export function SidebarNav({
             <nav>
                 {sidebarNavitems.map((nav, index) => (
                     <div key={nav.id}>
-                        {nav.showLabel && !isCollapsed && (
+                        {nav.showLabel && (
                             <h3 className="mb-2 px-2 pt-4 text-xs font-semibold uppercase text-muted-foreground">
                                 {nav.label}
                             </h3>
@@ -93,9 +93,6 @@ export function SidebarNav({
                                                                 }),
                                                                 "flex items-center justify-between gap-3",
                                                             )}
-                                                            chevronIcon={
-                                                                !isCollapsed
-                                                            }
                                                         >
                                                             <div
                                                                 // variant="ghost"
@@ -159,11 +156,6 @@ export function SidebarNav({
                                                                         isCollapsed={
                                                                             isCollapsed
                                                                         }
-                                                                        size={
-                                                                            isCollapsed
-                                                                                ? "default"
-                                                                                : "sm"
-                                                                        }
                                                                     />
                                                                 </TooltipTrigger>
                                                                 {isCollapsed && (
@@ -187,7 +179,7 @@ export function SidebarNav({
                                                         />
                                                     )}
                                                 </AccordionContent>
-                                            </AccordionItem>
+                                            </AccordionItem> 
                                         </Accordion>
                                     ) : (
                                         <Tooltip>
@@ -252,7 +244,7 @@ function NavLink({
             href={href}
             className={cn(
                 buttonVariants({
-                    variant: active ? "default" : "ghost",
+                    variant: active ? "secondary" : "ghost",
                     size,
                 }),
                 "flex w-full items-center justify-start gap-3",

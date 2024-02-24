@@ -55,7 +55,7 @@ function SupportCard({
                     className={buttonVariants({
                         className:
                             "w-fit gap-1 transition-all duration-300 ease-in-out hover:gap-3",
-                        variant: "outline",
+                        variant: "secondary",
                     })}
                 >
                     <span>{buttonText}</span>

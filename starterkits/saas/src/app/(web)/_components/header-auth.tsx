@@ -21,12 +21,6 @@ export async function HeaderAuth() {
             ) : (
                 <Fragment>
                     <Link
-                        href={siteUrls.auth.login}
-                        className={buttonVariants({ variant: "secondary" })}
-                    >
-                        Login
-                    </Link>
-                    <Link
                         href={siteUrls.auth.signup}
                         className={buttonVariants({
                             className: "flex items-center space-x-1",

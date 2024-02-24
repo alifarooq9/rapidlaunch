@@ -28,13 +28,9 @@ import { SignoutTrigger } from "@/components/signout-trigger";
  * @see /src/config/user-dropdown.ts file
  */
 
-type UserDropdownProps = {
-    isCollapsed?: boolean;
-};
-
 const userRoles = z.enum(usersRoleEnum.enumValues);
 
-export async function UserDropdown({ isCollapsed }: UserDropdownProps) {
+export async function UserDropdown() {
     const user = await getUser();
 
     const navItems =
@@ -45,34 +41,24 @@ export async function UserDropdown({ isCollapsed }: UserDropdownProps) {
                   removeIds: [userDropdownConfig.navIds.admin],
               });
 
-    return (
-        <UserDropdownContent
-            user={user}
-            isCollapsed={isCollapsed}
-            navItems={navItems}
-        />
-    );
+    return <UserDropdownContent user={user} navItems={navItems} />;
 }
 
 type UserDropdownContentProps = {
     user: User | null;
-    isCollapsed?: boolean;
     navItems: UserDropdownNavItems[];
 };
 
-function UserDropdownContent({
-    user,
-    isCollapsed,
-    navItems,
-}: UserDropdownContentProps) {
+function UserDropdownContent({ user, navItems }: UserDropdownContentProps) {
+    const isCollapsed = false;
+
     return (
         <DropdownMenu modal={false}>
             <DropdownMenuTrigger asChild>
                 <Button
                     variant="outline"
                     className={cn(
-                        "flex w-full gap-2 overflow-hidden p-2",
-                        isCollapsed ? "justify-center" : "justify-start",
+                        "flex w-full justify-start gap-2 overflow-hidden p-2",
                     )}
                     aria-label="user dropdown"
                 >
@@ -83,6 +69,7 @@ function UserDropdownContent({
                             {user?.email?.charAt(0).toUpperCase()}
                         </AvatarFallback>
                     </Avatar>
+
                     {!isCollapsed && (
                         <span className="truncate">{user?.email}</span>
                     )}

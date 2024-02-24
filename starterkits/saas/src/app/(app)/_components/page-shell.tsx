@@ -18,13 +18,13 @@ export function AppPageShell({
     const Container = as ?? "main";
 
     return (
-        <div className="px-8 py-10">
+        <div className="w-full px-8">
             <PageHeader
                 title={title}
                 rightContent={rightContent}
                 description={description}
             />
-            <Container>{children}</Container>
+            <Container className="w-full">{children}</Container>
         </div>
     );
 }
@@ -37,10 +37,10 @@ type PageHeaderProps = {
 
 function PageHeader({ title, rightContent, description }: PageHeaderProps) {
     return (
-        <header className="flex w-full items-center justify-between">
+        <header className="flex w-full items-center justify-between border-b border-border py-6">
             <section className="flex flex-col gap-1">
                 <h1 className="text-2xl font-bold">{title}</h1>
-                <p className="text-muted-foreground">{description}</p>
+                <p className="max-w-xl text-muted-foreground">{description}</p>
             </section>
             {rightContent && <section>{rightContent}</section>}
         </header>

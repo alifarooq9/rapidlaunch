@@ -8,10 +8,10 @@ export default async function SettingsPage() {
 
     return (
         <AppPageShell
-            title="Profile Settings"
-            description="This is the profile settings page. Here you can manage all the settings related to your profile."
+            title="Settings"
+            description="Here you can manage all the settings related to your profile."
         >
-            <div className="mt-10">
+            <div className="mt-10 w-full">
                 <UserNameForm user={user as User} />
             </div>
         </AppPageShell>
