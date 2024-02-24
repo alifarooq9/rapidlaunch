@@ -118,7 +118,12 @@ export function AuthForm({ type }: AuthFormProps) {
                         )}
                     />
 
-                    <Button type="submit" className="w-full gap-2">
+                    <Button
+                        disabled={isLoading}
+                        aria-disabled={isLoading}
+                        type="submit"
+                        className="w-full gap-2"
+                    >
                         {isLoading && <Icons.loader className="h-4 w-4" />}
                         <span>Continue with Email</span>
                     </Button>
