@@ -37,7 +37,7 @@ function PricingCard({ pricing }: PricingCardProps) {
     return (
         <Card
             className={cn(
-                "relative py-20",
+                "relative px-6 py-20",
                 pricing.buttonHighlighted && "border-2 border-primary",
             )}
         >
@@ -51,7 +51,7 @@ function PricingCard({ pricing }: PricingCardProps) {
             )}
 
             <CardHeader>
-                <CardTitle>{pricing.title}</CardTitle>
+                <CardTitle className="text-2xl">{pricing.title}</CardTitle>
                 <CardDescription>{pricing.description}</CardDescription>
             </CardHeader>
 

@@ -1,4 +1,4 @@
-import { PricingTable } from "@/app/(web)/pricing/components/pricing-table";
+import { PricingTable } from "@/app/(web)/pricing/_components/pricing-table";
 import {
     WebPageHeading,
     WebPageWrapper,

@@ -6,7 +6,7 @@ type AppLayoutProps = {
     children: React.ReactNode;
 };
 
-export default function DasboardLayout({ children }: AppLayoutProps) {
+export default function UserLayout({ children }: AppLayoutProps) {
     // these are the ids of the sidebar nav items to include in the sidebar specifically @get ids from the sidebar config
     const sideNavIncludedIds: string[] = [
         sidebarConfig.navIds.general,
