@@ -42,8 +42,7 @@ export function ColumnDropdown({ email, id, role }: UsersData) {
         toast.promise(async () => await changeRoleMutate({ role }), {
             loading: "Updating user role...",
             success: "User role updated!",
-            error: (error: { message: string }) =>
-                error.message ?? "Failed to update user role.",
+            error: "Failed to update user role, Check your permissions.",
         });
     };
 
