@@ -1,19 +1,18 @@
 "use client";
 
 import { ThemeProvider } from "@/components/theme-provider";
-import { TRPCReactProvider } from "@/trpc/react";
-import { SessionProvider } from "next-auth/react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 type ProvidersProps = {
     children: React.ReactNode;
 };
 
 export function Providers({ children }: ProvidersProps) {
+    const queryClient = new QueryClient();
+
     return (
-        <ThemeProvider>
-            <SessionProvider>
-                <TRPCReactProvider>{children}</TRPCReactProvider>
-            </SessionProvider>
-        </ThemeProvider>
+        <QueryClientProvider client={queryClient}>
+            <ThemeProvider>{children}</ThemeProvider>
+        </QueryClientProvider>
     );
 }

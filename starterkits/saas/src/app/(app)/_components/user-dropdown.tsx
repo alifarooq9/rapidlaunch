@@ -14,7 +14,6 @@ import {
     userDropdownConfig,
 } from "@/config/user-dropdown";
 import { cn } from "@/lib/utils";
-import { getUser } from "@/server/auth";
 import { usersRoleEnum } from "@/server/db/schema";
 import { LogOutIcon } from "lucide-react";
 import { type User } from "next-auth";
@@ -28,14 +27,16 @@ import { SignoutTrigger } from "@/components/signout-trigger";
  * @see /src/config/user-dropdown.ts file
  */
 
+type UserDropdownProps = {
+    user: User | null;
+};
+
 const userRoles = z.enum(usersRoleEnum.enumValues);
 
-export async function UserDropdown() {
-    const user = await getUser();
-
+export async function UserDropdown({ user }: UserDropdownProps) {
     const navItems =
-        user?.role === userRoles.Values.ADMIN ||
-        user?.role === userRoles.Values.SUPER_ADMIN
+        user?.role === userRoles.Values.Admin ||
+        user?.role === userRoles.Values["Super Admin"]
             ? userDropdownConfig.navigation
             : userDropdownConfig.filterNavItems({
                   removeIds: [userDropdownConfig.navIds.admin],
@@ -103,9 +104,7 @@ function UserDropdownContent({ user, navItems }: UserDropdownContentProps) {
                  */}
                 {navItems.map((nav) => (
                     <Fragment key={nav.id}>
-                        <DropdownMenuLabel className="text-xs text-muted-foreground">
-                            {nav.label}
-                        </DropdownMenuLabel>
+                        <DropdownMenuLabel>{nav.label}</DropdownMenuLabel>
                         {nav.items.map((item) => (
                             <DropdownMenuItem key={item.label} asChild>
                                 <Link

@@ -21,7 +21,7 @@ export const createTable = pgTableCreator(
     (name) => `rapidlaunch-saas-starterkit_${name}`,
 );
 
-export const usersRoleEnum = pgEnum("role", ["USER", "ADMIN", "SUPER_ADMIN"]);
+export const usersRoleEnum = pgEnum("role", ["User", "Admin", "Super Admin"]);
 
 export const users = createTable("user", {
     id: varchar("id", { length: 255 }).notNull().primaryKey(),
@@ -31,7 +31,8 @@ export const users = createTable("user", {
         mode: "date",
     }).default(sql`CURRENT_TIMESTAMP`),
     image: varchar("image", { length: 255 }),
-    role: usersRoleEnum("role").notNull().default("USER"),
+    role: usersRoleEnum("role").default("User").notNull(),
+    createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
 });
 
 export const usersRelations = relations(users, ({ many }) => ({

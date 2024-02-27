@@ -29,6 +29,19 @@ export async function sendVerificationEmail({
                         sign in.
                     </p>
                     <a href="${params.url}">Verify your email</a>
+
+                    <p> or </p>
+
+                    <p>
+                        Copy and paste the following link in your browser:
+                        <br />
+                        ${params.url}
+                    </p>
+
+                    <hr />
+                    <p>
+                        If you didn't request this email, you can ignore it.
+                    </p>
                 </div>`,
             text: `Click the link below to verify your email address and sign in. ${params.url}`,
         });

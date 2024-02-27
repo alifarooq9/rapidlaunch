@@ -25,7 +25,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Icons } from "@/components/ui/icons";
 import { useMutation } from "@tanstack/react-query";
-import { updateName } from "@/server/actions/user";
+import { updateNameAction } from "@/server/actions/user";
 
 const userNameFormSchema = z.object({
     name: z
@@ -50,8 +50,8 @@ export function UserNameForm({ user }: UserNameFormProps) {
         },
     });
 
-    const { isLoading, mutateAsync } = useMutation({
-        mutationFn: () => updateName({ name: form.getValues().name }),
+    const { isPending, mutateAsync } = useMutation({
+        mutationFn: () => updateNameAction({ name: form.getValues().name }),
         onSuccess: () => {
             router.refresh();
             toast.success("Name updated successfully");
@@ -102,11 +102,11 @@ export function UserNameForm({ user }: UserNameFormProps) {
                     </CardContent>
                     <CardFooter>
                         <Button
-                            disabled={isLoading}
+                            disabled={isPending}
                             type="submit"
                             className="gap-2"
                         >
-                            {isLoading && <Icons.loader className="h-4 w-4" />}
+                            {isPending && <Icons.loader className="h-4 w-4" />}
                             <span>Save Changes</span>
                         </Button>
                     </CardFooter>

@@ -32,12 +32,14 @@ declare module "next-auth" {
         user: {
             id: string;
             role: UserRole;
+            createdAt: Date;
             // ...other properties
         } & DefaultSession["user"];
     }
 
     interface User {
         role: UserRole;
+        createdAt: Date;
         // ...other properties
     }
 }
@@ -57,6 +59,7 @@ export const authOptions: NextAuthOptions = {
                 session.user.email = token.email;
                 session.user.image = token.picture;
                 session.user.role = token.role as UserRole;
+                session.user.createdAt = token.createdAt as Date;
             }
 
             return session;
@@ -79,6 +82,7 @@ export const authOptions: NextAuthOptions = {
                 email: dbUser.email,
                 picture: dbUser.image,
                 role: dbUser.role,
+                createdAt: dbUser.createdAt,
             };
         },
     },

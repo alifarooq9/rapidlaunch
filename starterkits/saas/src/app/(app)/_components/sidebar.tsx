@@ -7,6 +7,7 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Suspense } from "react";
 import { buttonVariants } from "@/components/ui/button";
 import { SidebarNav } from "@/app/(app)/_components/sidebar-nav";
+import { getUser } from "@/server/auth";
 
 type SideNavProps = {
     sidebarNavIncludeIds?: string[];
@@ -21,10 +22,12 @@ type SideNavProps = {
  * fell free to customize the sidebar component as you like
  */
 
-export function Sidebar({
+export async function Sidebar({
     sidebarNavIncludeIds,
     sidebarNavRemoveIds,
 }: SideNavProps) {
+    const user = await getUser();
+
     return (
         <aside className={cn("h-full w-full")}>
             <div className={cn(" flex h-16 items-center justify-between px-4")}>
@@ -32,7 +35,10 @@ export function Sidebar({
                     href={siteUrls.home}
                     className={cn("z-10 transition-transform hover:scale-90")}
                 >
-                    <Icons.logo />
+                    <Icons.logo
+                        className="text-xl"
+                        iconProps={{ className: "w-7 h-7 fill-primary" }}
+                    />
                 </Link>
             </div>
 
@@ -51,7 +57,7 @@ export function Sidebar({
                         </button>
                     }
                 >
-                    <UserDropdown />
+                    <UserDropdown user={user} />
                 </Suspense>
             </div>
 
