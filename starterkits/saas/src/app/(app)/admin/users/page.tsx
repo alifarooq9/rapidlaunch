@@ -4,18 +4,11 @@ import {
     type UsersData,
     columns,
 } from "@/app/(app)/admin/users/_components/columns";
-import { db } from "@/server/db";
-import { desc } from "drizzle-orm";
-import { users } from "@/server/db/schema";
-
-async function getUsers() {
-    return await db.query.users.findMany({
-        orderBy: [desc(users.createdAt)],
-    });
-}
+import { usersPageConfig } from "@/app/(app)/admin/users/_constants/page-config";
+import { getAllUsers } from "@/server/actions/user";
 
 export default async function UsersPage() {
-    const fetchedUsers = await getUsers();
+    const fetchedUsers = await getAllUsers();
 
     const usersData: UsersData[] = fetchedUsers.map((user) => {
         return {
@@ -30,8 +23,8 @@ export default async function UsersPage() {
 
     return (
         <AppPageShell
-            title="Users"
-            description="View all users in your app. Perform actions such as creating new users, sending users login links, debug bugs your users face by logging in as them and more!"
+            title={usersPageConfig.title}
+            description={usersPageConfig.description}
         >
             <div className="w-full">
                 <DataTable columns={columns} data={usersData} />

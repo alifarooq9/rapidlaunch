@@ -1,8 +1,8 @@
 "use server";
 
 import { db } from "@/server/db";
-import { users } from "@/server/db/schema";
-import { eq } from "drizzle-orm";
+import { accounts, users } from "@/server/db/schema";
+import { desc, eq } from "drizzle-orm";
 import { protectedProcedure, superAdminProcedure } from "@/server/procedures";
 
 type UpdateNameProps = {
@@ -32,4 +32,22 @@ export async function updateRoleAction({ userId, role }: UpdateRoleProps) {
         .set({ role })
         .where(eq(users.id, userId))
         .execute();
+}
+
+export async function getAllUsers() {
+    return await db.query.users.findMany({
+        orderBy: [desc(users.createdAt)],
+    });
+}
+
+type DeleteUserProps = {
+    userId: string;
+};
+
+export async function deleteUserAction({ userId }: DeleteUserProps) {
+    await superAdminProcedure();
+
+    await db.delete(accounts).where(eq(accounts.userId, userId)).execute();
+
+    return await db.delete(users).where(eq(users.id, userId)).execute();
 }

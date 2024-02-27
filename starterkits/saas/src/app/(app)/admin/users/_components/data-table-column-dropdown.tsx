@@ -19,7 +19,7 @@ import { usersRoleEnum } from "@/server/db/schema";
 import { toast } from "sonner";
 import { type UsersData } from "@/app/(app)/admin/users/_components/columns";
 import { useMutation } from "@tanstack/react-query";
-import { updateRoleAction } from "@/server/actions/user";
+import { deleteUserAction, updateRoleAction } from "@/server/actions/user";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { siteUrls } from "@/config/urls";
@@ -29,16 +29,17 @@ type Role = (typeof usersRoleEnum.enumValues)[number];
 export function ColumnDropdown({ email, id, role }: UsersData) {
     const router = useRouter();
 
-    const { mutateAsync, isPending } = useMutation({
-        mutationFn: ({ role }: { role: Role }) =>
-            updateRoleAction({ userId: id, role }),
-        onSettled: () => {
-            router.refresh();
-        },
-    });
+    const { mutateAsync: changeRoleMutate, isPending: changeRoleIsPending } =
+        useMutation({
+            mutationFn: ({ role }: { role: Role }) =>
+                updateRoleAction({ userId: id, role }),
+            onSettled: () => {
+                router.refresh();
+            },
+        });
 
     const onRoleChange = (role: Role) => {
-        toast.promise(async () => await mutateAsync({ role }), {
+        toast.promise(async () => await changeRoleMutate({ role }), {
             loading: "Updating user role...",
             success: "User role updated!",
             error: (error: { message: string }) =>
@@ -62,6 +63,22 @@ export function ColumnDropdown({ email, id, role }: UsersData) {
                 error: "Failed to send verification link.",
             },
         );
+    };
+
+    const { mutateAsync: deleteUserMutate, isPending: deleteUserIsPending } =
+        useMutation({
+            mutationFn: () => deleteUserAction({ userId: id }),
+            onSettled: () => {
+                router.refresh();
+            },
+        });
+
+    const deleteUser = () => {
+        toast.promise(async () => await deleteUserMutate(), {
+            loading: "Deleting user...",
+            success: "User deleted!",
+            error: "Failed to delete user.",
+        });
     };
 
     return (
@@ -101,7 +118,7 @@ export function ColumnDropdown({ email, id, role }: UsersData) {
                                 <DropdownMenuRadioItem
                                     key={currentRole}
                                     value={currentRole}
-                                    disabled={isPending}
+                                    disabled={changeRoleIsPending}
                                 >
                                     {currentRole}
                                 </DropdownMenuRadioItem>
@@ -113,11 +130,8 @@ export function ColumnDropdown({ email, id, role }: UsersData) {
                 <DropdownMenuSeparator />
 
                 <DropdownMenuItem
-                    onClick={async () => {
-                        toast("User deleted!", {
-                            description: `${email} has been deleted.`,
-                        });
-                    }}
+                    disabled={deleteUserIsPending}
+                    onClick={deleteUser}
                     className="text-red-600"
                 >
                     Delete
