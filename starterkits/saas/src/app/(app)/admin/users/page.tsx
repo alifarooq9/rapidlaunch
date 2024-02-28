@@ -27,6 +27,8 @@ export default async function UsersPage() {
             description={usersPageConfig.description}
         >
             <div className="w-full">
+                {/** @learn more about data-table at shadcn ui website @see https://ui.shadcn.com/docs/components/data-table */}
+
                 <DataTable columns={columns} data={usersData} />
             </div>
         </AppPageShell>

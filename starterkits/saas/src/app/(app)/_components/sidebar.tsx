@@ -8,6 +8,10 @@ import { Suspense } from "react";
 import { buttonVariants } from "@/components/ui/button";
 import { SidebarNav } from "@/app/(app)/_components/sidebar-nav";
 import { getUser } from "@/server/auth";
+import { OrgSelectDropdown } from "@/app/(app)/_components/org-select-dropdown";
+import { cookies } from "next/headers";
+import { orgConfig } from "@/config/organization";
+import { getUserOrgs } from "@/server/actions/organization";
 
 type SideNavProps = {
     sidebarNavIncludeIds?: string[];
@@ -27,6 +31,11 @@ export async function Sidebar({
     sidebarNavRemoveIds,
 }: SideNavProps) {
     const user = await getUser();
+
+    const userOrgs = await getUserOrgs();
+
+    const defaultOrg =
+        cookies().get(orgConfig.cookieName)?.value ?? userOrgs[0]!.id;
 
     return (
         <aside className={cn("h-full w-full")}>
@@ -61,7 +70,29 @@ export async function Sidebar({
                 </Suspense>
             </div>
 
-            <ScrollArea style={{ height: "calc(100vh - 7.5rem)" }}>
+            <div className="px-4 py-2">
+                <Suspense
+                    fallback={
+                        <button
+                            aria-disabled
+                            disabled
+                            className={buttonVariants({
+                                variant: "outline",
+                                className: "w-full",
+                            })}
+                        >
+                            <Icons.loader className="h-4 w-4" />
+                        </button>
+                    }
+                >
+                    <OrgSelectDropdown
+                        userOrgs={userOrgs}
+                        defaultOrg={defaultOrg}
+                    />
+                </Suspense>
+            </div>
+
+            <ScrollArea style={{ height: "calc(100vh - 10.5rem)" }}>
                 <div className="h-full w-full px-4 py-2">
                     <SidebarNav
                         sidebarNavIncludeIds={sidebarNavIncludeIds}

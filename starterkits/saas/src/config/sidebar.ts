@@ -1,14 +1,8 @@
 import {
-    ActivitySquareIcon,
-    BellIcon,
     BookTextIcon,
-    CheckSquare2Icon,
-    DatabaseIcon,
     HelpCircleIcon,
     LayoutDashboardIcon,
-    ListChecksIcon,
     PenLineIcon,
-    PlusCircleIcon,
     SettingsIcon,
     UsersRoundIcon,
 } from "lucide-react";
@@ -67,6 +61,7 @@ export type SidebarNavItems = {
 const navIds = {
     admin: "admin",
     general: "general",
+    org: "org",
     resources: "resources",
 };
 
@@ -113,52 +108,17 @@ const navigation: SidebarNavItems[] = [
                 icon: LayoutDashboardIcon,
                 href: siteUrls.dashboard.home,
             },
+        ],
+    },
+    {
+        id: navIds.org,
+        label: "Organization",
+        showLabel: true,
+        items: [
             {
-                label: "Projects",
-                icon: ActivitySquareIcon,
-                subMenu: [
-                    {
-                        label: "See Projects",
-                        href: siteUrls.dashboard.projects.home,
-                        icon: ListChecksIcon,
-                    },
-                    {
-                        label: "Create Project",
-                        href: siteUrls.dashboard.projects.new,
-                        icon: PlusCircleIcon,
-                    },
-                ],
-            },
-            {
-                label: "Tasks",
-                icon: CheckSquare2Icon,
-                subMenu: [
-                    {
-                        label: "See Tasks",
-                        href: siteUrls.dashboard.tasks.home,
-                        icon: ListChecksIcon,
-                    },
-                    {
-                        label: "Create Task",
-                        href: siteUrls.dashboard.tasks.new,
-                        icon: PlusCircleIcon,
-                    },
-                ],
-            },
-            {
-                label: "Database",
-                icon: DatabaseIcon,
-                href: siteUrls.dashboard.database,
-            },
-            {
-                label: "Team",
+                label: "Members",
                 icon: UsersRoundIcon,
-                href: siteUrls.dashboard.team,
-            },
-            {
-                label: "Notifications",
-                icon: BellIcon,
-                href: siteUrls.dashboard.notifications,
+                href: siteUrls.organization.members,
             },
         ],
     },

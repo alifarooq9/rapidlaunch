@@ -3,6 +3,11 @@ import { UserNameForm } from "@/app/(app)/(user)/profile/settings/_components/us
 import { getUser } from "@/server/auth";
 import { type User } from "next-auth";
 
+/**
+ * This is the settings page for the user profile.
+ * @add more settings related components here
+ */
+
 export default async function SettingsPage() {
     const user = await getUser();
 

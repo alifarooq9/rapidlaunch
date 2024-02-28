@@ -20,12 +20,34 @@ import {
 } from "@/components/ui/tooltip";
 import { ChevronDown } from "lucide-react";
 import { sidebarConfig } from "@/config/sidebar";
+import { type VariantProps } from "class-variance-authority";
 
 /**
  * SidebarNav is a component that renders the sidebar navigation for the dashboard
  * it uses the dashboardConfig.navigation to render the navigation items
  * to add a new navigation item, you can add a new object to the dashboardConfig.navigation array @see /src/config/dashboard.ts
+ *
+ * @customize button ui update link style to match the design system
  */
+
+type LinkStyleProps = {
+    active?: boolean;
+    disabled?: boolean;
+    className?: string;
+} & VariantProps<typeof buttonVariants>;
+
+function LinkStyle({ active, disabled, className, ...props }: LinkStyleProps) {
+    return cn(
+        buttonVariants({
+            variant: active ? "secondary" : "ghost",
+            size: props.size,
+            ...props,
+        }),
+        "flex h-8 w-full items-center justify-start gap-3 px-3",
+        disabled && "pointer-events-none opacity-50",
+        className,
+    );
+}
 
 type SidebarNavProps = {
     sidebarNavIncludeIds?: string[];
@@ -51,7 +73,7 @@ export function SidebarNav({
                 {sidebarNavitems.map((nav, index) => (
                     <div key={nav.id}>
                         {nav.showLabel && (
-                            <h3 className="mb-2 px-2 pt-4 text-xs font-semibold uppercase text-muted-foreground">
+                            <h3 className="mb-2 px-2 pt-3 text-xs font-semibold uppercase text-muted-foreground">
                                 {nav.label}
                             </h3>
                         )}
@@ -86,12 +108,11 @@ export function SidebarNav({
                                                 <Tooltip>
                                                     <TooltipTrigger asChild>
                                                         <AccordionTrigger
-                                                            className={cn(
-                                                                buttonVariants({
-                                                                    variant:
-                                                                        "ghost",
-                                                                }),
-                                                                "flex items-center justify-between gap-3",
+                                                            className={LinkStyle(
+                                                                {
+                                                                    className:
+                                                                        "justify-between",
+                                                                },
                                                             )}
                                                         >
                                                             <div
@@ -133,7 +154,7 @@ export function SidebarNav({
                                                         " flex flex-col gap-1 pt-1",
                                                         isCollapsed
                                                             ? ""
-                                                            : "relative pl-8 pr-0",
+                                                            : "relative pl-7 pr-0",
                                                     )}
                                                 >
                                                     {item.subMenu.map(
@@ -175,7 +196,7 @@ export function SidebarNav({
                                                     {!isCollapsed && (
                                                         <Separator
                                                             orientation="vertical"
-                                                            className="absolute bottom-3 left-6 right-auto"
+                                                            className="absolute bottom-2 left-5 right-auto"
                                                         />
                                                     )}
                                                 </AccordionContent>
@@ -240,17 +261,7 @@ function NavLink({
     isCollapsed,
 }: NavLinkProps) {
     return (
-        <Link
-            href={href}
-            className={cn(
-                buttonVariants({
-                    variant: active ? "secondary" : "ghost",
-                    size,
-                }),
-                "flex w-full items-center justify-start gap-3",
-                disabled && "pointer-events-none opacity-50",
-            )}
-        >
+        <Link href={href} className={LinkStyle({ active, disabled, size })}>
             <Icon
                 className={cn(
                     "flex-shrink-0",

@@ -13,6 +13,7 @@ type AppLayoutProps = {
  * @param children the main content of the app
  * @param sideNavIncludedIds the ids of the sidebar nav items to include in the sidebar specifically @get ids from the sidebar config
  * @param sideNavRemoveIds the ids of the sidebar nav items to remove from the sidebar specifically @get ids from the sidebar config
+ * @param orgName the name of the organization from params
  */
 
 export function AppLayoutShell({

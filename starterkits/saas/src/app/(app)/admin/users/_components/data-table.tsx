@@ -26,6 +26,10 @@ import {
 import { DataTableToolbar } from "@/app/(app)/admin/users/_components/data-table-toolbar";
 import { DataTablePagination } from "@/app/(app)/admin/users/_components/data-table-pagination";
 
+/**
+ * learn more about data-table at shadcn ui website @see https://ui.shadcn.com/docs/components/data-table
+ */
+
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];

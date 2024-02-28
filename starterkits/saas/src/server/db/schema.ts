@@ -37,6 +37,7 @@ export const users = createTable("user", {
 
 export const usersRelations = relations(users, ({ many }) => ({
     accounts: many(accounts),
+    membersToOrganizations: many(membersToOrganizations),
 }));
 
 export const accounts = createTable(
@@ -101,5 +102,63 @@ export const verificationTokens = createTable(
     },
     (vt) => ({
         compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
+    }),
+);
+
+export const organizations = createTable("organization", {
+    id: varchar("id", { length: 255 })
+        .notNull()
+        .primaryKey()
+        .default(sql`gen_random_uuid()`),
+    name: varchar("name", { length: 255 }).notNull(),
+    image: varchar("image", { length: 255 }),
+    createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
+    ownerId: varchar("ownerId", { length: 255 })
+        .notNull()
+        .references(() => users.id),
+});
+
+export const organizationsRelations = relations(
+    organizations,
+    ({ one, many }) => ({
+        owner: one(users, {
+            fields: [organizations.ownerId],
+            references: [users.id],
+        }),
+        membersToOrganizations: many(membersToOrganizations),
+    }),
+);
+
+export const membersToOrganizations = createTable(
+    "membersToOrganizations",
+    {
+        id: varchar("id", { length: 255 })
+            .primaryKey()
+            .default(sql`gen_random_uuid()`),
+        userId: varchar("userId", { length: 255 })
+            .notNull()
+            .references(() => users.id, { onDelete: "cascade" }),
+        organizationId: varchar("organizationId", { length: 255 })
+            .notNull()
+            .references(() => organizations.id, { onDelete: "cascade" }),
+    },
+    (mto) => ({
+        compoundKey: primaryKey({
+            columns: [mto.userId, mto.organizationId],
+        }),
+    }),
+);
+
+export const membersToOrganizationsRelations = relations(
+    membersToOrganizations,
+    ({ one }) => ({
+        user: one(users, {
+            fields: [membersToOrganizations.userId],
+            references: [users.id],
+        }),
+        organization: one(organizations, {
+            fields: [membersToOrganizations.organizationId],
+            references: [organizations.id],
+        }),
     }),
 );

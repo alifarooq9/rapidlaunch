@@ -7,14 +7,11 @@ type AppLayoutProps = {
 };
 
 export default function UserLayout({ children }: AppLayoutProps) {
-    // these are the ids of the sidebar nav items to include in the sidebar specifically @get ids from the sidebar config
-    const sideNavIncludedIds: string[] = [
-        sidebarConfig.navIds.general,
-        sidebarConfig.navIds.resources,
-    ];
+    // these are the ids of the sidebar nav items to not included in the sidebar specifically @get ids from the sidebar config
+    const sideNavRemoveIds: string[] = [sidebarConfig.navIds.admin];
 
     return (
-        <AppLayoutShell sideNavIncludedIds={sideNavIncludedIds}>
+        <AppLayoutShell sideNavRemoveIds={sideNavRemoveIds}>
             {children}
         </AppLayoutShell>
     );
