@@ -105,6 +105,7 @@ export function AuthForm({ type }: AuthFormProps) {
                                 <FormLabel>Email</FormLabel>
                                 <FormControl>
                                     <Input
+                                        className="bg-background"
                                         placeholder="hey@example.com"
                                         {...field}
                                     />

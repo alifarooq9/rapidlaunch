@@ -179,7 +179,7 @@ export function SidebarNav({
                                                         />
                                                     )}
                                                 </AccordionContent>
-                                            </AccordionItem> 
+                                            </AccordionItem>
                                         </Accordion>
                                     ) : (
                                         <Tooltip>

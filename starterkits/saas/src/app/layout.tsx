@@ -1,3 +1,5 @@
+import React from "react";
+import Background from "@/components/background";
 import { Providers } from "@/components/providers";
 import { Toaster } from "@/components/ui/sonner";
 import "@/styles/globals.css";
@@ -19,7 +21,7 @@ export default function RootLayout({
         <html lang="en" suppressHydrationWarning>
             <body className={`${GeistSans.className} overflow-x-hidden`}>
                 <Providers>
-                    {children}
+                    <Background>{children}</Background>
                     <Toaster
                         richColors={true}
                         closeButton={true}
