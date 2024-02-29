@@ -23,9 +23,10 @@ export default function RootLayout({
                 <Providers>
                     <Background>{children}</Background>
                     <Toaster
-                        richColors={true}
-                        closeButton={true}
+                        richColors
+                        closeButton
                         position="top-right"
+                        expand
                     />
                 </Providers>
             </body>

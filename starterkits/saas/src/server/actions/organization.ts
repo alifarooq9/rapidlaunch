@@ -3,7 +3,10 @@
 import { membersToOrganizations, organizations } from "@/server/db/schema";
 import { db } from "@/server/db";
 import { protectedProcedure } from "@/server/procedures";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
+import { cookies } from "next/headers";
+import { unstable_cache as cache, revalidateTag } from "next/cache";
+import { orgConfig } from "@/config/organization";
 
 // exclude id and ownerId from props
 type CreateOrgProps = Omit<typeof organizations.$inferInsert, "id" | "ownerId">;
@@ -22,10 +25,12 @@ export async function createOrgAction({ ...props }: CreateOrgProps) {
         organizationId: createOrg[0]!.id,
     });
 
+    await revalidateOrganizationsTag();
+
     return createOrg[0];
 }
 
-export async function getUserOrgs() {
+export async function getUserOrgsAction() {
     const { user } = await protectedProcedure();
 
     return (
@@ -40,4 +45,62 @@ export async function getUserOrgs() {
     ).map((mto) => ({
         ...mto.organization,
     }));
+}
+
+type OrganizationReturnType = {
+    currentOrg: typeof organizations.$inferSelect;
+    userOrgs: (typeof organizations.$inferSelect)[];
+};
+
+export const revalidateOrganizationsTag = async () => {
+    revalidateTag("get-organization");
+};
+
+export const getOrganizations = cache(
+    async (): Promise<OrganizationReturnType> => {
+        const userOrgs = await getUserOrgsAction();
+
+        const defaultOrg = cookies().get(orgConfig.cookieName)?.value;
+
+        const currentOrg =
+            userOrgs.find((org) => org.id === defaultOrg) ?? userOrgs[0];
+
+        return {
+            currentOrg: currentOrg as typeof organizations.$inferSelect,
+            userOrgs,
+        };
+    },
+    ["get-organization"],
+    { tags: ["get-organization"] },
+);
+
+type UpdateOrgNameProps = {
+    name: string;
+};
+
+export async function updateOrgNameAction({ name }: UpdateOrgNameProps) {
+    const { user } = await protectedProcedure();
+
+    const { currentOrg } = await getOrganizations();
+
+    const memToOrg = await db.query.membersToOrganizations.findFirst({
+        where: and(
+            eq(membersToOrganizations.userId, user.id),
+            eq(membersToOrganizations.organizationId, currentOrg.id),
+        ),
+    });
+
+    if (!memToOrg) {
+        throw new Error("User is not a member of any organization");
+    }
+
+    const updateName = await db
+        .update(organizations)
+        .set({ name })
+        .where(eq(organizations.id, currentOrg.id))
+        .execute();
+
+    await revalidateOrganizationsTag();
+
+    return updateName;
 }

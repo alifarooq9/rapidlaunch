@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/form";
 import { Icons } from "@/components/ui/icons";
 import { Input } from "@/components/ui/input";
+import { UseOrgTransition } from "@/hooks/use-org-transition";
 import { createOrgAction } from "@/server/actions/organization";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
@@ -52,12 +53,17 @@ export function CreateOrgForm({ open, setOpen }: CreateOrgFormProps) {
         },
     });
 
+    const { startTransition } = UseOrgTransition();
+
     const { isPending, mutateAsync } = useMutation({
         mutationFn: ({ name }: { name: string }) => createOrgAction({ name }),
         onSuccess: () => {
             toast.success("Name updated successfully");
             setOpen(false);
             form.reset();
+            startTransition(() => {
+                router.refresh();
+            });
         },
         onError: (error: { message?: string } = {}) =>
             toast.error(

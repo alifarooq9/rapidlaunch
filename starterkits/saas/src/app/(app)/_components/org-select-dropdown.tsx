@@ -13,10 +13,10 @@ import {
 import { orgConfig } from "@/config/organization";
 import { cn } from "@/lib/utils";
 import { CheckIcon, PlusCircledIcon } from "@radix-ui/react-icons";
-import { useRouter } from "next/navigation";
 import { Fragment, useState } from "react";
 import { CreateOrgForm } from "@/app/(app)/_components/create-org-form";
 import { type organizations } from "@/server/db/schema";
+import { revalidateOrganizationsTag } from "@/server/actions/organization";
 
 type OrgSelectDropdownProps = {
     currentOrg: typeof organizations.$inferSelect;
@@ -27,13 +27,11 @@ export function OrgSelectDropdown({
     currentOrg,
     userOrgs,
 }: OrgSelectDropdownProps) {
-    const router = useRouter();
-
     const isCollapsed = false;
 
-    const onOrgChange = (orgId: string) => {
-        document.cookie = `${orgConfig.cookieName}=${orgId}; secure;`;
-        router.refresh();
+    const onOrgChange = async (orgId: string) => {
+        document.cookie = `${orgConfig.cookieName}=${orgId};`;
+        await revalidateOrganizationsTag();
     };
 
     const [drawerOpen, setDrawerOpen] = useState<boolean>(false);

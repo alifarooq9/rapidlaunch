@@ -9,7 +9,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { SidebarNav } from "@/app/(app)/_components/sidebar-nav";
 import { getUser } from "@/server/auth";
 import { OrgSelectDropdown } from "@/app/(app)/_components/org-select-dropdown";
-import { getOrganization } from "@/hooks/get-organization";
+import { getOrganizations } from "@/server/actions/organization";
 
 type SideNavProps = {
     sidebarNavIncludeIds?: string[];
@@ -30,7 +30,7 @@ export async function Sidebar({
 }: SideNavProps) {
     const user = await getUser();
 
-    const { currentOrg, userOrgs } = await getOrganization();
+    const { currentOrg, userOrgs } = await getOrganizations();
 
     return (
         <aside className={cn("h-full w-full")}>
