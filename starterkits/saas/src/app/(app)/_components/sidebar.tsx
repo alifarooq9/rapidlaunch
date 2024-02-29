@@ -9,9 +9,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { SidebarNav } from "@/app/(app)/_components/sidebar-nav";
 import { getUser } from "@/server/auth";
 import { OrgSelectDropdown } from "@/app/(app)/_components/org-select-dropdown";
-import { cookies } from "next/headers";
-import { orgConfig } from "@/config/organization";
-import { getUserOrgs } from "@/server/actions/organization";
+import { getOrganization } from "@/hooks/get-organization";
 
 type SideNavProps = {
     sidebarNavIncludeIds?: string[];
@@ -32,10 +30,7 @@ export async function Sidebar({
 }: SideNavProps) {
     const user = await getUser();
 
-    const userOrgs = await getUserOrgs();
-
-    const defaultOrg =
-        cookies().get(orgConfig.cookieName)?.value ?? userOrgs[0]!.id;
+    const { currentOrg, userOrgs } = await getOrganization();
 
     return (
         <aside className={cn("h-full w-full")}>
@@ -87,7 +82,7 @@ export async function Sidebar({
                 >
                     <OrgSelectDropdown
                         userOrgs={userOrgs}
-                        defaultOrg={defaultOrg}
+                        currentOrg={currentOrg}
                     />
                 </Suspense>
             </div>

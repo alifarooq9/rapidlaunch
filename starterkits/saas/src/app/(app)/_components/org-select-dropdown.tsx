@@ -19,21 +19,17 @@ import { CreateOrgForm } from "@/app/(app)/_components/create-org-form";
 import { type organizations } from "@/server/db/schema";
 
 type OrgSelectDropdownProps = {
-    defaultOrg: string | undefined;
+    currentOrg: typeof organizations.$inferSelect;
     userOrgs: (typeof organizations.$inferSelect)[];
 };
 
 export function OrgSelectDropdown({
-    defaultOrg,
+    currentOrg,
     userOrgs,
 }: OrgSelectDropdownProps) {
     const router = useRouter();
 
     const isCollapsed = false;
-
-    const currentOrg = defaultOrg ?? userOrgs[0]!.id;
-
-    const currentOrgData = userOrgs.find((org) => org.id === currentOrg);
 
     const onOrgChange = (orgId: string) => {
         document.cookie = `${orgConfig.cookieName}=${orgId}; secure;`;
@@ -57,22 +53,16 @@ export function OrgSelectDropdown({
                     >
                         <Avatar className="h-6 w-6">
                             <AvatarImage
-                                src={
-                                    currentOrgData?.image
-                                        ? currentOrgData.image
-                                        : ""
-                                }
+                                src={currentOrg?.image ? currentOrg.image : ""}
                             />
 
                             <AvatarFallback className="text-xs">
-                                {currentOrgData?.name?.charAt(0).toUpperCase()}
+                                {currentOrg?.name?.charAt(0).toUpperCase()}
                             </AvatarFallback>
                         </Avatar>
 
                         {!isCollapsed && (
-                            <span className="truncate">
-                                {currentOrgData?.name}
-                            </span>
+                            <span className="truncate">{currentOrg?.name}</span>
                         )}
 
                         <span className="sr-only">org select menu</span>
@@ -85,7 +75,9 @@ export function OrgSelectDropdown({
                                 key={org.id}
                                 asChild
                                 className={
-                                    currentOrg === org.id ? "bg-accent/60" : ""
+                                    currentOrg.id === org.id
+                                        ? "bg-accent/60"
+                                        : ""
                                 }
                             >
                                 <button
@@ -109,7 +101,7 @@ export function OrgSelectDropdown({
                                         </span>
                                     </div>
 
-                                    {currentOrg === org.id && (
+                                    {currentOrg.id === org.id && (
                                         <CheckIcon className="h-4 w-4 text-foreground" />
                                     )}
                                 </button>

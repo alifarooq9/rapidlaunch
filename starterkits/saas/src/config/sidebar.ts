@@ -3,6 +3,7 @@ import {
     HelpCircleIcon,
     LayoutDashboardIcon,
     PenLineIcon,
+    Settings2Icon,
     SettingsIcon,
     UsersRoundIcon,
 } from "lucide-react";
@@ -119,6 +120,11 @@ const navigation: SidebarNavItems[] = [
                 label: "Members",
                 icon: UsersRoundIcon,
                 href: siteUrls.organization.members,
+            },
+            {
+                label: "Org Settings",
+                icon: Settings2Icon,
+                href: siteUrls.organization.settings,
             },
         ],
     },
