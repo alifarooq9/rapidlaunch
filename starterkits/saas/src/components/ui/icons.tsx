@@ -65,7 +65,7 @@ export const Icons = {
         <Loader2Icon
             {...props}
             className={cn(
-                "animate-spin transition-all duration-500",
+                "duration-400 animate-spin transition-all",
                 props.className,
             )}
         />

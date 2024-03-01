@@ -1,17 +1,7 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
 import { Button } from "@/components/ui/button";
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+// import { Input } from "@/components/ui/input";
 import {
     Card,
     CardContent,
@@ -23,83 +13,99 @@ import {
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Icons } from "@/components/ui/icons";
+import * as z from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { useMutation } from "@tanstack/react-query";
-import { type organizations } from "@/server/db/schema";
-import { updateOrgNameAction } from "@/server/actions/organization";
 import { useAwaitableTransition } from "@/hooks/use-awaitable-transition";
+import { deleteOrgAction } from "@/server/actions/organization";
+import { setOrgCookie } from "@/lib/utils";
+import { siteUrls } from "@/config/urls";
 
-const orgNameFormSchema = z.object({
-    name: z
-        .string()
-        .trim()
-        .min(3, "Name must be at least 3 characters long")
-        .max(50, "Name must be at most 50 characters long"),
+const confirmationText = "DELETE MY ORG";
+
+const deleteOrgFormSchema = z.object({
+    confirmation: z
+        .string({ required_error: `Type "${confirmationText}" to confirms` })
+        .min(1, `Type "${confirmationText}" to confirms`),
 });
 
-export type OrgNameFormSchema = z.infer<typeof orgNameFormSchema>;
+export type DeleteOrgFormSchema = z.infer<typeof deleteOrgFormSchema>;
 
-type OrgNameFormProps = {
-    currentOrg: typeof organizations.$inferSelect;
+type DeleteYourOrgFormProps = {
+    fallbackOrgId: string;
 };
 
-export function OrgNameForm({ currentOrg }: OrgNameFormProps) {
+export function DeleteYourOrgForm({ fallbackOrgId }: DeleteYourOrgFormProps) {
     const router = useRouter();
 
-    const form = useForm<OrgNameFormSchema>({
-        resolver: zodResolver(orgNameFormSchema),
-        defaultValues: {
-            name: currentOrg.name ?? "",
-        },
+    const form = useForm<DeleteOrgFormSchema>({
+        resolver: zodResolver(deleteOrgFormSchema),
     });
 
-    const { mutateAsync, isPending: isMutatePending } = useMutation({
-        mutationFn: () => updateOrgNameAction({ name: form.getValues().name }),
+    const { isPending: isMutatePending, mutateAsync } = useMutation({
+        mutationFn: () => deleteOrgAction(),
     });
 
     const [isPending, startAwaitableTransition] = useAwaitableTransition();
 
-    const onSubmit = async (values: OrgNameFormSchema) => {
-        if (values.name === currentOrg.name) {
-            return toast("Name is already set to this name");
+    async function onSubmit(data: DeleteOrgFormSchema) {
+        if (data.confirmation !== confirmationText) {
+            return form.setError("confirmation", {
+                message: `Type "${confirmationText}" to confirms`,
+            });
         }
 
         try {
             await mutateAsync();
 
             await startAwaitableTransition(() => {
+                setOrgCookie(fallbackOrgId);
                 router.refresh();
+                router.push(siteUrls.dashboard.home);
+                form.reset();
             });
 
-            toast.success("Name updated successfully");
+            toast.success("Org deleted successfully");
         } catch (error: unknown) {
             toast.error(
                 (error as { message?: string })?.message ??
-                    "Name could not be updated",
+                    "Could not delete the org",
             );
         }
-    };
+    }
 
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-                <Card className="w-full">
+                <Card>
                     <CardHeader>
-                        <CardTitle>Org Name</CardTitle>
+                        <CardTitle>Delete My Org</CardTitle>
                         <CardDescription>
-                            Please enter the name of your organization, this
-                            will be used to identify your organization
+                            Type{" "}
+                            <span className="font-bold">
+                                {confirmationText}
+                            </span>{" "}
+                            to permanently delete your account.
                         </CardDescription>
                     </CardHeader>
-
                     <CardContent>
                         <FormField
                             control={form.control}
-                            name="name"
+                            name="confirmation"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormControl>
                                         <Input
-                                            placeholder="Ali's Org"
+                                            placeholder={confirmationText}
                                             {...field}
                                         />
                                     </FormControl>
@@ -110,14 +116,15 @@ export function OrgNameForm({ currentOrg }: OrgNameFormProps) {
                     </CardContent>
                     <CardFooter>
                         <Button
-                            disabled={isPending || isMutatePending}
+                            disabled={isMutatePending || isPending}
+                            variant="destructive"
                             type="submit"
                             className="gap-2"
                         >
                             {isPending || isMutatePending ? (
                                 <Icons.loader className="h-4 w-4" />
                             ) : null}
-                            <span>Save Changes</span>
+                            <span>Delete My Org</span>
                         </Button>
                     </CardFooter>
                 </Card>

@@ -18,6 +18,9 @@ const config = {
             backgroundImage: {
                 "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
             },
+            transitionDuration: {
+                400: "400ms",
+            },
             colors: {
                 border: "hsl(var(--border))",
                 input: "hsl(var(--input))",

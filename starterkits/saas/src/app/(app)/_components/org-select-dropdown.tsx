@@ -10,13 +10,15 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { orgConfig } from "@/config/organization";
-import { cn } from "@/lib/utils";
+import { cn, setOrgCookie } from "@/lib/utils";
 import { CheckIcon, PlusCircledIcon } from "@radix-ui/react-icons";
 import { Fragment, useState } from "react";
 import { CreateOrgForm } from "@/app/(app)/_components/create-org-form";
 import { type organizations } from "@/server/db/schema";
 import { revalidateOrganizationsTag } from "@/server/actions/organization";
+import { useAwaitableTransition } from "@/hooks/use-awaitable-transition";
+import { useRouter } from "next/navigation";
+import { switchOrgPendingState } from "@/app/(app)/_components/org-switch-loading";
 
 type OrgSelectDropdownProps = {
     currentOrg: typeof organizations.$inferSelect;
@@ -27,18 +29,29 @@ export function OrgSelectDropdown({
     currentOrg,
     userOrgs,
 }: OrgSelectDropdownProps) {
+    const router = useRouter();
+
     const isCollapsed = false;
 
+    const { setIsPending } = switchOrgPendingState();
+
+    const [, startAwaitableTransition] = useAwaitableTransition();
+
     const onOrgChange = async (orgId: string) => {
-        document.cookie = `${orgConfig.cookieName}=${orgId};`;
+        setIsPending(true);
+        setOrgCookie(orgId);
         await revalidateOrganizationsTag();
+        await startAwaitableTransition(() => {
+            router.refresh();
+        });
+        setIsPending(false);
     };
 
-    const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
+    const [modalOpen, setModalOpen] = useState<boolean>(false);
 
     return (
         <Fragment>
-            <CreateOrgForm open={drawerOpen} setOpen={setDrawerOpen} />
+            <CreateOrgForm open={modalOpen} setOpen={setModalOpen} />
 
             <DropdownMenu modal={false}>
                 <DropdownMenuTrigger asChild>
@@ -111,7 +124,7 @@ export function OrgSelectDropdown({
 
                     <DropdownMenuItem asChild>
                         <button
-                            onClick={() => setDrawerOpen(true)}
+                            onClick={() => setModalOpen(true)}
                             className="flex w-full cursor-pointer items-center justify-start gap-2"
                         >
                             <PlusCircledIcon className="h-4 w-4" />

@@ -8,7 +8,8 @@ import { cookies } from "next/headers";
 import { unstable_cache as cache, revalidateTag } from "next/cache";
 import { orgConfig } from "@/config/organization";
 
-// exclude id and ownerId from props
+const ORG_CACHE_KEY = "get-organization";
+
 type CreateOrgProps = Omit<typeof organizations.$inferInsert, "id" | "ownerId">;
 
 export async function createOrgAction({ ...props }: CreateOrgProps) {
@@ -53,7 +54,7 @@ type OrganizationReturnType = {
 };
 
 export const revalidateOrganizationsTag = async () => {
-    revalidateTag("get-organization");
+    revalidateTag(ORG_CACHE_KEY);
 };
 
 export const getOrganizations = cache(
@@ -70,8 +71,8 @@ export const getOrganizations = cache(
             userOrgs,
         };
     },
-    ["get-organization"],
-    { tags: ["get-organization"] },
+    [ORG_CACHE_KEY],
+    { tags: [ORG_CACHE_KEY], revalidate: 3600 },
 );
 
 type UpdateOrgNameProps = {
@@ -91,7 +92,7 @@ export async function updateOrgNameAction({ name }: UpdateOrgNameProps) {
     });
 
     if (!memToOrg) {
-        throw new Error("User is not a member of any organization");
+        throw new Error("You are not a member of this organization");
     }
 
     const updateName = await db
@@ -103,4 +104,30 @@ export async function updateOrgNameAction({ name }: UpdateOrgNameProps) {
     await revalidateOrganizationsTag();
 
     return updateName;
+}
+
+export async function deleteOrgAction() {
+    const { user } = await protectedProcedure();
+
+    const { currentOrg } = await getOrganizations();
+
+    const memToOrg = await db.query.membersToOrganizations.findFirst({
+        where: and(
+            eq(membersToOrganizations.userId, user.id),
+            eq(membersToOrganizations.organizationId, currentOrg.id),
+        ),
+    });
+
+    if (!memToOrg) {
+        throw new Error("You are not a member of this organization");
+    }
+
+    const deleteOrg = await db
+        .delete(organizations)
+        .where(eq(organizations.id, currentOrg.id))
+        .execute();
+
+    await revalidateOrganizationsTag();
+
+    return deleteOrg;
 }

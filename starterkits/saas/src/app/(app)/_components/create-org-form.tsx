@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/form";
 import { Icons } from "@/components/ui/icons";
 import { Input } from "@/components/ui/input";
-import { UseOrgTransition } from "@/hooks/use-org-transition";
+import { useAwaitableTransition } from "@/hooks/use-awaitable-transition";
 import { createOrgAction } from "@/server/actions/organization";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
@@ -53,28 +53,30 @@ export function CreateOrgForm({ open, setOpen }: CreateOrgFormProps) {
         },
     });
 
-    const { startTransition } = UseOrgTransition();
-
-    const { isPending, mutateAsync } = useMutation({
+    const { mutateAsync, isPending: isMutatePending } = useMutation({
         mutationFn: ({ name }: { name: string }) => createOrgAction({ name }),
-        onSuccess: () => {
-            toast.success("Name updated successfully");
-            setOpen(false);
-            form.reset();
-            startTransition(() => {
-                router.refresh();
-            });
-        },
-        onError: (error: { message?: string } = {}) =>
-            toast.error(
-                error.message ??
-                    "Failed to update name, please try again later",
-            ),
-        onSettled: () => router.refresh(),
     });
 
+    const [isPending, startAwaitableTransition] = useAwaitableTransition();
+
     const onSubmit = async (values: CreateOrgFormSchema) => {
-        await mutateAsync(values);
+        try {
+            await mutateAsync(values);
+
+            await startAwaitableTransition(() => {
+                router.refresh();
+            });
+
+            setOpen(false);
+            form.reset();
+
+            toast.success("Organization created successfully");
+        } catch (error) {
+            toast.error(
+                (error as { message?: string })?.message ??
+                    "Organization could not be created",
+            );
+        }
     };
 
     return (
@@ -111,13 +113,13 @@ export function CreateOrgForm({ open, setOpen }: CreateOrgFormProps) {
 
                         <DialogFooter>
                             <Button
-                                disabled={isPending}
+                                disabled={isPending || isMutatePending}
                                 type="submit"
                                 className="gap-2"
                             >
-                                {isPending && (
+                                {isPending || isMutatePending ? (
                                     <Icons.loader className="h-4 w-4" />
-                                )}
+                                ) : null}
                                 <span>Create</span>
                             </Button>
                         </DialogFooter>
