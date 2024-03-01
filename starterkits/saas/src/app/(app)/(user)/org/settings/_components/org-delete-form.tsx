@@ -70,9 +70,10 @@ export function DeleteYourOrgForm({ fallbackOrgId }: DeleteYourOrgFormProps) {
             await startAwaitableTransition(() => {
                 setOrgCookie(fallbackOrgId);
                 router.refresh();
-                router.push(siteUrls.dashboard.home);
                 form.reset();
             });
+
+            router.push(siteUrls.dashboard.home);
 
             toast.success("Org deleted successfully");
         } catch (error: unknown) {
