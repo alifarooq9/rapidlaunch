@@ -8,7 +8,7 @@ import { cookies } from "next/headers";
 import { unstable_cache as cache, revalidateTag } from "next/cache";
 import { orgConfig } from "@/config/organization";
 
-const ORG_CACHE_KEY = "get-organization";
+const ORG_CACHE_TAG = "get-organization";
 
 type CreateOrgProps = Omit<typeof organizations.$inferInsert, "id" | "ownerId">;
 
@@ -54,7 +54,7 @@ type OrganizationReturnType = {
 };
 
 export const revalidateOrganizationsTag = async () => {
-    revalidateTag(ORG_CACHE_KEY);
+    revalidateTag(ORG_CACHE_TAG);
 };
 
 export const getOrganizations = cache(
@@ -71,8 +71,8 @@ export const getOrganizations = cache(
             userOrgs,
         };
     },
-    [ORG_CACHE_KEY],
-    { tags: [ORG_CACHE_KEY], revalidate: 3600 },
+    [ORG_CACHE_TAG],
+    { tags: [ORG_CACHE_TAG], revalidate: 3600 },
 );
 
 type UpdateOrgNameProps = {

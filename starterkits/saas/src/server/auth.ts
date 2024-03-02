@@ -18,8 +18,7 @@ import GithubProvider from "next-auth/providers/github";
 import { sendVerificationEmail } from "@/server/actions/send-verification-email";
 import { env } from "@/env";
 import { eq } from "drizzle-orm";
-
-type UserRole = typeof users.$inferSelect.role;
+import { revalidateOrganizationsTag } from "@/server/actions/organization";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -27,6 +26,8 @@ type UserRole = typeof users.$inferSelect.role;
  *
  * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
  */
+type UserRole = typeof users.$inferSelect.role;
+
 declare module "next-auth" {
     interface Session extends DefaultSession {
         user: {
@@ -85,6 +86,11 @@ export const authOptions: NextAuthOptions = {
                 createdAt: dbUser.createdAt,
             };
         },
+        async signIn() {
+            await revalidateOrganizationsTag();
+
+            return true;
+        },
     },
 
     secret: env.NEXTAUTH_SECRET,
@@ -94,6 +100,7 @@ export const authOptions: NextAuthOptions = {
     adapter: DrizzleAdapter(db, createTable) as Adapter,
     pages: {
         signIn: siteUrls.auth.login,
+        signOut: siteUrls.auth.login,
         error: siteUrls.auth.login,
     },
     providers: [
