@@ -5,10 +5,8 @@
         "build": "turbo build",
         "dev": "turbo dev",
         "dev:www": "turbo --filter=www dev",
-        "dev:saas": "turbo --filter=rapidlaunch-saas dev",
         "start": "turbo start",
         "start:www": "turbo --filter=www start",
-        "start:saas": "turbo --filter=rapidlaunch-saas start",
         "lint": "turbo lint",
         "format": "prettier --write \"**/*.{ts,tsx,md}\"",
         "clean": "turbo clean && rm -rf node_modules"

@@ -1,28 +1,42 @@
 {
-    "name": "www",
-    "version": "1.0.0",
-    "private": true,
-    "scripts": {
-        "dev": "next dev --port=3000",
-        "build": "next build",
-        "start": "next start",
-        "lint": "eslint . --max-warnings 0"
-    },
-    "dependencies": {
-        "@repo/ui": "workspace:*",
-        "next": "^14.0.4",
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0"
-    },
-    "devDependencies": {
-        "@next/eslint-plugin-next": "^14.0.4",
-        "@repo/eslint-config": "workspace:*",
-        "@repo/typescript-config": "workspace:*",
-        "@types/eslint": "^8.56.1",
-        "@types/node": "^20.10.6",
-        "@types/react": "^18.2.46",
-        "@types/react-dom": "^18.2.18",
-        "eslint": "^8.56.0",
-        "typescript": "^5.3.3"
-    }
+  "name": "www",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev",
+    "lint": "next lint",
+    "start": "next start --port=3001"
+  },
+  "dependencies": {
+    "@t3-oss/env-nextjs": "^0.9.2",
+    "next": "^14.1.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/eslint": "^8.56.2",
+    "@types/node": "^20.11.20",
+    "@types/react": "^18.2.57",
+    "@types/react-dom": "^18.2.19",
+    "@typescript-eslint/eslint-plugin": "^7.0.2",
+    "@typescript-eslint/parser": "^7.0.2",
+    "eslint": "^8.56.0",
+    "eslint-config-next": "^14.1.0",
+    "postcss": "^8.4.34",
+    "prettier": "^3.2.5",
+    "prettier-plugin-tailwindcss": "^0.5.11",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.3.3",
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@repo/tailwind-config": "workspace:*",
+    "@repo/ui": "workspace:*"
+  },
+  "ct3aMetadata": {
+    "initVersion": "7.28.0"
+  },
+  "packageManager": "pnpm@8.15.2"
 }
