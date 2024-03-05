@@ -11,32 +11,39 @@
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.3.4",
     "@t3-oss/env-nextjs": "^0.9.2",
+    "@tanstack/react-query": "^5.24.1",
+    "geist": "^1.2.2",
+    "lucide-react": "^0.343.0",
     "next": "^14.1.0",
+    "next-themes": "^0.2.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hook-form": "^7.50.1",
+    "react-wrap-balancer": "^1.1.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@rapidlaunch/db": "workspace:*",
+    "@rapidlaunch/eslint-config": "workspace:*",
+    "@rapidlaunch/tailwind-config": "workspace:*",
+    "@rapidlaunch/typescript-config": "workspace:*",
+    "@rapidlaunch/ui": "workspace:*",
     "@types/eslint": "^8.56.2",
     "@types/node": "^20.11.20",
     "@types/react": "^18.2.57",
     "@types/react-dom": "^18.2.19",
     "@typescript-eslint/eslint-plugin": "^7.0.2",
     "@typescript-eslint/parser": "^7.0.2",
+    "dotenv-cli": "^7.3.0",
     "eslint": "^8.56.0",
     "eslint-config-next": "^14.1.0",
     "postcss": "^8.4.34",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.11",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5.3.3",
-    "@rapidlaunch/eslint-config": "workspace:*",
-    "@rapidlaunch/typescript-config": "workspace:*",
-    "@rapidlaunch/tailwind-config": "workspace:*",
-    "@rapidlaunch/ui": "workspace:*",
-    "@rapidlaunch/db": "workspace:*",
-    "dotenv-cli": "^7.3.0"
+    "typescript": "^5.3.3"
   },
   "ct3aMetadata": {
     "initVersion": "7.28.0"

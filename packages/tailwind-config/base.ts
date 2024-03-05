@@ -5,15 +5,24 @@ import { fontFamily } from "tailwindcss/defaultTheme.js";
 export default {
     darkMode: ["class"],
     content: ["src/**/*.{ts,tsx}"],
+    prefix: "",
+    safelist: ["dark"],
     theme: {
         container: {
             center: true,
-            padding: "2rem",
+            padding: "1rem",
             screens: {
                 "2xl": "1400px",
             },
         },
         extend: {
+            // REMINDER: added for background.tsx
+            backgroundImage: {
+                "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+            },
+            transitionDuration: {
+                400: "400ms",
+            },
             colors: {
                 border: "hsl(var(--border))",
                 input: "hsl(var(--input))",
