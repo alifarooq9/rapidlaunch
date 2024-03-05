@@ -6,7 +6,8 @@ export default function HomePage() {
     return (
         <main className="container flex flex-col items-center justify-center gap-4 py-20">
             <Badge size="md" variant="secondary" className="gap-2">
-                <span>🎉</span> <p>Open Source Starterkits and components</p>
+                <span>🎉</span>{" "}
+                <p>Open Source SaaS Starterkits and components</p>
             </Badge>
             <Balance
                 as="h1"
@@ -19,7 +20,7 @@ export default function HomePage() {
                 className="text-center text-muted-foreground sm:text-xl"
             >
                 Elevate your development game with Rapidlaunch! Launch your apps
-                faster with our starterkits, components, building blocks.
+                faster with our SaaS starterkits, components, building blocks.
                 Customizable. Open Source
             </Balance>
 

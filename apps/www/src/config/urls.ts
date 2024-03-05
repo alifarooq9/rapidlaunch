@@ -1,3 +1,4 @@
 export const siteUrls = {
-  home: "/",
+    home: "/",
+    twitter: "https://twitter.com/AliFarooqDev",
 } as const;
