@@ -1,4 +1,4 @@
-import { Button } from "@repo/ui/button";
+import { Button } from "@rapidlaunch/ui/button";
 
 export default function HomePage() {
   return (

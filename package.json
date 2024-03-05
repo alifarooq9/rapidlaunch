@@ -9,11 +9,13 @@
         "start:www": "turbo --filter=www start",
         "lint": "turbo lint",
         "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-        "clean": "turbo clean && rm -rf node_modules"
+        "clean": "turbo clean && rm -rf node_modules",
+        "db:push": "pnpm -F db push",
+        "db:studio": "pnpm -F db studio"
     },
     "devDependencies": {
-        "@repo/eslint-config": "workspace:*",
-        "@repo/typescript-config": "workspace:*",
+        "@rapidlaunch/eslint-config": "workspace:*",
+        "@rapidlaunch/typescript-config": "workspace:*",
         "prettier": "^3.2.5",
         "turbo": "latest"
     },

@@ -1,20 +1,21 @@
 {
     "$schema": "https://json.schemastore.org/tsconfig",
-    "display": "Default",
     "compilerOptions": {
-        "declaration": true,
-        "declarationMap": true,
-        "esModuleInterop": true,
-        "incremental": false,
-        "isolatedModules": true,
-        "lib": ["es2022", "DOM", "DOM.Iterable"],
-        "module": "NodeNext",
-        "moduleDetection": "force",
-        "moduleResolution": "NodeNext",
-        "noUncheckedIndexedAccess": true,
-        "resolveJsonModule": true,
+        "target": "ES2022",
+        "lib": ["dom", "dom.iterable", "ES2022"],
+        "allowJs": true,
         "skipLibCheck": true,
         "strict": true,
-        "target": "ES2022"
-    }
+        "noEmit": true,
+        "esModuleInterop": true,
+        "module": "esnext",
+        "moduleResolution": "Bundler",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "moduleDetection": "force",
+        "jsx": "preserve",
+        "incremental": true,
+        "noUncheckedIndexedAccess": true
+    },
+    "exclude": ["node_modules", "build", "dist", ".next", ".expo"]
 }

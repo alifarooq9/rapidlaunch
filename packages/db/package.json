@@ -1,0 +1,33 @@
+{
+    "name": "@rapidlaunch/db",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+    "exports": {
+        ".": "./src/index.ts"
+    },
+    "license": "MIT",
+    "scripts": {
+        "clean": "rm -rf .turbo node_modules",
+        "format": "prettier --check . --ignore-path ../../.gitignore",
+        "push": "pnpm with-env drizzle-kit push:pg",
+        "studio": "pnpm with-env drizzle-kit studio",
+        "typecheck": "tsc --noEmit",
+        "with-env": "dotenv -e ../../.env --"
+    },
+    "dependencies": {
+        "drizzle-orm": "^0.29.4",
+        "postgres": "^3.4.3"
+    },
+    "devDependencies": {
+        "@rapidlaunch/eslint-config": "workspace:*",
+        "@rapidlaunch/typescript-config": "workspace:*",
+        "@types/node": "^20.11.24",
+        "dotenv-cli": "^7.3.0",
+        "drizzle-kit": "^0.20.14",
+        "eslint": "^8.57.0",
+        "pg": "^8.11.3",
+        "prettier": "^3.2.5",
+        "typescript": "^5.3.3"
+    }
+}

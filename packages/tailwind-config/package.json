@@ -1,5 +1,5 @@
 {
-    "name": "@repo/tailwind-config",
+    "name": "@rapidlaunch/tailwind-config",
     "version": "0.1.0",
     "private": true,
     "type": "module",
@@ -19,8 +19,8 @@
         "tailwindcss-animate": "^1.0.7"
     },
     "devDependencies": {
-        "@repo/eslint-config": "workspace:^*",
-        "@repo/typescript-config": "workspace:^*",
+        "@rapidlaunch/eslint-config": "workspace:^*",
+        "@rapidlaunch/typescript-config": "workspace:^*",
         "eslint": "^8.57.0",
         "prettier": "^3.2.5",
         "typescript": "^5.3.3"
@@ -28,7 +28,7 @@
     "eslintConfig": {
         "root": true,
         "extends": [
-            "@repo/eslint-config/next"
+            "@rapidlaunch/eslint-config/next"
         ]
     }
 }

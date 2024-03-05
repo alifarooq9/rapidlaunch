@@ -4,10 +4,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "next build",
-    "dev": "next dev",
+    "build": "pnpm with-env next build",
+    "dev": "pnpm with-env next dev",
     "lint": "next lint",
-    "start": "next start --port=3001"
+    "start": "pnpm with-env next start --port=3001",
+    "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
     "@t3-oss/env-nextjs": "^0.9.2",
@@ -30,10 +31,12 @@
     "prettier-plugin-tailwindcss": "^0.5.11",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.3.3",
-    "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
-    "@repo/tailwind-config": "workspace:*",
-    "@repo/ui": "workspace:*"
+    "@rapidlaunch/eslint-config": "workspace:*",
+    "@rapidlaunch/typescript-config": "workspace:*",
+    "@rapidlaunch/tailwind-config": "workspace:*",
+    "@rapidlaunch/ui": "workspace:*",
+    "@rapidlaunch/db": "workspace:*",
+    "dotenv-cli": "^7.3.0"
   },
   "ct3aMetadata": {
     "initVersion": "7.28.0"

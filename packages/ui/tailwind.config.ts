@@ -4,7 +4,7 @@
  */
 import type { Config } from "tailwindcss";
 
-const baseConfig = import("@repo/tailwind-config/base");
+import baseConfig from "@rapidlaunch/tailwind-config/base";
 
 export default {
     content: ["./src/**/*.tsx"],
