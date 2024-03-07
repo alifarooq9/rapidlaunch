@@ -41,7 +41,7 @@ export async function Sidebar({
                 >
                     <Icons.logo
                         className="text-xl"
-                        iconProps={{ className: "w-7 h-7 fill-primary" }}
+                        iconProps={{ className: "w-6 h-6 fill-primary" }}
                     />
                 </Link>
             </div>

@@ -132,9 +132,7 @@ export const organizationsRelations = relations(
 export const membersToOrganizations = createTable(
     "membersToOrganizations",
     {
-        id: varchar("id", { length: 255 })
-            .primaryKey()
-            .default(sql`gen_random_uuid()`),
+        id: varchar("id", { length: 255 }).default(sql`gen_random_uuid()`),
         userId: varchar("userId", { length: 255 })
             .notNull()
             .references(() => users.id, { onDelete: "cascade" }),
@@ -144,7 +142,7 @@ export const membersToOrganizations = createTable(
     },
     (mto) => ({
         compoundKey: primaryKey({
-            columns: [mto.userId, mto.organizationId],
+            columns: [mto.id, mto.userId, mto.organizationId],
         }),
     }),
 );
@@ -162,3 +160,35 @@ export const membersToOrganizationsRelations = relations(
         }),
     }),
 );
+
+export const orgRequests = createTable(
+    "orgRequest",
+    {
+        id: varchar("id", { length: 255 })
+            .notNull()
+            .primaryKey()
+            .default(sql`gen_random_uuid()`),
+        userId: varchar("userId", { length: 255 })
+            .notNull()
+            .references(() => users.id, { onDelete: "cascade" }),
+        organizationId: varchar("organizationId", {
+            length: 255,
+        })
+            .notNull()
+            .references(() => organizations.id, { onDelete: "cascade" }),
+        createdAt: timestamp("createdAt", { mode: "date" })
+            .notNull()
+            .defaultNow(),
+    },
+    (or) => ({
+        orgIdIdx: index("orgRequest_organizationId_idx").on(or.organizationId),
+    }),
+);
+
+export const orgRequestsRelations = relations(orgRequests, ({ one }) => ({
+    user: one(users, { fields: [orgRequests.userId], references: [users.id] }),
+    organization: one(organizations, {
+        fields: [orgRequests.organizationId],
+        references: [organizations.id],
+    }),
+}));

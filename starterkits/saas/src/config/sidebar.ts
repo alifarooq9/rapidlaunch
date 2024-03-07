@@ -5,6 +5,8 @@ import {
     PenLineIcon,
     Settings2Icon,
     SettingsIcon,
+    UserRoundCheckIcon,
+    UserRoundPlusIcon,
     UsersRoundIcon,
 } from "lucide-react";
 import { siteUrls } from "@/config/urls";
@@ -119,10 +121,21 @@ const navigation: SidebarNavItems[] = [
             {
                 label: "Members",
                 icon: UsersRoundIcon,
-                href: siteUrls.organization.members,
+                subMenu: [
+                    {
+                        label: "Org Members",
+                        icon: UserRoundCheckIcon,
+                        href: siteUrls.organization.members.home,
+                    },
+                    {
+                        label: "Invite Members",
+                        icon: UserRoundPlusIcon,
+                        href: siteUrls.organization.members.invite,
+                    },
+                ],
             },
             {
-                label: "Org Settings",
+                label: "Settings",
                 icon: Settings2Icon,
                 href: siteUrls.organization.settings,
             },

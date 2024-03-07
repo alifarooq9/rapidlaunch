@@ -15,7 +15,6 @@ import { CheckIcon, PlusCircledIcon } from "@radix-ui/react-icons";
 import { Fragment, useState } from "react";
 import { CreateOrgForm } from "@/app/(app)/_components/create-org-form";
 import { type organizations } from "@/server/db/schema";
-import { revalidateOrganizationsTag } from "@/server/actions/organization";
 import { useAwaitableTransition } from "@/hooks/use-awaitable-transition";
 import { useRouter } from "next/navigation";
 import { switchOrgPendingState } from "@/app/(app)/_components/org-switch-loading";
@@ -40,7 +39,6 @@ export function OrgSelectDropdown({
     const onOrgChange = async (orgId: string) => {
         setIsPending(true);
         setOrgCookie(orgId);
-        await revalidateOrganizationsTag();
         await startAwaitableTransition(() => {
             router.refresh();
         });

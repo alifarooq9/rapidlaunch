@@ -24,7 +24,7 @@ export function AppPageShell({
                 rightContent={rightContent}
                 description={description}
             />
-            <div className="w-full">{children}</div>
+            {children}
         </Container>
     );
 }

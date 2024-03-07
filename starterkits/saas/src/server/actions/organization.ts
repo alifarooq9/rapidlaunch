@@ -1,14 +1,17 @@
 "use server";
 
-import { membersToOrganizations, organizations } from "@/server/db/schema";
+import {
+    membersToOrganizations,
+    orgRequests,
+    organizations,
+} from "@/server/db/schema";
 import { db } from "@/server/db";
 import { protectedProcedure } from "@/server/procedures";
 import { and, eq } from "drizzle-orm";
 import { cookies } from "next/headers";
-import { unstable_cache as cache, revalidateTag } from "next/cache";
 import { orgConfig } from "@/config/organization";
 
-const ORG_CACHE_TAG = "get-organization";
+// TODO: add role level access control
 
 type CreateOrgProps = Omit<typeof organizations.$inferInsert, "id" | "ownerId">;
 
@@ -25,8 +28,6 @@ export async function createOrgAction({ ...props }: CreateOrgProps) {
         userId: user.id,
         organizationId: createOrg[0]!.id,
     });
-
-    await revalidateOrganizationsTag();
 
     return createOrg[0];
 }
@@ -48,32 +49,19 @@ export async function getUserOrgsAction() {
     }));
 }
 
-type OrganizationReturnType = {
-    currentOrg: typeof organizations.$inferSelect;
-    userOrgs: (typeof organizations.$inferSelect)[];
-};
+export async function getOrganizations() {
+    const userOrgs = await getUserOrgsAction();
 
-export const revalidateOrganizationsTag = async () => {
-    revalidateTag(ORG_CACHE_TAG);
-};
+    const defaultOrg = cookies().get(orgConfig.cookieName)?.value;
 
-export const getOrganizations = cache(
-    async (): Promise<OrganizationReturnType> => {
-        const userOrgs = await getUserOrgsAction();
+    const currentOrg =
+        userOrgs.find((org) => org.id === defaultOrg) ?? userOrgs[0];
 
-        const defaultOrg = cookies().get(orgConfig.cookieName)?.value;
-
-        const currentOrg =
-            userOrgs.find((org) => org.id === defaultOrg) ?? userOrgs[0];
-
-        return {
-            currentOrg: currentOrg as typeof organizations.$inferSelect,
-            userOrgs,
-        };
-    },
-    [ORG_CACHE_TAG],
-    { tags: [ORG_CACHE_TAG], revalidate: 3600 },
-);
+    return {
+        currentOrg: currentOrg as typeof organizations.$inferSelect,
+        userOrgs,
+    };
+}
 
 type UpdateOrgNameProps = {
     name: string;
@@ -101,8 +89,6 @@ export async function updateOrgNameAction({ name }: UpdateOrgNameProps) {
         .where(eq(organizations.id, currentOrg.id))
         .execute();
 
-    await revalidateOrganizationsTag();
-
     return updateName;
 }
 
@@ -127,7 +113,130 @@ export async function deleteOrgAction() {
         .where(eq(organizations.id, currentOrg.id))
         .execute();
 
-    await revalidateOrganizationsTag();
-
     return deleteOrg;
+}
+
+type OrgRequestProps = {
+    orgId: string;
+};
+
+export async function sendOrgRequestAction({ orgId }: OrgRequestProps) {
+    const { user } = await protectedProcedure();
+
+    return await db
+        .insert(orgRequests)
+        .values({ organizationId: orgId, userId: user.id })
+        .onConflictDoNothing({
+            where: and(
+                eq(orgRequests.organizationId, orgId),
+                eq(orgRequests.userId, user.id),
+            ),
+        })
+        .execute();
+}
+
+export async function getOrgRequestsAction() {
+    await protectedProcedure();
+
+    const { currentOrg } = await getOrganizations();
+
+    return await db.query.orgRequests
+        .findMany({
+            where: eq(orgRequests.organizationId, currentOrg.id),
+            with: {
+                user: true,
+            },
+        })
+        .execute();
+}
+
+type AcceptOrgRequestProps = {
+    requestId: string;
+};
+
+export async function acceptOrgRequestAction({
+    requestId,
+}: AcceptOrgRequestProps) {
+    const { user } = await protectedProcedure();
+
+    const { currentOrg } = await getOrganizations();
+
+    const memToOrg = await db.query.membersToOrganizations.findFirst({
+        where: and(
+            eq(membersToOrganizations.userId, user.id),
+            eq(membersToOrganizations.organizationId, currentOrg.id),
+        ),
+    });
+
+    if (!memToOrg) {
+        throw new Error("You are not a member of this organization");
+    }
+
+    const request = await db.query.orgRequests.findFirst({
+        where: eq(orgRequests.id, requestId),
+    });
+
+    if (!request) {
+        throw new Error("Request not found");
+    }
+
+    await db.insert(membersToOrganizations).values({
+        userId: request.userId,
+        organizationId: currentOrg.id,
+    });
+
+    return await db
+        .delete(orgRequests)
+        .where(eq(orgRequests.id, requestId))
+        .execute();
+}
+
+type DeclineOrgRequestProps = {
+    requestId: string;
+};
+
+export async function declineOrgRequestAction({
+    requestId,
+}: DeclineOrgRequestProps) {
+    const { user } = await protectedProcedure();
+
+    const { currentOrg } = await getOrganizations();
+
+    const memToOrg = await db.query.membersToOrganizations.findFirst({
+        where: and(
+            eq(membersToOrganizations.userId, user.id),
+            eq(membersToOrganizations.organizationId, currentOrg.id),
+        ),
+    });
+
+    if (!memToOrg) {
+        throw new Error("You are not a member of this organization");
+    }
+
+    return await db
+        .delete(orgRequests)
+        .where(eq(orgRequests.id, requestId))
+        .execute();
+}
+
+type GetOrgByIdProps = {
+    orgId: string;
+};
+
+export async function getOrgById({ orgId }: GetOrgByIdProps) {
+    await protectedProcedure();
+
+    const org = await db.query.organizations.findFirst({
+        where: and(eq(organizations.id, orgId)),
+        columns: {
+            name: true,
+            image: true,
+        },
+    });
+
+    if (!org) {
+        throw new Error("Organization not found");
+    }
+
+    return org;
 }

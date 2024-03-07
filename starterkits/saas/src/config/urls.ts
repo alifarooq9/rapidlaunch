@@ -23,7 +23,10 @@ export const siteUrls = {
         home: "/dashboard",
     },
     organization: {
-        members: "/org/members",
+        members: {
+            home: "/org/members",
+            invite: "/org/members/invite",
+        },
         settings: "/org/settings",
     },
     admin: {

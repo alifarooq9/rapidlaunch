@@ -18,7 +18,6 @@ import GithubProvider from "next-auth/providers/github";
 import { sendVerificationEmail } from "@/server/actions/send-verification-email";
 import { env } from "@/env";
 import { eq } from "drizzle-orm";
-import { revalidateOrganizationsTag } from "@/server/actions/organization";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -85,11 +84,6 @@ export const authOptions: NextAuthOptions = {
                 role: dbUser.role,
                 createdAt: dbUser.createdAt,
             };
-        },
-        async signIn() {
-            await revalidateOrganizationsTag();
-
-            return true;
         },
     },
 

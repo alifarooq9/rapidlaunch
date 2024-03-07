@@ -44,6 +44,12 @@ export async function sendVerificationEmail({
                     </p>
                 </div>`,
             text: `Click the link below to verify your email address and sign in. ${params.url}`,
+            tags: [
+                {
+                    name: "category",
+                    value: "confirm_email",
+                },
+            ],
         });
     } catch (error) {
         throw new Error("Failed to send verification email");

@@ -30,6 +30,8 @@ import { type VariantProps } from "class-variance-authority";
  * @customize button ui update link style to match the design system
  */
 
+//TODO: Make it more easy to customize the sidebar
+
 type LinkStyleProps = {
     active?: boolean;
     disabled?: boolean;
@@ -115,10 +117,7 @@ export function SidebarNav({
                                                                 },
                                                             )}
                                                         >
-                                                            <div
-                                                                // variant="ghost"
-                                                                className="flex items-center justify-start gap-3 "
-                                                            >
+                                                            <div className="flex items-center justify-start gap-3 ">
                                                                 <item.icon
                                                                     className={cn(
                                                                         "flex-shrink-0",
@@ -128,7 +127,7 @@ export function SidebarNav({
                                                                     )}
                                                                 />
                                                                 {!isCollapsed && (
-                                                                    <span className="font-medium">
+                                                                    <span className="truncate">
                                                                         {
                                                                             item.label
                                                                         }
@@ -268,9 +267,7 @@ function NavLink({
                     isCollapsed ? "h-5 w-5" : "h-4 w-4 ",
                 )}
             />
-            {!isCollapsed && (
-                <span className="truncate font-medium">{label}</span>
-            )}
+            {!isCollapsed && <span className="truncate">{label}</span>}
         </Link>
     );
 }
