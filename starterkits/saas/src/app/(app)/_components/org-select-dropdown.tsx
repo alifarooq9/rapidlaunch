@@ -2,14 +2,6 @@
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuGroup,
-    DropdownMenuItem,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { cn, setOrgCookie } from "@/lib/utils";
 import { CheckIcon, PlusCircledIcon } from "@radix-ui/react-icons";
 import { Fragment, useState } from "react";
@@ -18,6 +10,20 @@ import { type organizations } from "@/server/db/schema";
 import { useAwaitableTransition } from "@/hooks/use-awaitable-transition";
 import { useRouter } from "next/navigation";
 import { switchOrgPendingState } from "@/app/(app)/_components/org-switch-loading";
+import {
+    Command,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+    CommandList,
+    CommandSeparator,
+} from "@/components/ui/command";
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover";
 
 type OrgSelectDropdownProps = {
     currentOrg: typeof organizations.$inferSelect;
@@ -46,19 +52,24 @@ export function OrgSelectDropdown({
     };
 
     const [modalOpen, setModalOpen] = useState<boolean>(false);
+    const [popOpen, setPopOpen] = useState<boolean>(false);
 
     return (
         <Fragment>
             <CreateOrgForm open={modalOpen} setOpen={setModalOpen} />
 
-            <DropdownMenu modal={false}>
-                <DropdownMenuTrigger asChild>
+            <Popover
+                modal={false}
+                open={popOpen}
+                onOpenChange={(o: boolean) => setPopOpen(o)}
+            >
+                <PopoverTrigger asChild role="combobox">
                     <Button
                         variant="outline"
                         className={cn(
                             "flex w-full justify-start gap-2 overflow-hidden p-2",
                         )}
-                        aria-label="user dropdown"
+                        aria-label="select organization"
                     >
                         <Avatar className="h-6 w-6">
                             <AvatarImage
@@ -76,63 +87,67 @@ export function OrgSelectDropdown({
 
                         <span className="sr-only">org select menu</span>
                     </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-60" align="start">
-                    <DropdownMenuGroup>
-                        {userOrgs.map((org) => (
-                            <DropdownMenuItem
-                                key={org.id}
-                                asChild
-                                className={
-                                    currentOrg.id === org.id
-                                        ? "bg-accent/60"
-                                        : ""
-                                }
-                            >
-                                <button
-                                    onClick={() => onOrgChange(org.id)}
-                                    className="flex w-full cursor-pointer items-center justify-between gap-2"
-                                >
-                                    <div className="flex items-center gap-2">
-                                        <Avatar className="h-5 w-5">
-                                            <AvatarImage
-                                                src={org.image ? org.image : ""}
-                                            />
+                </PopoverTrigger>
+                <PopoverContent className="w-60 p-0" align="start">
+                    <Command>
+                        <CommandList>
+                            <CommandInput placeholder="Search team..." />
+                            <CommandEmpty>No team found.</CommandEmpty>
 
-                                            <AvatarFallback className="text-xs">
-                                                {org?.name
-                                                    ?.charAt(0)
+                            <CommandGroup>
+                                {userOrgs.map((org) => (
+                                    <CommandItem
+                                        key={org.id}
+                                        onSelect={async () => {
+                                            setPopOpen(false);
+                                            await onOrgChange(org.id);
+                                        }}
+                                        className="text-sm"
+                                    >
+                                        <Avatar className="mr-2 h-5 w-5">
+                                            <AvatarImage
+                                                src={org.image ?? ""}
+                                                alt={org.name}
+                                                className="grayscale"
+                                            />
+                                            <AvatarFallback>
+                                                {org.name
+                                                    .charAt(0)
                                                     .toUpperCase()}
                                             </AvatarFallback>
                                         </Avatar>
-                                        <span className="truncate">
-                                            {org?.name}
+                                        {org.name}
+                                        <CheckIcon
+                                            className={cn(
+                                                "ml-auto h-4 w-4",
+                                                currentOrg.id === org.id
+                                                    ? "opacity-100"
+                                                    : "opacity-0",
+                                            )}
+                                        />
+                                    </CommandItem>
+                                ))}
+                            </CommandGroup>
+                        </CommandList>
+                        <CommandSeparator />
+                        <CommandList>
+                            <CommandGroup>
+                                <CommandItem>
+                                    <button
+                                        onClick={() => setModalOpen(true)}
+                                        className="flex w-full cursor-pointer items-center justify-start gap-2"
+                                    >
+                                        <PlusCircledIcon className="h-4 w-4" />
+                                        <span className="font-medium">
+                                            Create Organization
                                         </span>
-                                    </div>
-
-                                    {currentOrg.id === org.id && (
-                                        <CheckIcon className="h-4 w-4 text-foreground" />
-                                    )}
-                                </button>
-                            </DropdownMenuItem>
-                        ))}
-                    </DropdownMenuGroup>
-
-                    <DropdownMenuSeparator />
-
-                    <DropdownMenuItem asChild>
-                        <button
-                            onClick={() => setModalOpen(true)}
-                            className="flex w-full cursor-pointer items-center justify-start gap-2"
-                        >
-                            <PlusCircledIcon className="h-4 w-4" />
-                            <span className="font-medium">
-                                Create Organization
-                            </span>
-                        </button>
-                    </DropdownMenuItem>
-                </DropdownMenuContent>
-            </DropdownMenu>
+                                    </button>
+                                </CommandItem>
+                            </CommandGroup>
+                        </CommandList>
+                    </Command>
+                </PopoverContent>
+            </Popover>
         </Fragment>
     );
 }
