@@ -21,7 +21,7 @@ export default function RootLayout({
         <html lang="en" suppressHydrationWarning>
             <body className={`${GeistSans.className} overflow-x-hidden`}>
                 <Providers>
-                    <Toaster position="top-right" expand />
+                    <Toaster richColors position="top-right" expand />
                     <Background>{children}</Background>
                 </Providers>
             </body>

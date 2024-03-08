@@ -129,20 +129,33 @@ export const organizationsRelations = relations(
     }),
 );
 
+export const membersToOrganizationsRoleEnum = pgEnum("org-member-role", [
+    "Viewer",
+    "Developer",
+    "Billing",
+    "Admin",
+]);
+
 export const membersToOrganizations = createTable(
     "membersToOrganizations",
     {
         id: varchar("id", { length: 255 }).default(sql`gen_random_uuid()`),
-        userId: varchar("userId", { length: 255 })
+        memberId: varchar("userId", { length: 255 })
             .notNull()
             .references(() => users.id, { onDelete: "cascade" }),
         organizationId: varchar("organizationId", { length: 255 })
             .notNull()
             .references(() => organizations.id, { onDelete: "cascade" }),
+        role: membersToOrganizationsRoleEnum("role")
+            .default("Viewer")
+            .notNull(),
+        createdAt: timestamp("createdAt", { mode: "date" })
+            .notNull()
+            .defaultNow(),
     },
     (mto) => ({
         compoundKey: primaryKey({
-            columns: [mto.id, mto.userId, mto.organizationId],
+            columns: [mto.id, mto.memberId, mto.organizationId],
         }),
     }),
 );
@@ -151,7 +164,7 @@ export const membersToOrganizationsRelations = relations(
     membersToOrganizations,
     ({ one }) => ({
         user: one(users, {
-            fields: [membersToOrganizations.userId],
+            fields: [membersToOrganizations.memberId],
             references: [users.id],
         }),
         organization: one(organizations, {

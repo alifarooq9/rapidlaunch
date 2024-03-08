@@ -2,14 +2,11 @@
 
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { type Table } from "@tanstack/react-table";
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DataTableViewOptions } from "@/app/(app)/_components/data-table-view-options";
-
-import { statuses } from "@/app/(app)/admin/users/_constants/data";
 import { DataTableFacetedFilter } from "@/app/(app)/_components/data-table-faceted-filter";
-import { usersRoleEnum } from "@/server/db/schema";
+import { membersToOrganizationsRoleEnum } from "@/server/db/schema";
 
 interface DataTableToolbarProps<TData> {
     table: Table<TData>;
@@ -20,7 +17,7 @@ export function DataTableToolbar<TData>({
 }: DataTableToolbarProps<TData>) {
     const isFiltered = table.getState().columnFilters.length > 0;
 
-    const roles = usersRoleEnum.enumValues.map((role) => ({
+    const roles = membersToOrganizationsRoleEnum.enumValues.map((role) => ({
         label: role,
         value: role,
     }));
@@ -42,18 +39,6 @@ export function DataTableToolbar<TData>({
                     }
                     className="h-8 w-[150px] bg-background lg:w-[250px]"
                 />
-                {table.getColumn("status") && (
-                    <DataTableFacetedFilter
-                        column={table.getColumn("status")}
-                        title="Status"
-                        options={
-                            statuses as unknown as {
-                                label: string;
-                                value: string;
-                            }[]
-                        }
-                    />
-                )}
                 {table.getColumn("role") && (
                     <DataTableFacetedFilter
                         column={table.getColumn("role")}

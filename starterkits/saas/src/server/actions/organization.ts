@@ -25,8 +25,9 @@ export async function createOrgAction({ ...props }: CreateOrgProps) {
         .execute();
 
     await db.insert(membersToOrganizations).values({
-        userId: user.id,
+        memberId: user.id,
         organizationId: createOrg[0]!.id,
+        role: "Admin",
     });
 
     return createOrg[0];
@@ -38,7 +39,7 @@ export async function getUserOrgsAction() {
     return (
         await db.query.membersToOrganizations
             .findMany({
-                where: eq(membersToOrganizations.userId, user.id),
+                where: eq(membersToOrganizations.memberId, user.id),
                 with: {
                     organization: true,
                 },
@@ -74,7 +75,7 @@ export async function updateOrgNameAction({ name }: UpdateOrgNameProps) {
 
     const memToOrg = await db.query.membersToOrganizations.findFirst({
         where: and(
-            eq(membersToOrganizations.userId, user.id),
+            eq(membersToOrganizations.memberId, user.id),
             eq(membersToOrganizations.organizationId, currentOrg.id),
         ),
     });
@@ -99,7 +100,7 @@ export async function deleteOrgAction() {
 
     const memToOrg = await db.query.membersToOrganizations.findFirst({
         where: and(
-            eq(membersToOrganizations.userId, user.id),
+            eq(membersToOrganizations.memberId, user.id),
             eq(membersToOrganizations.organizationId, currentOrg.id),
         ),
     });
@@ -163,7 +164,7 @@ export async function acceptOrgRequestAction({
 
     const memToOrg = await db.query.membersToOrganizations.findFirst({
         where: and(
-            eq(membersToOrganizations.userId, user.id),
+            eq(membersToOrganizations.memberId, user.id),
             eq(membersToOrganizations.organizationId, currentOrg.id),
         ),
     });
@@ -181,7 +182,7 @@ export async function acceptOrgRequestAction({
     }
 
     await db.insert(membersToOrganizations).values({
-        userId: request.userId,
+        memberId: request.userId,
         organizationId: currentOrg.id,
     });
 
@@ -204,7 +205,7 @@ export async function declineOrgRequestAction({
 
     const memToOrg = await db.query.membersToOrganizations.findFirst({
         where: and(
-            eq(membersToOrganizations.userId, user.id),
+            eq(membersToOrganizations.memberId, user.id),
             eq(membersToOrganizations.organizationId, currentOrg.id),
         ),
     });
@@ -239,4 +240,93 @@ export async function getOrgById({ orgId }: GetOrgByIdProps) {
     }
 
     return org;
+}
+
+export async function getOrgMembersAction() {
+    const { currentOrg } = await getOrganizations();
+
+    return await db.query.membersToOrganizations
+        .findMany({
+            where: eq(membersToOrganizations.organizationId, currentOrg.id),
+            with: {
+                user: {
+                    columns: {
+                        id: true,
+                        email: true,
+                        image: true,
+                        name: true,
+                    },
+                },
+            },
+        })
+        .execute();
+}
+
+type UpdateMemberRoleProps = {
+    memberId: string;
+    role: typeof membersToOrganizations.$inferSelect.role;
+};
+
+export async function updateMemberRoleAction({
+    memberId,
+    role,
+}: UpdateMemberRoleProps) {
+    const { user } = await protectedProcedure();
+
+    const { currentOrg } = await getOrganizations();
+
+    const memToOrg = await db.query.membersToOrganizations.findFirst({
+        where: and(
+            eq(membersToOrganizations.memberId, user.id),
+            eq(membersToOrganizations.organizationId, currentOrg.id),
+            eq(membersToOrganizations.role, "Admin"),
+        ),
+    });
+
+    if (!memToOrg) {
+        throw new Error("You are not an admin of this organization");
+    }
+
+    return await db
+        .update(membersToOrganizations)
+        .set({ role: role })
+        .where(
+            and(
+                eq(membersToOrganizations.memberId, memberId),
+                eq(membersToOrganizations.organizationId, currentOrg.id),
+            ),
+        )
+        .execute();
+}
+
+type RemoveUserProps = {
+    userId: string;
+};
+
+export async function removeUserAction({ userId }: RemoveUserProps) {
+    const { user } = await protectedProcedure();
+
+    const { currentOrg } = await getOrganizations();
+
+    const memToOrg = await db.query.membersToOrganizations.findFirst({
+        where: and(
+            eq(membersToOrganizations.memberId, user.id),
+            eq(membersToOrganizations.organizationId, currentOrg.id),
+            eq(membersToOrganizations.role, "Admin"),
+        ),
+    });
+
+    if (!memToOrg) {
+        throw new Error("You are not an admin of this organization");
+    }
+
+    return await db
+        .delete(membersToOrganizations)
+        .where(
+            and(
+                eq(membersToOrganizations.memberId, userId),
+                eq(membersToOrganizations.organizationId, currentOrg.id),
+            ),
+        )
+        .execute();
 }

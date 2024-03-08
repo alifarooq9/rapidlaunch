@@ -23,7 +23,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { DataTableToolbar } from "@/app/(app)/admin/users/_components/data-table-toolbar";
+import { DataTableToolbar } from "@/app/(app)/(user)/org/members/_components/data-table-toolbar";
 import { DataTablePagination } from "@/app/(app)/_components/data-table-pagination";
 
 /**
