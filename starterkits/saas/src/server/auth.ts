@@ -33,6 +33,7 @@ declare module "next-auth" {
             id: string;
             role: UserRole;
             createdAt: Date;
+            emailVerified: Date;
             // ...other properties
         } & DefaultSession["user"];
     }
@@ -40,6 +41,7 @@ declare module "next-auth" {
     interface User {
         role: UserRole;
         createdAt: Date;
+        emailVerified: Date;
         // ...other properties
     }
 }
@@ -60,6 +62,7 @@ export const authOptions: NextAuthOptions = {
                 session.user.image = token.picture;
                 session.user.role = token.role as UserRole;
                 session.user.createdAt = token.createdAt as Date;
+                session.user.emailVerified = token.emailVerified as Date;
             }
 
             return session;
@@ -83,6 +86,7 @@ export const authOptions: NextAuthOptions = {
                 picture: dbUser.image,
                 role: dbUser.role,
                 createdAt: dbUser.createdAt,
+                emailVerified: dbUser.emailVerified,
             };
         },
     },
