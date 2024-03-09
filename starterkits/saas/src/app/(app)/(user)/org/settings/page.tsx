@@ -12,7 +12,7 @@ export default async function OrgSettingsPage() {
             title={orgSettingsPageConfig.title}
             description={orgSettingsPageConfig.description}
         >
-            <div className="w-full space-y-5">
+            <div className="grid w-full grid-cols-2 gap-4">
                 <OrgNameForm currentOrg={currentOrg} key={currentOrg.id} />
 
                 <DeleteYourOrgForm fallbackOrgId={userOrgs[0]!.id} />
