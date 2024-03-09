@@ -3,7 +3,11 @@
 import { db } from "@/server/db";
 import { accounts, users } from "@/server/db/schema";
 import { desc, eq } from "drizzle-orm";
-import { protectedProcedure, superAdminProcedure } from "@/server/procedures";
+import {
+    adminProcedure,
+    protectedProcedure,
+    superAdminProcedure,
+} from "@/server/procedures";
 
 type UpdateNameProps = {
     name: string;
@@ -15,6 +19,20 @@ export async function updateNameAction({ name }: UpdateNameProps) {
     return await db
         .update(users)
         .set({ name })
+        .where(eq(users.email, user.email!))
+        .execute();
+}
+
+type UpdateImageProps = {
+    image: string;
+};
+
+export async function updateImageAction({ image }: UpdateImageProps) {
+    const { user } = await protectedProcedure();
+
+    return await db
+        .update(users)
+        .set({ image })
         .where(eq(users.email, user.email!))
         .execute();
 }
@@ -35,6 +53,8 @@ export async function updateRoleAction({ userId, role }: UpdateRoleProps) {
 }
 
 export async function getAllUsers() {
+    await adminProcedure();
+
     return await db.query.users.findMany({
         orderBy: [desc(users.createdAt)],
     });

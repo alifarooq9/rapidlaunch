@@ -34,7 +34,7 @@ export async function Sidebar({
 
     return (
         <aside className={cn("h-full w-full")}>
-            <div className={cn(" flex h-16 items-center justify-between px-4")}>
+            <div className={cn(" flex h-16 items-center justify-between")}>
                 <Link
                     href={siteUrls.home}
                     className={cn("z-10 transition-transform hover:scale-90")}
@@ -46,7 +46,7 @@ export async function Sidebar({
                 </Link>
             </div>
 
-            <div className="px-4 py-2">
+            <div className="py-2">
                 <Suspense
                     fallback={
                         <button
@@ -65,7 +65,7 @@ export async function Sidebar({
                 </Suspense>
             </div>
 
-            <div className="px-4 py-2">
+            <div className="py-2">
                 <Suspense
                     fallback={
                         <button
@@ -88,7 +88,7 @@ export async function Sidebar({
             </div>
 
             <ScrollArea style={{ height: "calc(100vh - 10.5rem)" }}>
-                <div className="h-full w-full px-4 py-2">
+                <div className="h-full w-full py-2">
                     <SidebarNav
                         sidebarNavIncludeIds={sidebarNavIncludeIds}
                         sidebarNavRemoveIds={sidebarNavRemoveIds}

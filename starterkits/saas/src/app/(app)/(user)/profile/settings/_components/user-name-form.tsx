@@ -75,32 +75,34 @@ export function UserNameForm({ user }: UserNameFormProps) {
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-                <Card className="w-full">
-                    <CardHeader>
-                        <CardTitle>Your Name</CardTitle>
-                        <CardDescription>
-                            Please enter your full name, or a display name you
-                            are comfortable with.
-                        </CardDescription>
-                    </CardHeader>
+                <Card className="flex h-full w-full flex-col justify-between">
+                    <div>
+                        <CardHeader>
+                            <CardTitle>Your Name</CardTitle>
+                            <CardDescription>
+                                Please enter your full name, or a display name
+                                you are comfortable with.
+                            </CardDescription>
+                        </CardHeader>
 
-                    <CardContent>
-                        <FormField
-                            control={form.control}
-                            name="name"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormControl>
-                                        <Input
-                                            placeholder="alidotm"
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                    </CardContent>
+                        <CardContent>
+                            <FormField
+                                control={form.control}
+                                name="name"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormControl>
+                                            <Input
+                                                placeholder="alidotm"
+                                                {...field}
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                        </CardContent>
+                    </div>
                     <CardFooter>
                         <Button
                             disabled={isPending}

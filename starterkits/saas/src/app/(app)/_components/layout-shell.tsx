@@ -1,4 +1,5 @@
 import { Sidebar } from "@/app/(app)/_components/sidebar";
+import { Suspense } from "react";
 
 type AppLayoutProps = {
     children: React.ReactNode;
@@ -23,11 +24,13 @@ export function AppLayoutShell({
 }: AppLayoutProps) {
     return (
         <div className="container flex items-start ">
-            <div className="sticky left-0 top-0 h-screen w-72 flex-shrink-0 ">
-                <Sidebar
-                    sidebarNavIncludeIds={sideNavIncludedIds}
-                    sidebarNavRemoveIds={sideNavRemoveIds}
-                />
+            <div className="sticky left-0 top-0 h-screen w-60 flex-shrink-0 ">
+                <Suspense fallback={<div>loading...</div>}>
+                    <Sidebar
+                        sidebarNavIncludeIds={sideNavIncludedIds}
+                        sidebarNavRemoveIds={sideNavRemoveIds}
+                    />
+                </Suspense>
             </div>
             <section className="min-h-screen w-full flex-grow">
                 {children}
