@@ -38,6 +38,8 @@ type UserImageFormProps = {
     user: User;
 };
 
+const PROFILE_MAX_SIZE = 4;
+
 export function UserImageForm({ user }: UserImageFormProps) {
     const router = useRouter();
 
@@ -64,7 +66,7 @@ export function UserImageForm({ user }: UserImageFormProps) {
                 ? generateClientDropzoneAccept(fileTypes)
                 : undefined,
             maxFiles: 1,
-            maxSize: 4 * 1024 * 1024,
+            maxSize: PROFILE_MAX_SIZE * 1024 * 1024,
         });
 
     const [isPending, awaitableTransition] = useAwaitableTransition();
@@ -121,10 +123,10 @@ export function UserImageForm({ user }: UserImageFormProps) {
 
                     <div>
                         <p className="text-sm font-light text-muted-foreground">
-                            Max file size: 4MB
+                            Max file size: {PROFILE_MAX_SIZE}MB
                         </p>
                         <p className="text-sm font-light text-muted-foreground">
-                            Recommended size: 400x400
+                            Recommended size: 600x600
                         </p>
                     </div>
                 </CardContent>

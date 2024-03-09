@@ -14,6 +14,7 @@ import { getOrganizations } from "@/server/actions/organization";
 type SideNavProps = {
     sidebarNavIncludeIds?: string[];
     sidebarNavRemoveIds?: string[];
+    showOrgSwitcher?: boolean;
 };
 
 /**
@@ -27,6 +28,7 @@ type SideNavProps = {
 export async function Sidebar({
     sidebarNavIncludeIds,
     sidebarNavRemoveIds,
+    showOrgSwitcher = true,
 }: SideNavProps) {
     const user = await getUser();
 
@@ -65,27 +67,29 @@ export async function Sidebar({
                 </Suspense>
             </div>
 
-            <div className="py-2">
-                <Suspense
-                    fallback={
-                        <button
-                            aria-disabled
-                            disabled
-                            className={buttonVariants({
-                                variant: "outline",
-                                className: "w-full",
-                            })}
-                        >
-                            <Icons.loader className="h-4 w-4" />
-                        </button>
-                    }
-                >
-                    <OrgSelectDropdown
-                        userOrgs={userOrgs}
-                        currentOrg={currentOrg}
-                    />
-                </Suspense>
-            </div>
+            {showOrgSwitcher && (
+                <div className="py-2">
+                    <Suspense
+                        fallback={
+                            <button
+                                aria-disabled
+                                disabled
+                                className={buttonVariants({
+                                    variant: "outline",
+                                    className: "w-full",
+                                })}
+                            >
+                                <Icons.loader className="h-4 w-4" />
+                            </button>
+                        }
+                    >
+                        <OrgSelectDropdown
+                            userOrgs={userOrgs}
+                            currentOrg={currentOrg}
+                        />
+                    </Suspense>
+                </div>
+            )}
 
             <ScrollArea style={{ height: "calc(100vh - 10.5rem)" }}>
                 <div className="h-full w-full py-2">

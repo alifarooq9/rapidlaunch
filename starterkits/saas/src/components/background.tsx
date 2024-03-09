@@ -10,7 +10,7 @@ export default function Background({
     children: React.ReactNode;
 }) {
     // --x and --y will be updated based on mouse position
-    useMouseMove();
+    // useMouseMove();
     return (
         <>
             <div className="fixed left-0 top-0 -z-50">

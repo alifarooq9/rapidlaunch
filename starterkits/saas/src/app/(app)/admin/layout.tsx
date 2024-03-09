@@ -11,7 +11,10 @@ export default function AdminLayout({ children }: AppLayoutProps) {
     const sideNavIncludedIds: string[] = [sidebarConfig.navIds.admin];
 
     return (
-        <AppLayoutShell sideNavIncludedIds={sideNavIncludedIds}>
+        <AppLayoutShell
+            sideNavIncludedIds={sideNavIncludedIds}
+            showOrgSwitcher={false}
+        >
             {children}
         </AppLayoutShell>
     );
