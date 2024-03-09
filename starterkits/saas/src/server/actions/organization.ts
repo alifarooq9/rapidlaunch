@@ -11,8 +11,6 @@ import { and, eq } from "drizzle-orm";
 import { cookies } from "next/headers";
 import { orgConfig } from "@/config/organization";
 
-// TODO: add role level access control
-
 type CreateOrgProps = Omit<typeof organizations.$inferInsert, "id" | "ownerId">;
 
 export async function createOrgAction({ ...props }: CreateOrgProps) {
@@ -77,20 +75,19 @@ export async function updateOrgNameAction({ name }: UpdateOrgNameProps) {
         where: and(
             eq(membersToOrganizations.memberId, user.id),
             eq(membersToOrganizations.organizationId, currentOrg.id),
+            eq(membersToOrganizations.role, "Admin"),
         ),
     });
 
-    if (!memToOrg) {
-        throw new Error("You are not a member of this organization");
+    if (currentOrg.ownerId === user.id || memToOrg) {
+        return await db
+            .update(organizations)
+            .set({ name })
+            .where(eq(organizations.id, currentOrg.id))
+            .execute();
     }
 
-    const updateName = await db
-        .update(organizations)
-        .set({ name })
-        .where(eq(organizations.id, currentOrg.id))
-        .execute();
-
-    return updateName;
+    throw new Error("You are not an admin of this organization");
 }
 
 export async function deleteOrgAction() {
@@ -98,23 +95,14 @@ export async function deleteOrgAction() {
 
     const { currentOrg } = await getOrganizations();
 
-    const memToOrg = await db.query.membersToOrganizations.findFirst({
-        where: and(
-            eq(membersToOrganizations.memberId, user.id),
-            eq(membersToOrganizations.organizationId, currentOrg.id),
-        ),
-    });
-
-    if (!memToOrg) {
-        throw new Error("You are not a member of this organization");
+    if (currentOrg.ownerId !== user.id) {
+        throw new Error("You are not the owner of this organization");
     }
 
-    const deleteOrg = await db
+    return await db
         .delete(organizations)
         .where(eq(organizations.id, currentOrg.id))
         .execute();
-
-    return deleteOrg;
 }
 
 type OrgRequestProps = {
@@ -166,30 +154,31 @@ export async function acceptOrgRequestAction({
         where: and(
             eq(membersToOrganizations.memberId, user.id),
             eq(membersToOrganizations.organizationId, currentOrg.id),
+            eq(membersToOrganizations.role, "Admin"),
         ),
     });
 
-    if (!memToOrg) {
-        throw new Error("You are not a member of this organization");
+    if (currentOrg.ownerId === user.id || memToOrg) {
+        const request = await db.query.orgRequests.findFirst({
+            where: eq(orgRequests.id, requestId),
+        });
+
+        if (!request) {
+            throw new Error("Request not found");
+        }
+
+        await db.insert(membersToOrganizations).values({
+            memberId: request.userId,
+            organizationId: currentOrg.id,
+        });
+
+        return await db
+            .delete(orgRequests)
+            .where(eq(orgRequests.id, requestId))
+            .execute();
     }
 
-    const request = await db.query.orgRequests.findFirst({
-        where: eq(orgRequests.id, requestId),
-    });
-
-    if (!request) {
-        throw new Error("Request not found");
-    }
-
-    await db.insert(membersToOrganizations).values({
-        memberId: request.userId,
-        organizationId: currentOrg.id,
-    });
-
-    return await db
-        .delete(orgRequests)
-        .where(eq(orgRequests.id, requestId))
-        .execute();
+    throw new Error("You are not an admin of this organization");
 }
 
 type DeclineOrgRequestProps = {
@@ -207,17 +196,18 @@ export async function declineOrgRequestAction({
         where: and(
             eq(membersToOrganizations.memberId, user.id),
             eq(membersToOrganizations.organizationId, currentOrg.id),
+            eq(membersToOrganizations.role, "Admin"),
         ),
     });
 
-    if (!memToOrg) {
-        throw new Error("You are not a member of this organization");
+    if (currentOrg.ownerId === user.id || memToOrg) {
+        return await db
+            .delete(orgRequests)
+            .where(eq(orgRequests.id, requestId))
+            .execute();
     }
 
-    return await db
-        .delete(orgRequests)
-        .where(eq(orgRequests.id, requestId))
-        .execute();
+    throw new Error("You are not an admin of this organization");
 }
 
 type GetOrgByIdProps = {
@@ -283,20 +273,24 @@ export async function updateMemberRoleAction({
         ),
     });
 
-    if (!memToOrg) {
-        throw new Error("You are not an admin of this organization");
+    if (role === "Admin" && currentOrg.ownerId !== user.id) {
+        throw new Error("You are not the owner of this organization");
     }
 
-    return await db
-        .update(membersToOrganizations)
-        .set({ role: role })
-        .where(
-            and(
-                eq(membersToOrganizations.memberId, memberId),
-                eq(membersToOrganizations.organizationId, currentOrg.id),
-            ),
-        )
-        .execute();
+    if (currentOrg.ownerId === user.id || memToOrg) {
+        return await db
+            .update(membersToOrganizations)
+            .set({ role: role })
+            .where(
+                and(
+                    eq(membersToOrganizations.memberId, memberId),
+                    eq(membersToOrganizations.organizationId, currentOrg.id),
+                ),
+            )
+            .execute();
+    }
+
+    throw new Error("You are not an admin of this organization");
 }
 
 type RemoveUserProps = {
@@ -316,17 +310,17 @@ export async function removeUserAction({ userId }: RemoveUserProps) {
         ),
     });
 
-    if (!memToOrg) {
-        throw new Error("You are not an admin of this organization");
+    if (currentOrg.ownerId === user.id || memToOrg) {
+        return await db
+            .delete(membersToOrganizations)
+            .where(
+                and(
+                    eq(membersToOrganizations.memberId, userId),
+                    eq(membersToOrganizations.organizationId, currentOrg.id),
+                ),
+            )
+            .execute();
     }
 
-    return await db
-        .delete(membersToOrganizations)
-        .where(
-            and(
-                eq(membersToOrganizations.memberId, userId),
-                eq(membersToOrganizations.organizationId, currentOrg.id),
-            ),
-        )
-        .execute();
+    throw new Error("You are not an admin of this organization");
 }
