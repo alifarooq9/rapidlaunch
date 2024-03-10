@@ -39,7 +39,7 @@ function PageHeader({ title, rightContent, description }: PageHeaderProps) {
     return (
         <header className="flex w-full items-center justify-between border-b border-border py-6">
             <section className="flex flex-col gap-1">
-                <h1 className="text-2xl font-bold">{title}</h1>
+                <h1 className="text-2xl font-semibold">{title}</h1>
                 <p className="max-w-xl text-muted-foreground">{description}</p>
             </section>
             {rightContent && <section>{rightContent}</section>}

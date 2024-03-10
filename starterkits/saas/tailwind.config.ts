@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss";
-import { withUt } from "uploadthing/tw";
+import { fontFamily } from "tailwindcss/defaultTheme";
 
 const config = {
     darkMode: ["class"],
@@ -21,6 +21,14 @@ const config = {
             },
             transitionDuration: {
                 400: "400ms",
+            },
+            fontFamily: {
+                sans: ["var(--font-geist-sans)", ...fontFamily.sans],
+                heading: [
+                    "var(--font-cabinet-grotesk)",
+                    "var(--font-geist-sans)",
+                    ...fontFamily.sans,
+                ],
             },
             colors: {
                 border: "hsl(var(--border))",
@@ -82,4 +90,4 @@ const config = {
     plugins: [require("tailwindcss-animate")],
 } satisfies Config;
 
-export default withUt(config);
+export default config;

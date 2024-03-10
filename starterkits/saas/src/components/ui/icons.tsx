@@ -18,16 +18,15 @@ export const Icons = {
         const Comp = as ?? "div";
         return (
             <Comp
-                className={cn(
-                    "flex items-center space-x-2 text-lg font-bold",
-                    className,
-                )}
+                className={cn("flex items-center space-x-2 text-lg", className)}
             >
                 <Icons.logoIcon
                     className={cn("h-5 w-5 fill-primary", iconProps?.className)}
                     {...iconProps}
                 />
-                <span>{siteConfig.name}</span>
+                <span className="font-heading font-extrabold">
+                    {siteConfig.name}
+                </span>
             </Comp>
         );
     },
@@ -65,7 +64,7 @@ export const Icons = {
         <Loader2Icon
             {...props}
             className={cn(
-                "duration-400 animate-spin transition-all",
+                "animate-spin transition-all duration-400",
                 props.className,
             )}
         />
