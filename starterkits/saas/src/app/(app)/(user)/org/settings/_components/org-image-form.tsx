@@ -10,7 +10,6 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import type { User } from "next-auth";
 import {
     Dialog,
     DialogClose,
@@ -29,18 +28,19 @@ import type { OurFileRouter } from "@/server/uploadthing/core";
 import { generateClientDropzoneAccept } from "uploadthing/client";
 import { Icons } from "@/components/ui/icons";
 import { useMutation } from "@tanstack/react-query";
-import { updateImageAction } from "@/server/actions/user";
 import { toast } from "sonner";
 import { useAwaitableTransition } from "@/hooks/use-awaitable-transition";
 import { useRouter } from "next/navigation";
+import { updateOrgImageAction } from "@/server/actions/organization";
+import type { organizations } from "@/server/db/schema";
 
-type UserImageFormProps = {
-    user: User;
+type OrgImageFormProps = {
+    currentOrg: typeof organizations.$inferSelect;
 };
 
 const PROFILE_MAX_SIZE = 4;
 
-export function UserImageForm({ user }: UserImageFormProps) {
+export function OrgImageForm({ currentOrg }: OrgImageFormProps) {
     const router = useRouter();
 
     const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -55,7 +55,7 @@ export function UserImageForm({ user }: UserImageFormProps) {
     }, []);
 
     const { startUpload, permittedFileInfo, isUploading } = useUploadThing(
-        "profilePicture",
+        "orgProfilePicture",
         {
             onUploadProgress: (progress) => {
                 setUploadProgress(progress);
@@ -81,7 +81,7 @@ export function UserImageForm({ user }: UserImageFormProps) {
 
     const { isPending: isMutatePending, mutateAsync } = useMutation({
         mutationFn: ({ imageUrl }: { imageUrl: string }) =>
-            updateImageAction({ image: imageUrl }),
+            updateOrgImageAction({ image: imageUrl }),
     });
 
     const handleUpdateImage = async () => {
@@ -115,17 +115,19 @@ export function UserImageForm({ user }: UserImageFormProps) {
         >
             <Card>
                 <CardHeader>
-                    <CardTitle>Your Profile Image</CardTitle>
+                    <CardTitle>Your Org Image</CardTitle>
                     <CardDescription>
-                        Add a profile image to make your account more personal.
+                        Upload a new profile image here
                     </CardDescription>
                 </CardHeader>
                 <CardContent className="flex items-center gap-4">
                     <Avatar className="h-16 w-16">
-                        <AvatarImage src={user.image ? user.image : ""} />
+                        <AvatarImage
+                            src={currentOrg.image ? currentOrg.image : ""}
+                        />
 
                         <AvatarFallback className="text-3xl">
-                            {user.name![0]}
+                            {currentOrg.name[0]}
                         </AvatarFallback>
                     </Avatar>
 
@@ -147,9 +149,12 @@ export function UserImageForm({ user }: UserImageFormProps) {
 
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Upload a new profile image here</DialogTitle>
+                    <DialogTitle>
+                        Upload your org&apos;s profile image here
+                    </DialogTitle>
                     <DialogDescription>
-                        Drag and drop the image here, or click to select a file
+                        Please upload a profile image for your organization.
+                        This will be used to identify your organization.
                     </DialogDescription>
                 </DialogHeader>
 
@@ -213,9 +218,7 @@ export function UserImageForm({ user }: UserImageFormProps) {
                         ) : null}
                         <span>
                             {isUploading && `Uploading (${uploadProgress})`}
-                            {isPending || isMutatePending
-                                ? "Setting up..."
-                                : null}
+                            {isPending || isMutatePending ? "Setting up" : null}
                             {!isUploading && !isPending && !isMutatePending
                                 ? "Upload"
                                 : null}

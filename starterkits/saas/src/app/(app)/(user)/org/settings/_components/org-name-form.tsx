@@ -82,7 +82,7 @@ export function OrgNameForm({ currentOrg }: OrgNameFormProps) {
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-                <Card className="w-full">
+                <Card className="flex h-full w-full flex-col justify-between">
                     <CardHeader>
                         <CardTitle>Org Name</CardTitle>
                         <CardDescription>

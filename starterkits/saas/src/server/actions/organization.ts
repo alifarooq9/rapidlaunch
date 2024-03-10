@@ -90,6 +90,34 @@ export async function updateOrgNameAction({ name }: UpdateOrgNameProps) {
     throw new Error("You are not an admin of this organization");
 }
 
+type UpdateOrgImageProps = {
+    image: string;
+};
+
+export async function updateOrgImageAction({ image }: UpdateOrgImageProps) {
+    const { user } = await protectedProcedure();
+
+    const { currentOrg } = await getOrganizations();
+
+    const memToOrg = await db.query.membersToOrganizations.findFirst({
+        where: and(
+            eq(membersToOrganizations.memberId, user.id),
+            eq(membersToOrganizations.organizationId, currentOrg.id),
+            eq(membersToOrganizations.role, "Admin"),
+        ),
+    });
+
+    if (currentOrg.ownerId === user.id || memToOrg) {
+        return await db
+            .update(organizations)
+            .set({ image })
+            .where(eq(organizations.id, currentOrg.id))
+            .execute();
+    }
+
+    throw new Error("You are not an admin of this organization");
+}
+
 export async function deleteOrgAction() {
     const { user } = await protectedProcedure();
 

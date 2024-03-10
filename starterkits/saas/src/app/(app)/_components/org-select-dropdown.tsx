@@ -108,7 +108,6 @@ export function OrgSelectDropdown({
                                             <AvatarImage
                                                 src={org.image ?? ""}
                                                 alt={org.name}
-                                                className="grayscale"
                                             />
                                             <AvatarFallback>
                                                 {org.name
