@@ -1,4 +1,5 @@
 import { orgConfig } from "@/config/organization";
+import { env } from "@/env";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -13,4 +14,8 @@ export function isLinkActive(href: string, pathname: string) {
 
 export function setOrgCookie(orgId: string) {
     document.cookie = `${orgConfig.cookieName}=${orgId}; path=/; max-age=31536000;`;
+}
+
+export function getAbsoluteUrl(path: string) {
+    return `${env.NEXTAUTH_URL}${path}`;
 }

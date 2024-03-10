@@ -8,7 +8,11 @@ export default function OrgSettingsLoading() {
             title={orgSettingsPageConfig.title}
             description={orgSettingsPageConfig.description}
         >
-            <Skeleton className="h-96 w-full" />
+            <div className="grid grid-cols-2 gap-4">
+                <Skeleton className="h-60 w-full" />
+                <Skeleton className="h-60 w-full" />
+                <Skeleton className="h-60 w-full" />
+            </div>
         </AppPageLoading>
     );
 }

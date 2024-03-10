@@ -33,15 +33,33 @@ declare module "next-auth" {
             id: string;
             role: UserRole;
             createdAt: Date;
-            emailVerified: Date;
+            emailVerified: Date | null;
             // ...other properties
         } & DefaultSession["user"];
     }
 
     interface User {
+        id: string;
         role: UserRole;
         createdAt: Date;
-        emailVerified: Date;
+        emailVerified: Date | null;
+        // ...other properties
+    }
+}
+
+/**
+ * Module augmentation for `next-auth/jwt` types. Allows us to add custom properties to the `jwt`
+ * object and keep type safety.
+ *
+ * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
+ */
+declare module "next-auth/jwt" {
+    // /** Returned by the `jwt` callback and `getToken`, when using JWT sessions */
+    interface JWT {
+        id: string;
+        role: UserRole;
+        createdAt: Date;
+        emailVerified: Date | null;
         // ...other properties
     }
 }
@@ -56,13 +74,13 @@ export const authOptions: NextAuthOptions = {
         session({ token, session }) {
             if (token) {
                 // Add the user id to the session, so it's available in the client app
-                session.user.id = token.id as string;
+                session.user.id = token.id;
                 session.user.name = token.name;
                 session.user.email = token.email;
                 session.user.image = token.picture;
                 session.user.role = token.role as UserRole;
-                session.user.createdAt = token.createdAt as Date;
-                session.user.emailVerified = token.emailVerified as Date;
+                session.user.createdAt = token.createdAt;
+                session.user.emailVerified = token.emailVerified;
             }
 
             return session;
@@ -81,12 +99,12 @@ export const authOptions: NextAuthOptions = {
 
             return {
                 id: dbUser.id,
-                name: dbUser.name,
-                email: dbUser.email,
-                picture: dbUser.image,
                 role: dbUser.role,
                 createdAt: dbUser.createdAt,
                 emailVerified: dbUser.emailVerified,
+                email: dbUser.email,
+                name: dbUser.name,
+                picture: dbUser.image,
             };
         },
     },
