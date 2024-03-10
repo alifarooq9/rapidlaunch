@@ -34,7 +34,10 @@ export const ourFileRouter = {
             const { currentOrg } = await getOrganizations();
 
             if (!currentOrg)
-                throw new UploadThingError("No organization found");
+                throw new UploadThingError({
+                    message: "You are not a member of any organization",
+                    code: "BAD_REQUEST",
+                });
 
             const memToOrg = await db.query.membersToOrganizations.findFirst({
                 where: and(
@@ -48,9 +51,13 @@ export const ourFileRouter = {
                 return { orgId: currentOrg.id, userId: user.id };
             }
 
-            throw new UploadThingError(
-                "You are not an admin of this organization",
-            );
+            throw new UploadThingError({
+                message: "You are not an admin of this organization",
+                code: "BAD_REQUEST",
+            });
+        })
+        .onUploadError((error) => {
+            return error.error;
         })
         .onUploadComplete(async ({ metadata, file }) => {
             return {

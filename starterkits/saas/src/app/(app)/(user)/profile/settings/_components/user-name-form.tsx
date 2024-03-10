@@ -78,7 +78,7 @@ export function UserNameForm({ user }: UserNameFormProps) {
                 <Card className="flex h-full w-full flex-col justify-between">
                     <div>
                         <CardHeader>
-                            <CardTitle>Your Name</CardTitle>
+                            <CardTitle>Name</CardTitle>
                             <CardDescription>
                                 Please enter your full name, or a display name
                                 you are comfortable with.

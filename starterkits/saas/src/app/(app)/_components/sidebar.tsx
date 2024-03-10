@@ -8,7 +8,10 @@ import { Suspense } from "react";
 import { buttonVariants } from "@/components/ui/button";
 import { SidebarNav } from "@/app/(app)/_components/sidebar-nav";
 import { getUser } from "@/server/auth";
-import { OrgSelectDropdown } from "@/app/(app)/_components/org-select-dropdown";
+import {
+    OrgSelectDropdown,
+    type UserOrgs,
+} from "@/app/(app)/_components/org-select-dropdown";
 import { getOrganizations } from "@/server/actions/organization";
 
 type SideNavProps = {
@@ -33,6 +36,20 @@ export async function Sidebar({
     const user = await getUser();
 
     const { currentOrg, userOrgs } = await getOrganizations();
+
+    const myOrgs = userOrgs.filter((org) => org.ownerId === user?.id);
+    const sharedOrgs = userOrgs.filter((org) => org.ownerId !== user?.id);
+
+    const urgOrgsData: UserOrgs[] = [
+        {
+            heading: "My Orgs",
+            items: myOrgs,
+        },
+        {
+            heading: "Shared Orgs",
+            items: sharedOrgs,
+        },
+    ];
 
     return (
         <aside className={cn("h-full w-full")}>
@@ -84,7 +101,7 @@ export async function Sidebar({
                         }
                     >
                         <OrgSelectDropdown
-                            userOrgs={userOrgs}
+                            userOrgs={urgOrgsData}
                             currentOrg={currentOrg}
                         />
                     </Suspense>

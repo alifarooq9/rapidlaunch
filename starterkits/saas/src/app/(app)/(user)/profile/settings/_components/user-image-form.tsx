@@ -115,7 +115,7 @@ export function UserImageForm({ user }: UserImageFormProps) {
         >
             <Card>
                 <CardHeader>
-                    <CardTitle>Your Profile Image</CardTitle>
+                    <CardTitle>Profile Image</CardTitle>
                     <CardDescription>
                         Add a profile image to make your account more personal.
                     </CardDescription>

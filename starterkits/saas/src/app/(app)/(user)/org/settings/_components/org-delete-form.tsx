@@ -89,7 +89,7 @@ export function DeleteYourOrgForm({ fallbackOrgId }: DeleteYourOrgFormProps) {
             <form onSubmit={form.handleSubmit(onSubmit)}>
                 <Card>
                     <CardHeader>
-                        <CardTitle>Delete My Org</CardTitle>
+                        <CardTitle>Delete Org</CardTitle>
                         <CardDescription>
                             Type{" "}
                             <span className="font-bold">

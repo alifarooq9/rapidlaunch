@@ -98,10 +98,9 @@ export function OrgImageForm({ currentOrg }: OrgImageFormProps) {
             setModalOpen(false);
             toast.success("Image uploaded successfully");
         } catch (error) {
-            toast.error(
-                (error as { message?: string })?.message ??
-                    "Image could not be uploaded",
-            );
+            toast.error("Image could not be uploaded", {
+                description: "Please check your premissions",
+            });
         }
     };
 
@@ -115,7 +114,7 @@ export function OrgImageForm({ currentOrg }: OrgImageFormProps) {
         >
             <Card>
                 <CardHeader>
-                    <CardTitle>Your Org Image</CardTitle>
+                    <CardTitle>Org Image</CardTitle>
                     <CardDescription>
                         Upload a new profile image here
                     </CardDescription>
