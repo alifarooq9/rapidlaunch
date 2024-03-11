@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/sonner";
 import "@/styles/globals.css";
 import { fontHeading, fontSans } from "@/lib/fonts";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata = {
     title: "RapidLaunch - Next.js Boilerplate",
@@ -28,6 +29,7 @@ export default function RootLayout({
                         <Background>{children}</Background>
                     </Providers>
                     <Toaster richColors position="top-right" expand />
+                    <Analytics />
                 </ThemeProvider>
             </body>
         </html>
