@@ -71,3 +71,13 @@ export async function deleteUserAction({ userId }: DeleteUserProps) {
 
     return await db.delete(users).where(eq(users.id, userId)).execute();
 }
+
+export async function completeNewUserSetupAction() {
+    const { user } = await protectedProcedure();
+
+    return await db
+        .update(users)
+        .set({ isNewUser: false })
+        .where(eq(users.id, user.id))
+        .execute();
+}

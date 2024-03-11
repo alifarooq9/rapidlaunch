@@ -34,6 +34,7 @@ declare module "next-auth" {
             role: UserRole;
             createdAt: Date;
             emailVerified: Date | null;
+            isNewUser: boolean;
             // ...other properties
         } & DefaultSession["user"];
     }
@@ -43,6 +44,7 @@ declare module "next-auth" {
         role: UserRole;
         createdAt: Date;
         emailVerified: Date | null;
+        isNewUser: boolean;
         // ...other properties
     }
 }
@@ -60,6 +62,7 @@ declare module "next-auth/jwt" {
         role: UserRole;
         createdAt: Date;
         emailVerified: Date | null;
+        isNewUser: boolean;
         // ...other properties
     }
 }
@@ -81,6 +84,7 @@ export const authOptions: NextAuthOptions = {
                 session.user.role = token.role as UserRole;
                 session.user.createdAt = token.createdAt;
                 session.user.emailVerified = token.emailVerified;
+                session.user.isNewUser = token.isNewUser;
             }
 
             return session;
@@ -105,6 +109,7 @@ export const authOptions: NextAuthOptions = {
                 email: dbUser.email,
                 name: dbUser.name,
                 picture: dbUser.image,
+                isNewUser: dbUser.isNewUser,
             };
         },
     },
@@ -118,6 +123,7 @@ export const authOptions: NextAuthOptions = {
         signIn: siteUrls.auth.login,
         signOut: siteUrls.auth.login,
         error: siteUrls.auth.login,
+        verifyRequest: siteUrls.auth.login,
     },
     providers: [
         EmailProvider({

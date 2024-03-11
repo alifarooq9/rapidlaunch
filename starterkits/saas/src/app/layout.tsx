@@ -4,6 +4,7 @@ import { Providers } from "@/components/providers";
 import { Toaster } from "@/components/ui/sonner";
 import "@/styles/globals.css";
 import { fontHeading, fontSans } from "@/lib/fonts";
+import { ThemeProvider } from "@/components/theme-provider";
 
 export const metadata = {
     title: "RapidLaunch - Next.js Boilerplate",
@@ -22,10 +23,12 @@ export default function RootLayout({
             <body
                 className={`${fontSans.variable} ${fontHeading.variable} overflow-x-hidden font-sans`}
             >
-                <Providers>
+                <ThemeProvider>
+                    <Providers>
+                        <Background>{children}</Background>
+                    </Providers>
                     <Toaster richColors position="top-right" expand />
-                    <Background>{children}</Background>
-                </Providers>
+                </ThemeProvider>
             </body>
         </html>
     );

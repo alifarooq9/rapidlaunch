@@ -1,5 +1,6 @@
 import { relations, sql } from "drizzle-orm";
 import {
+    boolean,
     index,
     integer,
     pgEnum,
@@ -32,6 +33,7 @@ export const users = createTable("user", {
     }).default(sql`CURRENT_TIMESTAMP`),
     image: varchar("image", { length: 255 }),
     role: usersRoleEnum("role").default("User").notNull(),
+    isNewUser: boolean("isNewUser").default(true).notNull(),
     createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
 });
 
