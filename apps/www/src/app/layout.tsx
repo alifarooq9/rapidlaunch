@@ -7,6 +7,7 @@ import "@/styles/globals.css";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
 import { siteConfig } from "@/config/site";
+import { Analytics } from "@vercel/analytics/react";
 
 const TITLE =
     "Rapidlaunch | Open Source Nextjs SaaS Starterkits and Components";
@@ -55,6 +56,7 @@ export default function RootLayout({
                         <Toaster position="top-center" />
                     </Background>
                 </Providers>
+                <Analytics />
             </body>
         </html>
     );

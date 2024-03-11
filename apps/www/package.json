@@ -14,6 +14,7 @@
     "@hookform/resolvers": "^3.3.4",
     "@t3-oss/env-nextjs": "^0.9.2",
     "@tanstack/react-query": "^5.24.1",
+    "@vercel/analytics": "^1.2.2",
     "geist": "^1.2.2",
     "lucide-react": "^0.343.0",
     "next": "^14.1.0",
