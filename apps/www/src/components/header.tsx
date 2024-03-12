@@ -23,12 +23,23 @@ export function Header() {
                 <div className="flex items-center space-x-2">
                     <Link
                         href={siteUrls.twitter}
+                        target="_blank"
                         className={buttonVariants({
                             variant: "outline",
                             size: "icon",
                         })}
                     >
                         <Icons.twitter className="h-4 w-4 fill-foreground" />
+                    </Link>
+                    <Link
+                        href={siteUrls.github}
+                        target="_blank"
+                        className={buttonVariants({
+                            variant: "outline",
+                            size: "icon",
+                        })}
+                    >
+                        <Icons.gitHub className="h-4 w-4 fill-foreground" />
                     </Link>
                     <ThemeToggle />
                 </div>
