@@ -19,7 +19,10 @@ import { usersRoleEnum } from "@/server/db/schema";
 import { toast } from "sonner";
 import { type UsersData } from "@/app/(app)/admin/users/_components/columns";
 import { useMutation } from "@tanstack/react-query";
-import { deleteUserAction, updateRoleAction } from "@/server/actions/user";
+import {
+    updateRoleMutation,
+    deleteUserMutation,
+} from "@/server/actions/user/mutations";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { siteUrls } from "@/config/urls";
@@ -32,7 +35,7 @@ export function ColumnDropdown({ email, id, role }: UsersData) {
     const { mutateAsync: changeRoleMutate, isPending: changeRoleIsPending } =
         useMutation({
             mutationFn: ({ role }: { role: Role }) =>
-                updateRoleAction({ userId: id, role }),
+                updateRoleMutation({ id, role }),
             onSettled: () => {
                 router.refresh();
             },
@@ -66,7 +69,7 @@ export function ColumnDropdown({ email, id, role }: UsersData) {
 
     const { mutateAsync: deleteUserMutate, isPending: deleteUserIsPending } =
         useMutation({
-            mutationFn: () => deleteUserAction({ userId: id }),
+            mutationFn: () => deleteUserMutation({ id }),
             onSettled: () => {
                 router.refresh();
             },

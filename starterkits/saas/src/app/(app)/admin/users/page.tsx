@@ -5,10 +5,10 @@ import {
     columns,
 } from "@/app/(app)/admin/users/_components/columns";
 import { usersPageConfig } from "@/app/(app)/admin/users/_constants/page-config";
-import { getAllUsers } from "@/server/actions/user";
+import { getAllUsersQuery } from "@/server/actions/user/queries";
 
 export default async function UsersPage() {
-    const fetchedUsers = await getAllUsers();
+    const fetchedUsers = await getAllUsersQuery();
 
     const usersData: UsersData[] = fetchedUsers.map((user) => {
         return {

@@ -25,7 +25,7 @@ import { useRouter } from "next/navigation";
 import { Icons } from "@/components/ui/icons";
 import { useMutation } from "@tanstack/react-query";
 import { type organizations } from "@/server/db/schema";
-import { updateOrgNameAction } from "@/server/actions/organization";
+import { updateOrgNameMutation } from "@/server/actions/organization/mutations";
 import { useAwaitableTransition } from "@/hooks/use-awaitable-transition";
 
 const orgNameFormSchema = z.object({
@@ -53,7 +53,8 @@ export function OrgNameForm({ currentOrg }: OrgNameFormProps) {
     });
 
     const { mutateAsync, isPending: isMutatePending } = useMutation({
-        mutationFn: () => updateOrgNameAction({ name: form.getValues().name }),
+        mutationFn: () =>
+            updateOrgNameMutation({ name: form.getValues().name }),
     });
 
     const [isPending, startAwaitableTransition] = useAwaitableTransition();

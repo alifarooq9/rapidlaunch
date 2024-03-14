@@ -25,7 +25,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Icons } from "@/components/ui/icons";
 import { useMutation } from "@tanstack/react-query";
-import { updateNameAction } from "@/server/actions/user";
+import { updateNameMutation } from "@/server/actions/user/mutations";
 
 const userNameFormSchema = z.object({
     name: z
@@ -52,7 +52,7 @@ export function UserNameForm({ user }: UserNameFormProps) {
     });
 
     const { isPending, mutateAsync } = useMutation({
-        mutationFn: () => updateNameAction({ name: form.getValues().name }),
+        mutationFn: () => updateNameMutation({ name: form.getValues().name }),
         onSuccess: () => {
             router.refresh();
             toast.success("Name updated successfully");

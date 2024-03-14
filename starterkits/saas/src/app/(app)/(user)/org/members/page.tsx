@@ -5,10 +5,10 @@ import {
     type UsersData,
     columns,
 } from "@/app/(app)/(user)/org/members/_components/columns";
-import { getOrgMembersAction } from "@/server/actions/organization";
+import { getOrgMembersQuery } from "@/server/actions/organization/queries";
 
 export default async function OrgMembersPage() {
-    const members = await getOrgMembersAction();
+    const members = await getOrgMembersQuery();
 
     const membersData: UsersData[] = members.map((member) => ({
         id: member.memberId,

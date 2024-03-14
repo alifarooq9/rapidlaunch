@@ -26,7 +26,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useMutation } from "@tanstack/react-query";
 import { useAwaitableTransition } from "@/hooks/use-awaitable-transition";
-import { deleteOrgAction } from "@/server/actions/organization";
+import { deleteOrgMutation } from "@/server/actions/organization/mutations";
 import { setOrgCookie } from "@/lib/utils";
 import { siteUrls } from "@/config/urls";
 
@@ -52,7 +52,7 @@ export function DeleteYourOrgForm({ fallbackOrgId }: DeleteYourOrgFormProps) {
     });
 
     const { isPending: isMutatePending, mutateAsync } = useMutation({
-        mutationFn: () => deleteOrgAction(),
+        mutationFn: () => deleteOrgMutation(),
     });
 
     const [isPending, startAwaitableTransition] = useAwaitableTransition();

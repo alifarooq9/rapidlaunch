@@ -21,9 +21,9 @@ import { type UsersData } from "@/app/(app)/(user)/org/members/_components/colum
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import {
-    removeUserAction,
-    updateMemberRoleAction,
-} from "@/server/actions/organization";
+    removeUserMutation,
+    updateMemberRoleMutation,
+} from "@/server/actions/organization/mutations";
 
 type Role = (typeof membersToOrganizationsRoleEnum.enumValues)[number];
 
@@ -33,7 +33,7 @@ export function ColumnDropdown({ id, role }: UsersData) {
     const { mutateAsync: changeRoleMutate, isPending: changeRoleIsPending } =
         useMutation({
             mutationFn: ({ role }: { role: Role }) =>
-                updateMemberRoleAction({ memberId: id, role }),
+                updateMemberRoleMutation({ memberId: id, role }),
             onSettled: () => {
                 router.refresh();
             },
@@ -49,7 +49,7 @@ export function ColumnDropdown({ id, role }: UsersData) {
 
     const { mutateAsync: removeUserMutate, isPending: removeUserIsPending } =
         useMutation({
-            mutationFn: () => removeUserAction({ userId: id }),
+            mutationFn: () => removeUserMutation({ userId: id }),
             onSettled: () => {
                 router.refresh();
             },

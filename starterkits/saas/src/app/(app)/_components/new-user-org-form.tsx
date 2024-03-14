@@ -22,8 +22,8 @@ import { Icons } from "@/components/ui/icons";
 import { Input } from "@/components/ui/input";
 import { new_user_setup_step_cookie } from "@/config/cookie-keys";
 import { useAwaitableTransition } from "@/hooks/use-awaitable-transition";
-import { createOrgAction } from "@/server/actions/organization";
-import { completeNewUserSetupAction } from "@/server/actions/user";
+import { createOrgMutation } from "@/server/actions/organization/mutations";
+import { completeNewUserSetupMutation } from "@/server/actions/user/mutations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -62,7 +62,7 @@ export function NewUserOrgForm({ currentStep, userId }: NewUserOrgFormProps) {
         mutateAsync: completeNewUserMutate,
         isPending: isCompleteNewUserPending,
     } = useMutation({
-        mutationFn: () => completeNewUserSetupAction(),
+        mutationFn: () => completeNewUserSetupMutation(),
     });
 
     const form = useForm<CreateOrgFormSchema>({
@@ -73,7 +73,7 @@ export function NewUserOrgForm({ currentStep, userId }: NewUserOrgFormProps) {
     });
 
     const { mutateAsync, isPending: isMutatePending } = useMutation({
-        mutationFn: ({ name }: { name: string }) => createOrgAction({ name }),
+        mutationFn: ({ name }: { name: string }) => createOrgMutation({ name }),
     });
 
     const [isPending, startAwaitableTransition] = useAwaitableTransition();
