@@ -27,7 +27,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Icons } from "@/components/ui/icons";
 import { useMutation } from "@tanstack/react-query";
-import { updateNameAction } from "@/server/actions/user";
+import { updateNameMutation } from "@/server/actions/user/mutations";
 import { useAwaitableTransition } from "@/hooks/use-awaitable-transition";
 import { siteConfig } from "@/config/site";
 import { new_user_setup_step_cookie } from "@/config/cookie-keys";
@@ -61,7 +61,7 @@ export function NewUserProfileForm({
     });
 
     const { isPending: isMutatePending, mutateAsync } = useMutation({
-        mutationFn: () => updateNameAction({ name: form.getValues().name }),
+        mutationFn: () => updateNameMutation({ name: form.getValues().name }),
     });
 
     const [isPending, startAwaitableTransition] = useAwaitableTransition();

@@ -29,7 +29,7 @@ import type { OurFileRouter } from "@/server/uploadthing/core";
 import { generateClientDropzoneAccept } from "uploadthing/client";
 import { Icons } from "@/components/ui/icons";
 import { useMutation } from "@tanstack/react-query";
-import { updateImageAction } from "@/server/actions/user";
+import { updateImageMutation } from "@/server/actions/user/mutations";
 import { toast } from "sonner";
 import { useAwaitableTransition } from "@/hooks/use-awaitable-transition";
 import { useRouter } from "next/navigation";
@@ -81,7 +81,7 @@ export function UserImageForm({ user }: UserImageFormProps) {
 
     const { isPending: isMutatePending, mutateAsync } = useMutation({
         mutationFn: ({ imageUrl }: { imageUrl: string }) =>
-            updateImageAction({ image: imageUrl }),
+            updateImageMutation({ image: imageUrl }),
     });
 
     const handleUpdateImage = async () => {
