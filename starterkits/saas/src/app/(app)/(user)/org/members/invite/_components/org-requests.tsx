@@ -6,10 +6,10 @@ import { Icons } from "@/components/ui/icons";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAwaitableTransition } from "@/hooks/use-awaitable-transition";
 import {
-    acceptOrgRequestAction,
-    declineOrgRequestAction,
-    type getOrgRequestsAction,
-} from "@/server/actions/organization";
+    acceptOrgRequestMutation,
+    declineOrgRequestMutation,
+} from "@/server/actions/organization/mutations";
+import type { getOrgRequestsQuery } from "@/server/actions/organization/queries";
 import { useMutation } from "@tanstack/react-query";
 import { RefreshCcwIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -17,7 +17,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 type OrgRequestsProps = {
-    requests: Awaited<ReturnType<typeof getOrgRequestsAction>>;
+    requests: Awaited<ReturnType<typeof getOrgRequestsQuery>>;
 };
 
 export function OrgRequests({ requests }: OrgRequestsProps) {
@@ -72,7 +72,7 @@ export function OrgRequests({ requests }: OrgRequestsProps) {
 }
 
 type RequestItemProps = {
-    request: Awaited<ReturnType<typeof getOrgRequestsAction>>[0];
+    request: Awaited<ReturnType<typeof getOrgRequestsQuery>>[0];
 };
 
 function RequestItem({ request }: RequestItemProps) {
@@ -84,7 +84,7 @@ function RequestItem({ request }: RequestItemProps) {
     const [, startAwaitableTransition] = useAwaitableTransition();
 
     const { mutateAsync: acceptMutateAsync } = useMutation({
-        mutationFn: () => acceptOrgRequestAction({ requestId: request.id }),
+        mutationFn: () => acceptOrgRequestMutation({ requestId: request.id }),
     });
 
     const onAccept = async () => {
@@ -109,7 +109,7 @@ function RequestItem({ request }: RequestItemProps) {
     };
 
     const { mutateAsync: declineMutateAsync } = useMutation({
-        mutationFn: () => declineOrgRequestAction({ requestId: request.id }),
+        mutationFn: () => declineOrgRequestMutation({ requestId: request.id }),
     });
 
     const onDecline = async () => {

@@ -12,7 +12,7 @@ import {
     OrgSelectDropdown,
     type UserOrgs,
 } from "@/app/(app)/_components/org-select-dropdown";
-import { getOrganizations } from "@/server/actions/organization";
+import { getOrganizations } from "@/server/actions/organization/queries";
 
 type SideNavProps = {
     sidebarNavIncludeIds?: string[];

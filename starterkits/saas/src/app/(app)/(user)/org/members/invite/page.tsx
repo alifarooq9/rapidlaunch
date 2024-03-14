@@ -10,9 +10,9 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { env } from "@/env";
 import {
-    getOrgRequestsAction,
+    getOrgRequestsQuery,
     getOrganizations,
-} from "@/server/actions/organization";
+} from "@/server/actions/organization/queries";
 import { ShareInviteLink } from "@/app/(app)/(user)/org/members/invite/_components/share-invite-link";
 import { OrgRequests } from "@/app/(app)/(user)/org/members/invite/_components/org-requests";
 
@@ -21,7 +21,7 @@ export default async function OrgMemberInvite() {
 
     const inviteLink = `${env.NEXTAUTH_URL}/invite/org/${currentOrg.id}`;
 
-    const requests = await getOrgRequestsAction();
+    const requests = await getOrgRequestsQuery();
 
     return (
         <AppPageShell

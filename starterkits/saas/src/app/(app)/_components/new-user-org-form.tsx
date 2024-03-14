@@ -22,7 +22,7 @@ import { Icons } from "@/components/ui/icons";
 import { Input } from "@/components/ui/input";
 import { new_user_setup_step_cookie } from "@/config/cookie-keys";
 import { useAwaitableTransition } from "@/hooks/use-awaitable-transition";
-import { createOrgAction } from "@/server/actions/organization";
+import { createOrgMutation } from "@/server/actions/organization/mutations";
 import { completeNewUserSetupAction } from "@/server/actions/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
@@ -73,7 +73,7 @@ export function NewUserOrgForm({ currentStep, userId }: NewUserOrgFormProps) {
     });
 
     const { mutateAsync, isPending: isMutatePending } = useMutation({
-        mutationFn: ({ name }: { name: string }) => createOrgAction({ name }),
+        mutationFn: ({ name }: { name: string }) => createOrgMutation({ name }),
     });
 
     const [isPending, startAwaitableTransition] = useAwaitableTransition();

@@ -10,21 +10,19 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { Icons } from "@/components/ui/icons";
-import {
-    sendOrgRequestAction,
-    type getOrgById,
-} from "@/server/actions/organization";
+import { sendOrgRequestMutation } from "@/server/actions/organization/mutations";
+import type { getOrgByIdQuery } from "@/server/actions/organization/queries";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 type RequestCardProps = {
-    org: Awaited<ReturnType<typeof getOrgById>>;
+    org: Awaited<ReturnType<typeof getOrgByIdQuery>>;
     orgId: string;
 };
 
 export function RequestCard({ org, orgId }: RequestCardProps) {
     const { isPending, mutate } = useMutation({
-        mutationFn: () => sendOrgRequestAction({ orgId }),
+        mutationFn: () => sendOrgRequestMutation({ orgId }),
         onSuccess: () => {
             toast.success("Request sent successfully");
         },

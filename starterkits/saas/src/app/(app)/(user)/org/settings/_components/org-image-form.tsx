@@ -31,7 +31,7 @@ import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useAwaitableTransition } from "@/hooks/use-awaitable-transition";
 import { useRouter } from "next/navigation";
-import { updateOrgImageAction } from "@/server/actions/organization";
+import { updateOrgImageMutation } from "@/server/actions/organization/mutations";
 import type { organizations } from "@/server/db/schema";
 
 type OrgImageFormProps = {
@@ -81,7 +81,7 @@ export function OrgImageForm({ currentOrg }: OrgImageFormProps) {
 
     const { isPending: isMutatePending, mutateAsync } = useMutation({
         mutationFn: ({ imageUrl }: { imageUrl: string }) =>
-            updateOrgImageAction({ image: imageUrl }),
+            updateOrgImageMutation({ image: imageUrl }),
     });
 
     const handleUpdateImage = async () => {

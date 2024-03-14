@@ -3,7 +3,7 @@ import { orgSettingsPageConfig } from "@/app/(app)/(user)/org/settings/_constant
 import { OrgNameForm } from "@/app/(app)/(user)/org/settings/_components/org-name-form";
 import { DeleteYourOrgForm } from "@/app/(app)/(user)/org/settings/_components/org-delete-form";
 import { OrgImageForm } from "@/app/(app)/(user)/org/settings/_components/org-image-form";
-import { getOrganizations } from "@/server/actions/organization";
+import { getOrganizations } from "@/server/actions/organization/queries";
 
 export default async function OrgSettingsPage() {
     const { currentOrg, userOrgs } = await getOrganizations();

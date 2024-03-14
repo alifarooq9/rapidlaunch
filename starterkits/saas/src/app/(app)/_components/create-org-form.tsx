@@ -20,7 +20,7 @@ import {
 import { Icons } from "@/components/ui/icons";
 import { Input } from "@/components/ui/input";
 import { useAwaitableTransition } from "@/hooks/use-awaitable-transition";
-import { createOrgAction } from "@/server/actions/organization";
+import { createOrgMutation } from "@/server/actions/organization/mutations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -55,7 +55,7 @@ export function CreateOrgForm({ open, setOpen }: CreateOrgFormProps) {
     });
 
     const { mutateAsync, isPending: isMutatePending } = useMutation({
-        mutationFn: ({ name }: { name: string }) => createOrgAction({ name }),
+        mutationFn: ({ name }: { name: string }) => createOrgMutation({ name }),
     });
 
     const [isPending, startAwaitableTransition] = useAwaitableTransition();

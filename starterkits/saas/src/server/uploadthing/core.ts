@@ -1,7 +1,7 @@
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
 import { getUser } from "@/server/auth";
-import { getOrganizations } from "@/server/actions/organization";
+import { getOrganizations } from "@/server/actions/organization/queries";
 import { db } from "@/server/db";
 import { and, eq } from "drizzle-orm";
 import { membersToOrganizations } from "@/server/db/schema";

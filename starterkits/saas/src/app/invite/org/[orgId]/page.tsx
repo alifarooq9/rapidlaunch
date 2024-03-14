@@ -1,4 +1,4 @@
-import { getOrgById } from "@/server/actions/organization";
+import { getOrgByIdQuery } from "@/server/actions/organization/queries";
 import { RequestCard } from "@/app/invite/org/[orgId]/_components/request-card";
 
 type OrgRequestProps = {
@@ -10,7 +10,7 @@ type OrgRequestProps = {
 export default async function OrgRequestPage({
     params: { orgId },
 }: OrgRequestProps) {
-    const org = await getOrgById({ orgId });
+    const org = await getOrgByIdQuery({ orgId });
 
     return (
         <main className="container flex min-h-screen flex-col items-center justify-center">

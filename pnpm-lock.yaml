@@ -362,6 +362,9 @@ importers:
       drizzle-orm:
         specifier: ^0.29.4
         version: 0.29.4(@types/react@18.2.60)(pg@8.11.3)(postgres@3.4.3)(react@18.2.0)
+      drizzle-zod:
+        specifier: ^0.5.1
+        version: 0.5.1(drizzle-orm@0.29.4)(zod@3.22.4)
       geist:
         specifier: ^1.2.2
         version: 1.2.2(next@14.1.0)
@@ -4955,6 +4958,16 @@ packages:
       pg: 8.11.3
       postgres: 3.4.3
       react: 18.2.0
+    dev: false
+
+  /drizzle-zod@0.5.1(drizzle-orm@0.29.4)(zod@3.22.4):
+    resolution: {integrity: sha512-C/8bvzUH/zSnVfwdSibOgFjLhtDtbKYmkbPbUCq46QZyZCH6kODIMSOgZ8R7rVjoI+tCj3k06MRJMDqsIeoS4A==}
+    peerDependencies:
+      drizzle-orm: '>=0.23.13'
+      zod: '*'
+    dependencies:
+      drizzle-orm: 0.29.4(@types/react@18.2.60)(pg@8.11.3)(postgres@3.4.3)(react@18.2.0)
+      zod: 3.22.4
     dev: false
 
   /eastasianwidth@0.2.0:
