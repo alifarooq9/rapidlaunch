@@ -24,7 +24,7 @@ export function AppPageShell({
                 rightContent={rightContent}
                 description={description}
             />
-            {children}
+            <div className="space-y-8 pb-8">{children}</div>
         </Container>
     );
 }
