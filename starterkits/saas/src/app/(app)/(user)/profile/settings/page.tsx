@@ -3,6 +3,7 @@ import { UserNameForm } from "@/app/(app)/(user)/profile/settings/_components/us
 import { UserImageForm } from "@/app/(app)/(user)/profile/settings/_components/user-image-form";
 import { UserVerifyForm } from "@/app/(app)/(user)/profile/settings/_components/user-verify-form";
 import { profileSettingsPageConfig } from "@/app/(app)/(user)/profile/settings/_constants/page-config";
+import { UserAppearanceForm } from "@/app/(app)/(user)/profile/settings/_components/user-appearance-form";
 import { getUser } from "@/server/auth";
 import { type User } from "next-auth";
 
@@ -27,6 +28,8 @@ export default async function SettingsPage() {
                 {user && !user.emailVerified && (
                     <UserVerifyForm user={user as User} />
                 )}
+
+                <UserAppearanceForm />
             </div>
         </AppPageShell>
     );
