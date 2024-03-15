@@ -42,18 +42,25 @@ const createOrgFormSchema = z.object({
 type CreateOrgFormSchema = z.infer<typeof createOrgFormSchema>;
 
 type NewUserOrgFormProps = {
-    currentStep: number;
+    currentStep?: number;
     userId: string;
+    prevBtn?: boolean;
 };
 
-export function NewUserOrgForm({ currentStep, userId }: NewUserOrgFormProps) {
+export function NewUserOrgForm({
+    currentStep,
+    userId,
+    prevBtn = true,
+}: NewUserOrgFormProps) {
     const router = useRouter();
 
     const [isPrevPending, startPrevTransition] = useAwaitableTransition();
 
     const handlePrev = async () => {
         await startPrevTransition(() => {
-            document.cookie = `${new_user_setup_step_cookie}${userId}=${currentStep - 1}; path=/`;
+            if (currentStep) {
+                document.cookie = `${new_user_setup_step_cookie}${userId}=${currentStep - 1}; path=/`;
+            }
             router.refresh();
         });
     };
@@ -133,18 +140,20 @@ export function NewUserOrgForm({ currentStep, userId }: NewUserOrgFormProps) {
                         />
                     </CardContent>
                     <CardFooter className="flex items-center justify-end gap-2">
-                        <Button
-                            disabled={isPrevPending}
-                            onClick={handlePrev}
-                            className="gap-2"
-                            variant="outline"
-                            type="button"
-                        >
-                            {isPrevPending ? (
-                                <Icons.loader className="h-4 w-4" />
-                            ) : null}
-                            <span>Previous</span>
-                        </Button>
+                        {prevBtn ? (
+                            <Button
+                                disabled={isPrevPending}
+                                onClick={handlePrev}
+                                className="gap-2"
+                                variant="outline"
+                                type="button"
+                            >
+                                {isPrevPending ? (
+                                    <Icons.loader className="h-4 w-4" />
+                                ) : null}
+                                <span>Previous</span>
+                            </Button>
+                        ) : null}
                         <Button
                             disabled={
                                 isPending ||
