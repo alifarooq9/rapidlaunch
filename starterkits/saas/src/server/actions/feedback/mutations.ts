@@ -6,8 +6,8 @@ import {
     feedbackInsertSchema,
     feedbackSelectSchema,
 } from "@/server/db/schema";
-import { protectedProcedure } from "@/server/procedures";
-import { eq } from "drizzle-orm";
+import { adminProcedure, protectedProcedure } from "@/server/procedures";
+import { and, eq } from "drizzle-orm";
 import type { z } from "zod";
 
 /**
@@ -55,10 +55,18 @@ export async function createFeedbackMutation(props: CreateFeedbackProps) {
  * @params id - The id of the feedback
  */
 
-export async function removeFeedbackMutation({ id }: { id: string }) {
-    await protectedProcedure();
+export async function removeUserFeedbackMutation({ id }: { id: string }) {
+    const { user } = await protectedProcedure();
 
     if (!id) throw new Error("Invalid feedback id");
+
+    const feedbackData = await db.query.feedback.findFirst({
+        where: and(eq(feedback.id, id), eq(feedback.userId, user.id)),
+    });
+
+    if (!feedbackData) {
+        throw new Error("Feedback not found");
+    }
 
     return await db.delete(feedback).where(eq(feedback.id, id)).execute();
 }
@@ -66,22 +74,21 @@ export async function removeFeedbackMutation({ id }: { id: string }) {
 /**
  * Update a feedback
  * @params id - The id of the feedback
- * @params title - The title of the feedback
- * @params message - The message of the feedback
+ * @params status - The status of the feedback
  * @params label - The label of the feedback
+ *
  */
 
 const feedbackUpdateSchema = feedbackSelectSchema.pick({
-    title: true,
-    message: true,
-    label: true,
     id: true,
+    status: true,
+    label: true,
 });
 
 type UpdateFeedbackProps = z.infer<typeof feedbackUpdateSchema>;
 
 export async function updateFeedbackMutation(props: UpdateFeedbackProps) {
-    const { user } = await protectedProcedure();
+    await adminProcedure();
 
     const feedbackParse = await feedbackUpdateSchema.safeParseAsync(props);
 
@@ -91,21 +98,22 @@ export async function updateFeedbackMutation(props: UpdateFeedbackProps) {
         });
     }
 
-    const feedbackData = await db.query.feedback.findFirst({
-        where: eq(feedback.id, feedbackParse.data.id),
-    });
-
-    if (feedbackData?.userId !== user.id) {
-        throw new Error("You are not allowed to update this feedback");
-    }
-
-    if (!feedbackData) {
-        throw new Error("Feedback not found");
-    }
-
     return await db
         .update(feedback)
         .set(feedbackParse.data)
         .where(eq(feedback.id, feedbackParse.data.id))
         .execute();
+}
+
+/**
+ * delete feedback by id
+ * @params id - The id of the feedback
+ */
+
+export async function deleteFeedbackMutation({ id }: { id: string }) {
+    await adminProcedure();
+
+    if (!id) throw new Error("Invalid feedback id");
+
+    return await db.delete(feedback).where(eq(feedback.id, id)).execute();
 }

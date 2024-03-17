@@ -220,6 +220,12 @@ export const feedbackLabelEnum = pgEnum("feedback-label", [
     "Other",
 ]);
 
+export const feedbackStatusEnum = pgEnum("feedback-status", [
+    "Open",
+    "In Progress",
+    "Closed",
+]);
+
 export const feedback = createTable("feedback", {
     id: varchar("id", { length: 255 })
         .notNull()
@@ -231,6 +237,7 @@ export const feedback = createTable("feedback", {
     title: varchar("title", { length: 255 }),
     message: text("message").notNull(),
     label: feedbackLabelEnum("label").notNull(),
+    status: feedbackStatusEnum("status").default("Open").notNull(),
     createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
 });
 

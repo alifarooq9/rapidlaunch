@@ -45,11 +45,20 @@ export default async function UserFeedbackPage() {
                                         "PPP",
                                     )}
                                 </p>
-                                <Badge
-                                    variant="outline"
-                                    className="w-fit rounded-[0.25rem]"
-                                >
+                                <Badge variant="background" className="w-fit">
                                     {feedback.label}
+                                </Badge>
+                                <Badge
+                                    variant={
+                                        feedback.status === "Open"
+                                            ? "success"
+                                            : feedback.status === "In Progress"
+                                              ? "info"
+                                              : "secondary"
+                                    }
+                                    className="w-fit"
+                                >
+                                    {feedback.status}
                                 </Badge>
                             </CardContent>
                         </Card>

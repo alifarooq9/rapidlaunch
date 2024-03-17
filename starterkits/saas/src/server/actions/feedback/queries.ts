@@ -2,8 +2,8 @@
 
 import { db } from "@/server/db";
 import { feedback } from "@/server/db/schema";
-import { protectedProcedure } from "@/server/procedures";
-import { and, desc, eq } from "drizzle-orm";
+import { adminProcedure, protectedProcedure } from "@/server/procedures";
+import { desc, eq } from "drizzle-orm";
 
 /**
  * get all feedback
@@ -19,16 +19,26 @@ export async function getUserFeedbacksQuery() {
     });
 }
 
-export async function getUserFeebackByIdQuery({ id }: { id: string }) {
-    const { user } = await protectedProcedure();
+/**
+ * get all feedback
+ * @returns all feedback
+ * (admin only)
+ */
 
-    if (!id) throw new Error("Invalid feedback id");
+export async function getAllFeedbacksQuery() {
+    await adminProcedure();
 
-    const feedbackData = await db.query.feedback.findFirst({
-        where: and(eq(feedback.userId, user.id), eq(feedback.id, id)),
+    return await db.query.feedback.findMany({
+        orderBy: desc(feedback.createdAt),
+        with: {
+            user: {
+                columns: {
+                    id: true,
+                    name: true,
+                    email: true,
+                    image: true,
+                },
+            },
+        },
     });
-
-    if (!feedbackData) throw new Error("Feedback not found");
-
-    return feedbackData;
 }

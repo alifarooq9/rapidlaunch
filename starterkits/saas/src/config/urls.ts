@@ -37,7 +37,7 @@ export const siteUrls = {
         users: "/admin/users",
         blog: "/admin/blog",
         settings: "/admin/settings",
-        feedback: "/admin/feedback",
+        feedbacks: "/admin/feedbacks",
     },
     profile: {
         settings: "/profile/settings",

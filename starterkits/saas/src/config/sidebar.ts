@@ -5,7 +5,6 @@ import {
     MessageSquareIcon,
     PenLineIcon,
     Settings2Icon,
-    SettingsIcon,
     UserRoundCheckIcon,
     UserRoundPlusIcon,
     UsersRoundIcon,
@@ -86,19 +85,9 @@ const navigation: SidebarNavItems[] = [
                 href: siteUrls.admin.users,
             },
             {
-                label: "Blog",
-                icon: PenLineIcon,
-                href: siteUrls.admin.blog,
-            },
-            {
-                label: "Application Settings",
-                icon: SettingsIcon,
-                href: siteUrls.admin.settings,
-            },
-            {
                 label: "Feedback List",
                 icon: HelpCircleIcon,
-                href: siteUrls.admin.feedback,
+                href: siteUrls.admin.feedbacks,
             },
         ],
     },

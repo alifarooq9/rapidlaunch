@@ -9,7 +9,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { removeFeedbackMutation } from "@/server/actions/feedback/mutations";
+import { removeUserFeedbackMutation } from "@/server/actions/feedback/mutations";
 import { useMutation } from "@tanstack/react-query";
 import { MoreVerticalIcon } from "lucide-react";
 import { toast } from "sonner";
@@ -26,7 +26,7 @@ export function FeedbackDropdown(props: FeedbackDropdownProps) {
         mutateAsync: removeFeedbackMutate,
         isPending: isRemoveFeedbackPending,
     } = useMutation({
-        mutationFn: () => removeFeedbackMutation({ id: props.id }),
+        mutationFn: () => removeUserFeedbackMutation({ id: props.id }),
         onSettled: () => {
             router.refresh();
         },
