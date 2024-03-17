@@ -2,6 +2,7 @@ import {
     BookTextIcon,
     HelpCircleIcon,
     LayoutDashboardIcon,
+    MessageSquareIcon,
     PenLineIcon,
     Settings2Icon,
     SettingsIcon,
@@ -147,9 +148,14 @@ const navigation: SidebarNavItems[] = [
         showLabel: true,
         items: [
             {
+                label: "Feedbacks",
+                icon: MessageSquareIcon,
+                href: siteUrls.feedback,
+            },
+            {
                 label: "Docs",
                 icon: BookTextIcon,
-                href: siteUrls.docs.home,
+                href: siteUrls.docs,
             },
             {
                 label: "Blog",

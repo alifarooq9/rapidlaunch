@@ -50,6 +50,7 @@
         "react": "18.2.0",
         "react-dom": "18.2.0",
         "react-hook-form": "^7.50.1",
+        "react-wrap-balancer": "^1.1.0",
         "resend": "^3.2.0",
         "server-only": "^0.0.1",
         "sonner": "^1.4.2",

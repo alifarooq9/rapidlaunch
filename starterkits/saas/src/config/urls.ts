@@ -8,7 +8,7 @@
  */
 
 export const siteUrls = {
-    publicUrl: "https://www.rapidlaunch.xyz",
+    publicUrl: "https://saasdemo.rapidlaunch.xyz",
     home: "/",
     auth: {
         login: "/auth/login",
@@ -18,10 +18,13 @@ export const siteUrls = {
     features: "/features",
     support: "/support",
     blog: "/blog",
+    docs: "/docs",
+    maintenance: "/maintenance",
     rapidlaunch: "https://www.rapidlaunch.xyz",
     dashboard: {
         home: "/dashboard",
     },
+    feedback: "/feedback",
     organization: {
         members: {
             home: "/org/members",
@@ -40,7 +43,15 @@ export const siteUrls = {
         settings: "/profile/settings",
         billing: "/profile/billing",
     },
-    docs: {
-        home: "/docs",
-    },
 } as const;
+
+export const publicRoutes: string[] = [
+    siteUrls.publicUrl,
+    siteUrls.home,
+    siteUrls.pricing,
+    siteUrls.features,
+    siteUrls.support,
+    siteUrls.blog,
+    siteUrls.docs,
+    siteUrls.maintenance,
+];

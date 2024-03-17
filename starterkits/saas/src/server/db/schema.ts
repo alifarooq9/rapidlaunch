@@ -10,7 +10,9 @@ import {
     timestamp,
     varchar,
 } from "drizzle-orm/pg-core";
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { type AdapterAccount } from "next-auth/adapters";
+import { z } from "zod";
 
 /**
  * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
@@ -40,6 +42,7 @@ export const users = createTable("user", {
 export const usersRelations = relations(users, ({ many }) => ({
     accounts: many(accounts),
     membersToOrganizations: many(membersToOrganizations),
+    feedback: many(feedback),
 }));
 
 export const accounts = createTable(
@@ -207,3 +210,52 @@ export const orgRequestsRelations = relations(orgRequests, ({ one }) => ({
         references: [organizations.id],
     }),
 }));
+
+export const feedbackLabelEnum = pgEnum("feedback-label", [
+    "Issue",
+    "Idea",
+    "Question",
+    "Complaint",
+    "Feature Request",
+    "Other",
+]);
+
+export const feedback = createTable("feedback", {
+    id: varchar("id", { length: 255 })
+        .notNull()
+        .primaryKey()
+        .default(sql`gen_random_uuid()`),
+    userId: varchar("userId", { length: 255 })
+        .notNull()
+        .references(() => users.id),
+    title: varchar("title", { length: 255 }),
+    message: text("message").notNull(),
+    label: feedbackLabelEnum("label").notNull(),
+    createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
+});
+
+export const feedbackRelations = relations(feedback, ({ one }) => ({
+    user: one(users, { fields: [feedback.userId], references: [users.id] }),
+}));
+
+export const feedbackInsertSchema = createInsertSchema(feedback, {
+    title: z
+        .string()
+        .min(3, "Title is too short")
+        .max(255, "Title is too long"),
+    message: z
+        .string()
+        .min(10, "Message is too short")
+        .max(1000, "Message is too long"),
+});
+
+export const feedbackSelectSchema = createSelectSchema(feedback, {
+    title: z
+        .string()
+        .min(3, "Title is too short")
+        .max(255, "Title is too long"),
+    message: z
+        .string()
+        .min(10, "Message is too short")
+        .max(1000, "Message is too long"),
+});
