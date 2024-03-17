@@ -21,8 +21,7 @@ https://github.com/alifarooq9/rapidlaunch/assets/79796123/4f636e2f-e6ec-4fbf-be7
 - [ ] Projects
   - [ ] Create Project
   - [ ] Manage Projects
-- [ ] Feedback System
-  - [ ] Create a support ticket
+- [x] Feedback System
 - [ ] Blog
 - [ ] Admin
   - [ ] Dashboard
