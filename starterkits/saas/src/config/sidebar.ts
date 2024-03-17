@@ -2,9 +2,9 @@ import {
     BookTextIcon,
     HelpCircleIcon,
     LayoutDashboardIcon,
+    MessageSquareIcon,
     PenLineIcon,
     Settings2Icon,
-    SettingsIcon,
     UserRoundCheckIcon,
     UserRoundPlusIcon,
     UsersRoundIcon,
@@ -85,19 +85,9 @@ const navigation: SidebarNavItems[] = [
                 href: siteUrls.admin.users,
             },
             {
-                label: "Blog",
-                icon: PenLineIcon,
-                href: siteUrls.admin.blog,
-            },
-            {
-                label: "Application Settings",
-                icon: SettingsIcon,
-                href: siteUrls.admin.settings,
-            },
-            {
                 label: "Feedback List",
                 icon: HelpCircleIcon,
-                href: siteUrls.admin.feedback,
+                href: siteUrls.admin.feedbacks,
             },
         ],
     },
@@ -147,9 +137,14 @@ const navigation: SidebarNavItems[] = [
         showLabel: true,
         items: [
             {
+                label: "Feedbacks",
+                icon: MessageSquareIcon,
+                href: siteUrls.feedback,
+            },
+            {
                 label: "Docs",
                 icon: BookTextIcon,
-                href: siteUrls.docs.home,
+                href: siteUrls.docs,
             },
             {
                 label: "Blog",

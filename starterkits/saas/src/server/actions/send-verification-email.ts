@@ -22,7 +22,7 @@ export async function sendVerificationEmail({
             subject: `Verify your email address | ${siteConfig.name}`,
             html: `
                 <div>
-                    <a href="${siteUrls.publicUrl}">${siteConfig.name}</a>
+                    <a href="${siteUrls.rapidlaunch}">${siteConfig.name}</a>
                     <h1>🪄 Your magic link</h1>
                     <p>
                         Click the link below to verify your email address and

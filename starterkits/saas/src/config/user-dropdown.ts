@@ -65,7 +65,7 @@ const navigation: UserDropdownNavItems[] = [
         label: "Admin",
         items: [
             {
-                label: "Admin Dashboard",
+                label: "Admin Panel",
                 icon: LayoutDashboardIcon,
                 href: siteUrls.admin.dashboard,
             },
