@@ -16,7 +16,7 @@ https://github.com/alifarooq9/rapidlaunch/assets/79796123/4f636e2f-e6ec-4fbf-be7
   - [x] Members
     - [x] Invite Members
     - [x] Manage Members
-- [ ] Dashboard
+- [x] Dashboard
 - [ ] Payments
 - [ ] Projects
   - [ ] Create Project
@@ -26,6 +26,4 @@ https://github.com/alifarooq9/rapidlaunch/assets/79796123/4f636e2f-e6ec-4fbf-be7
 - [ ] Admin
   - [ ] Dashboard
   - [x] User Management
-  - [ ] Feeback Managment
-  - [ ] Blog
-  - [ ] Application Settings
+  - [x] Feeback Managment
