@@ -49,7 +49,7 @@ export function ColumnDropdown({ id, role }: UsersData) {
 
     const { mutateAsync: removeUserMutate, isPending: removeUserIsPending } =
         useMutation({
-            mutationFn: () => removeUserMutation({ userId: id }),
+            mutationFn: () => removeUserMutation({ memberId: id }),
             onSettled: () => {
                 router.refresh();
             },

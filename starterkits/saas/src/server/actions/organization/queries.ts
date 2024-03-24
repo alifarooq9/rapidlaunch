@@ -57,6 +57,12 @@ export async function getOrgRequestsQuery() {
         .execute();
 }
 
+/**
+ * @purpose Get organization by id
+ * @param orgId
+ * @returns organization
+ */
+
 type GetOrgByIdProps = {
     orgId: string;
 };
@@ -64,19 +70,13 @@ type GetOrgByIdProps = {
 export async function getOrgByIdQuery({ orgId }: GetOrgByIdProps) {
     await protectedProcedure();
 
-    const org = await db.query.organizations.findFirst({
+    return await db.query.organizations.findFirst({
         where: and(eq(organizations.id, orgId)),
         columns: {
             name: true,
             image: true,
         },
     });
-
-    if (!org) {
-        throw new Error("Organization not found");
-    }
-
-    return org;
 }
 
 export async function getOrgMembersQuery() {

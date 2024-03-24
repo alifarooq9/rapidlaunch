@@ -1,27 +1,16 @@
 "use server";
 import { db } from "@/server/db";
-import { accounts, users } from "@/server/db/schema";
+import { accounts, userInsertSchema, users } from "@/server/db/schema";
 import { protectedProcedure, superAdminProcedure } from "@/server/procedures";
 import { eq } from "drizzle-orm";
-import { createInsertSchema } from "drizzle-zod";
-import { z } from "zod";
+import type { z } from "zod";
 
 /**
  * Update the name of the user
  * @param name The new name
  */
 
-const userDrizzleSchema = createInsertSchema(users, {
-    name: z
-        .string()
-        .trim()
-        .min(3, "Name must be at least 3 characters long")
-        .max(50, "Name must be at most 50 characters long"),
-    email: z.string().email(),
-    image: z.string().url(),
-});
-
-const updateNameSchema = userDrizzleSchema.pick({ name: true });
+const updateNameSchema = userInsertSchema.pick({ name: true });
 
 type UpdateNameProps = z.infer<typeof updateNameSchema>;
 
@@ -48,7 +37,7 @@ export async function updateNameMutation({ name }: UpdateNameProps) {
  * @param image The new image
  */
 
-const updateImageSchema = userDrizzleSchema.pick({ image: true });
+const updateImageSchema = userInsertSchema.pick({ image: true });
 
 type UpdateImageProps = z.infer<typeof updateImageSchema>;
 
@@ -76,7 +65,7 @@ export async function updateImageMutation({ image }: UpdateImageProps) {
  * @param role The new role
  */
 
-const updateRoleSchema = userDrizzleSchema.pick({
+const updateRoleSchema = userInsertSchema.pick({
     role: true,
     id: true,
 });
@@ -106,7 +95,7 @@ export async function updateRoleMutation({ role, id }: UpdateRoleProps) {
  * @param id The user id
  */
 
-const deleteUserSchema = userDrizzleSchema.pick({ id: true });
+const deleteUserSchema = userInsertSchema.pick({ id: true });
 
 type DeleteUserProps = z.infer<typeof deleteUserSchema>;
 

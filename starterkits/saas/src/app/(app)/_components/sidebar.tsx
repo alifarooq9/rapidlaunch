@@ -4,8 +4,6 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { UserDropdown } from "@/app/(app)/_components/user-dropdown";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { Suspense } from "react";
-import { buttonVariants } from "@/components/ui/button";
 import { SidebarNav } from "@/app/(app)/_components/sidebar-nav";
 import { getUser } from "@/server/auth";
 import {
@@ -13,6 +11,7 @@ import {
     type UserOrgs,
 } from "@/app/(app)/_components/org-select-dropdown";
 import { getOrganizations } from "@/server/actions/organization/queries";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type SideNavProps = {
     sidebarNavIncludeIds?: string[];
@@ -66,45 +65,15 @@ export async function Sidebar({
             </div>
 
             <div className="py-2">
-                <Suspense
-                    fallback={
-                        <button
-                            aria-disabled
-                            disabled
-                            className={buttonVariants({
-                                variant: "outline",
-                                className: "w-full",
-                            })}
-                        >
-                            <Icons.loader className="h-4 w-4" />
-                        </button>
-                    }
-                >
-                    <UserDropdown user={user} />
-                </Suspense>
+                <UserDropdown user={user} />
             </div>
 
             {showOrgSwitcher && (
                 <div className="py-2">
-                    <Suspense
-                        fallback={
-                            <button
-                                aria-disabled
-                                disabled
-                                className={buttonVariants({
-                                    variant: "outline",
-                                    className: "w-full",
-                                })}
-                            >
-                                <Icons.loader className="h-4 w-4" />
-                            </button>
-                        }
-                    >
-                        <OrgSelectDropdown
-                            userOrgs={urgOrgsData}
-                            currentOrg={currentOrg}
-                        />
-                    </Suspense>
+                    <OrgSelectDropdown
+                        userOrgs={urgOrgsData}
+                        currentOrg={currentOrg}
+                    />
                 </div>
             )}
 
@@ -114,6 +83,47 @@ export async function Sidebar({
                         sidebarNavIncludeIds={sidebarNavIncludeIds}
                         sidebarNavRemoveIds={sidebarNavRemoveIds}
                     />
+                    <ScrollBar orientation="vertical" />
+                </div>
+            </ScrollArea>
+        </aside>
+    );
+}
+
+export function SidebarLoading({
+    showOrgSwitcher = true,
+}: {
+    showOrgSwitcher?: boolean;
+}) {
+    return (
+        <aside className={cn("h-full w-full")}>
+            <div className={cn(" flex h-16 items-center justify-between")}>
+                <Link
+                    href={siteUrls.home}
+                    className={cn("z-10 transition-transform hover:scale-90")}
+                >
+                    <Icons.logo
+                        className="text-xl"
+                        iconProps={{ className: "w-6 h-6 fill-primary" }}
+                    />
+                </Link>
+            </div>
+
+            <div className="py-2">
+                <Skeleton className="h-9 w-full rounded-md" />
+            </div>
+
+            {showOrgSwitcher && (
+                <div className="py-2">
+                    <Skeleton className="h-9 w-full rounded-md" />
+                </div>
+            )}
+
+            <ScrollArea style={{ height: "calc(100vh - 10.5rem)" }}>
+                <div className="h-full w-full space-y-2 py-2">
+                    {[1, 2, 3, 4, 5].map((i) => (
+                        <Skeleton key={i} className="h-8 w-full rounded-md" />
+                    ))}
                     <ScrollBar orientation="vertical" />
                 </div>
             </ScrollArea>

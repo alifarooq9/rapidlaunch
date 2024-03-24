@@ -24,9 +24,7 @@ export function SwtichOrgLoading() {
             className="fixed inset-0 z-[20000] flex h-screen w-screen flex-col items-center justify-center gap-2 bg-background"
         >
             <Icons.loader className="h-7 w-7" />
-            <p className="animate-pulse text-lg font-semibold">
-                Switching Org...
-            </p>
+            <p className="text-lg font-semibold">Switching Org...</p>
         </div>
     );
 }

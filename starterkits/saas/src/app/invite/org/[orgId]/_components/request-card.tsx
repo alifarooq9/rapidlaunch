@@ -35,17 +35,17 @@ export function RequestCard({ org, orgId }: RequestCardProps) {
         <Card className="w-full max-w-sm">
             <CardHeader className="flex flex-col items-center space-y-3">
                 <Avatar className="h-10 w-10">
-                    <AvatarImage src={org.image!} />
+                    <AvatarImage src={org?.image ?? ""} />
                     <AvatarFallback>
-                        {org.name[0]!.toUpperCase()}
+                        {org?.name[0]!.toUpperCase()}
                     </AvatarFallback>
                 </Avatar>
                 <div className="space-y-1">
                     <CardTitle className="text-center text-xl">
-                        Request to join {org.name}
+                        Request to join {org?.name}
                     </CardTitle>
                     <CardDescription className="text-center">
-                        You can send joinning request to {org.name}.
+                        You can send joinning request to {org?.name}.
                     </CardDescription>
                 </div>
             </CardHeader>

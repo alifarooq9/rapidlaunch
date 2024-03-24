@@ -2,14 +2,16 @@
 
 import { db } from "@/server/db";
 import {
+    createOrgInsertSchema,
     membersToOrganizations,
+    membersToOrganizationsInsertSchema,
+    orgRequestInsertSchema,
     orgRequests,
     organizations,
 } from "@/server/db/schema";
 import { protectedProcedure } from "@/server/procedures";
 import { and, eq } from "drizzle-orm";
 import { getOrganizations } from "@/server/actions/organization/queries";
-import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
 /**
@@ -21,18 +23,10 @@ import { z } from "zod";
 
 type CreateOrgProps = Omit<typeof organizations.$inferInsert, "id" | "ownerId">;
 
-const createOrgSchema = createInsertSchema(organizations, {
-    name: z
-        .string()
-        .min(3, "Name must be at least 3 characters long")
-        .max(50, "Name must be at most 50 characters long"),
-    image: z.string().url({ message: "Invalid image URL" }),
-});
-
 export async function createOrgMutation({ ...props }: CreateOrgProps) {
     const { user } = await protectedProcedure();
 
-    const organizationParse = await createOrgSchema.safeParseAsync({
+    const organizationParse = await createOrgInsertSchema.safeParseAsync({
         ownerId: user.id,
         ...props,
     });
@@ -64,11 +58,8 @@ export async function createOrgMutation({ ...props }: CreateOrgProps) {
  * @returns The updated organization
  */
 
-const updateOrgNameSchema = z.object({
-    name: z
-        .string()
-        .min(3, "Name must be at least 3 characters long")
-        .max(50, "Name must be at most 50 characters long"),
+const updateOrgNameSchema = createOrgInsertSchema.pick({
+    name: true,
 });
 
 type UpdateOrgNameProps = z.infer<typeof updateOrgNameSchema>;
@@ -113,8 +104,8 @@ export async function updateOrgNameMutation({ name }: UpdateOrgNameProps) {
  * @returns The updated organization
  */
 
-const updateOrgImageSchema = z.object({
-    image: z.string().url({ message: "Invalid image URL" }),
+const updateOrgImageSchema = createOrgInsertSchema.pick({
+    image: true,
 });
 
 type UpdateOrgImageProps = z.infer<typeof updateOrgImageSchema>;
@@ -178,16 +169,14 @@ export async function deleteOrgMutation() {
  * @param orgId - ID of the organization
  */
 
-const orgRequestSchema = createInsertSchema(orgRequests);
-
 type OrgRequestProps = {
-    orgId: typeof orgRequestSchema._type.organizationId;
+    orgId: typeof orgRequestInsertSchema._type.organizationId;
 };
 
 export async function sendOrgRequestMutation({ orgId }: OrgRequestProps) {
     const { user } = await protectedProcedure();
 
-    const orgRequestParse = await orgRequestSchema.safeParseAsync({
+    const orgRequestParse = await orgRequestInsertSchema.safeParseAsync({
         organizationId: orgId,
         userId: user.id,
     });
@@ -324,9 +313,7 @@ export async function declineOrgRequestMutation({
  * @param role - The Role you want to update
  */
 
-const updateMemberRoleZodSchema = createInsertSchema(membersToOrganizations);
-
-const updateMemberRoleSchema = updateMemberRoleZodSchema.pick({
+const updateMemberRoleSchema = membersToOrganizationsInsertSchema.pick({
     role: true,
     memberId: true,
 });
@@ -391,25 +378,29 @@ export async function updateMemberRoleMutation({
  * @param userId - the id of user your want to remove
  */
 
-const removeUserSchema = z.object({
-    userId: z.string(),
+const removeUserSchema = membersToOrganizationsInsertSchema.pick({
+    memberId: true,
 });
 
 type RemoveUserProps = z.infer<typeof removeUserSchema>;
 
-export async function removeUserMutation({ userId }: RemoveUserProps) {
+export async function removeUserMutation({ memberId }: RemoveUserProps) {
     const { user } = await protectedProcedure();
 
     const { currentOrg } = await getOrganizations();
 
     const removeUserParse = await removeUserSchema.safeParseAsync({
-        userId,
+        memberId,
     });
 
     if (!removeUserParse.success) {
         throw new Error("Invalid remove user data", {
             cause: removeUserParse.error.errors,
         });
+    }
+
+    if (currentOrg.ownerId === removeUserParse.data.memberId) {
+        throw new Error("You can't remove the owner of the organization");
     }
 
     const memToOrg = await db.query.membersToOrganizations.findFirst({
@@ -427,7 +418,7 @@ export async function removeUserMutation({ userId }: RemoveUserProps) {
                 and(
                     eq(
                         membersToOrganizations.memberId,
-                        removeUserParse.data.userId,
+                        removeUserParse.data.memberId,
                     ),
                     eq(membersToOrganizations.organizationId, currentOrg.id),
                 ),

@@ -45,6 +45,16 @@ export const usersRelations = relations(users, ({ many }) => ({
     feedback: many(feedback),
 }));
 
+export const userInsertSchema = createInsertSchema(users, {
+    name: z
+        .string()
+        .trim()
+        .min(3, "Name must be at least 3 characters long")
+        .max(50, "Name must be at most 50 characters long"),
+    email: z.string().email(),
+    image: z.string().url(),
+});
+
 export const accounts = createTable(
     "account",
     {
@@ -123,6 +133,14 @@ export const organizations = createTable("organization", {
         .references(() => users.id),
 });
 
+export const createOrgInsertSchema = createInsertSchema(organizations, {
+    name: z
+        .string()
+        .min(3, "Name must be at least 3 characters long")
+        .max(50, "Name must be at most 50 characters long"),
+    image: z.string().url({ message: "Invalid image URL" }),
+});
+
 export const organizationsRelations = relations(
     organizations,
     ({ one, many }) => ({
@@ -179,6 +197,10 @@ export const membersToOrganizationsRelations = relations(
     }),
 );
 
+export const membersToOrganizationsInsertSchema = createInsertSchema(
+    membersToOrganizations,
+);
+
 export const orgRequests = createTable(
     "orgRequest",
     {
@@ -210,6 +232,10 @@ export const orgRequestsRelations = relations(orgRequests, ({ one }) => ({
         references: [organizations.id],
     }),
 }));
+
+export const orgRequestInsertSchema = createInsertSchema(orgRequests);
+
+// Feedback schema
 
 export const feedbackLabelEnum = pgEnum("feedback-label", [
     "Issue",
