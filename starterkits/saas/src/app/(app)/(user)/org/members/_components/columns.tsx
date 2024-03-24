@@ -5,7 +5,7 @@
 import { type ColumnDef } from "@tanstack/react-table";
 import { type membersToOrganizations } from "@/server/db/schema";
 import { Badge } from "@/components/ui/badge";
-import { ColumnDropdown } from "@/app/(app)/(user)/org/members/_components/data-table-column-dropdown";
+import { ColumnDropdown } from "@/app/(app)/(user)/org/members/_components/column-dropdown";
 import { format } from "date-fns";
 
 // This type is used to define the shape of our data.
@@ -18,23 +18,24 @@ export type MembersData = {
     createdAt: Date;
 };
 
+export function getColumns(): ColumnDef<MembersData>[] {
+    return columns;
+}
+
 export const columns: ColumnDef<MembersData>[] = [
     {
-        accessorKey: "idx",
-        header: () => <span className="px-1">IDX</span>,
-        cell: ({ row }) => (
-            <span className="px-2 text-center">{row.index + 1}</span>
-        ),
-    },
-    {
         accessorKey: "name",
-        header: "Name",
+        header: () => <span className="pl-2">Name</span>,
         cell: ({ row }) => {
             if (row.original.name) {
-                return <span className="font-medium">{row.original.name}</span>;
+                return (
+                    <span className="pl-2 font-medium">
+                        {row.original.name}
+                    </span>
+                );
             }
 
-            return <span className="text-muted-foreground">No name</span>;
+            return <span className="pl-2 text-muted-foreground">No name</span>;
         },
     },
     {
@@ -64,6 +65,8 @@ export const columns: ColumnDef<MembersData>[] = [
     },
     {
         id: "actions",
-        cell: ({ row }) => <ColumnDropdown {...row.original} />,
+        cell: ({ row }) => (
+            <ColumnDropdown {...row.original} id={row.original.id} />
+        ),
     },
 ];

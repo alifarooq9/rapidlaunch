@@ -7,12 +7,23 @@ import { asc, count, desc, ilike, inArray, or } from "drizzle-orm";
 import { unstable_noStore as noStore } from "next/cache";
 import { z } from "zod";
 
+/**
+ * Get paginated users
+ * @param page - page number
+ * @param per_page - number of items per page
+ * @param sort - sort by column
+ * @param email - filter by email
+ * @param role - filter by role
+ * @param operator - filter by operator
+ *
+ * @returns Paginated users
+ */
+
 const panginatedUserPropsSchema = z.object({
     page: z.coerce.number().default(1),
     per_page: z.coerce.number().default(10),
     sort: z.string().optional(),
     email: z.string().optional(),
-    status: z.string().optional(),
     role: z.string().optional(),
     operator: z.string().optional(),
 });

@@ -59,7 +59,10 @@ export function ColumnDropdown({ id, role }: MembersData) {
         toast.promise(async () => await removeUserMutate(), {
             loading: "Removing user...",
             success: "User removed!",
-            error: "Failed to remove user.",
+            error: (e) => {
+                console.log(e);
+                return "Failed to remove user.";
+            },
         });
     };
 

@@ -45,6 +45,7 @@ export async function createOrgMutation({ ...props }: CreateOrgProps) {
 
     await db.insert(membersToOrganizations).values({
         memberId: organizationParse.data.ownerId,
+        memberEmail: user.email!,
         organizationId: createOrg[0]!.id,
         role: "Admin",
     });
@@ -241,6 +242,9 @@ export async function acceptOrgRequestMutation({
     if (currentOrg.ownerId === user.id || memToOrg) {
         const request = await db.query.orgRequests.findFirst({
             where: eq(orgRequests.id, acceptReqParse.data.requestId),
+            with: {
+                user: true,
+            },
         });
 
         if (!request) {
@@ -250,6 +254,7 @@ export async function acceptOrgRequestMutation({
         await db.insert(membersToOrganizations).values({
             memberId: request.userId,
             organizationId: currentOrg.id,
+            memberEmail: request.user.email,
         });
 
         return await db
@@ -412,7 +417,7 @@ export async function removeUserMutation({ memberId }: RemoveUserProps) {
     });
 
     if (currentOrg.ownerId === user.id || memToOrg) {
-        return await db
+        const result = await db
             .delete(membersToOrganizations)
             .where(
                 and(
@@ -424,6 +429,8 @@ export async function removeUserMutation({ memberId }: RemoveUserProps) {
                 ),
             )
             .execute();
+
+        return result;
     }
 
     throw new Error("You are not an admin of this organization");

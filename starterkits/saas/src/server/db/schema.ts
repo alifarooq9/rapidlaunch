@@ -166,6 +166,7 @@ export const membersToOrganizations = createTable(
         memberId: varchar("userId", { length: 255 })
             .notNull()
             .references(() => users.id, { onDelete: "cascade" }),
+        memberEmail: varchar("userEmail", { length: 255 }).notNull(),
         organizationId: varchar("organizationId", { length: 255 })
             .notNull()
             .references(() => organizations.id, { onDelete: "cascade" }),
@@ -180,6 +181,9 @@ export const membersToOrganizations = createTable(
         compoundKey: primaryKey({
             columns: [mto.id, mto.memberId, mto.organizationId],
         }),
+        memberEmailIdx: index("membersToOrganizations_memberEmail_idx").on(
+            mto.memberEmail,
+        ),
     }),
 );
 
@@ -211,6 +215,7 @@ export const orgRequests = createTable(
         userId: varchar("userId", { length: 255 })
             .notNull()
             .references(() => users.id, { onDelete: "cascade" }),
+
         organizationId: varchar("organizationId", {
             length: 255,
         })

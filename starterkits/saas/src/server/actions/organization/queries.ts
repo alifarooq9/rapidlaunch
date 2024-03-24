@@ -8,8 +8,10 @@ import {
     organizations,
 } from "@/server/db/schema";
 import { protectedProcedure } from "@/server/procedures";
-import { and, eq } from "drizzle-orm";
+import { and, asc, count, desc, eq, ilike, inArray, or } from "drizzle-orm";
 import { cookies } from "next/headers";
+import { z } from "zod";
+import { unstable_noStore as noStore } from "next/cache";
 
 export async function getUserOrgsQuery() {
     const { user } = await protectedProcedure();
@@ -79,12 +81,65 @@ export async function getOrgByIdQuery({ orgId }: GetOrgByIdProps) {
     });
 }
 
-export async function getOrgMembersQuery() {
+/**
+ * @purpose Get paginated users
+ * @param page - page number
+ * @param per_page - number of items per page
+ * @param sort - sort by column
+ * @param email - filter by email
+ * @param role - filter by role
+ * @param operator - filter by operator
+ * @returns Paginated users
+ */
+
+const panginatedUserPropsSchema = z.object({
+    page: z.coerce.number().default(1),
+    per_page: z.coerce.number().default(10),
+    sort: z.string().optional(),
+    email: z.string().optional(),
+    role: z.string().optional(),
+    operator: z.string().optional(),
+});
+
+type GetPaginatedUsersQueryProps = z.infer<typeof panginatedUserPropsSchema>;
+
+export async function getPaginatedOrgMembersQuery(
+    input: GetPaginatedUsersQueryProps,
+) {
     const { currentOrg } = await getOrganizations();
 
-    return await db.query.membersToOrganizations
-        .findMany({
-            where: eq(membersToOrganizations.organizationId, currentOrg.id),
+    noStore();
+    const offset = (input.page - 1) * input.per_page;
+
+    const [column, order] = (input.sort?.split(".") as [
+        keyof typeof membersToOrganizations.$inferSelect | undefined,
+        "asc" | "desc" | undefined,
+    ]) ?? ["title", "desc"];
+
+    const roles =
+        (input.role?.split(
+            ".",
+        ) as (typeof membersToOrganizations.$inferSelect.role)[]) ?? [];
+
+    const { data, total } = await db.transaction(async (tx) => {
+        const data = await tx.query.membersToOrganizations.findMany({
+            offset,
+            limit: input.per_page,
+            where: and(
+                eq(membersToOrganizations.organizationId, currentOrg.id),
+                or(
+                    input.email
+                        ? ilike(
+                              membersToOrganizations.memberEmail,
+                              `%${input.email}%`,
+                          )
+                        : undefined,
+
+                    roles.length > 0
+                        ? inArray(membersToOrganizations.role, roles)
+                        : undefined,
+                ),
+            ),
             with: {
                 user: {
                     columns: {
@@ -95,6 +150,44 @@ export async function getOrgMembersQuery() {
                     },
                 },
             },
-        })
-        .execute();
+            orderBy:
+                column && column in membersToOrganizations
+                    ? order === "asc"
+                        ? asc(membersToOrganizations[column])
+                        : desc(membersToOrganizations[column])
+                    : desc(membersToOrganizations.createdAt),
+        });
+
+        
+        const total = await tx
+            .select({
+                count: count(),
+            })
+            .from(membersToOrganizations)
+            .where(
+                and(
+                    eq(membersToOrganizations.organizationId, currentOrg.id),
+                    or(
+                        input.email
+                            ? ilike(
+                                  membersToOrganizations.memberEmail,
+                                  `%${input.email}%`,
+                              )
+                            : undefined,
+
+                        roles.length > 0
+                            ? inArray(membersToOrganizations.role, roles)
+                            : undefined,
+                    ),
+                ),
+            )
+            .execute()
+            .then((res) => res[0]?.count ?? 0);
+
+        return { data, total };
+    });
+
+    const pageCount = Math.ceil(total / input.per_page);
+
+    return { data, pageCount, total };
 }

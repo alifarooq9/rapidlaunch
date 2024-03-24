@@ -3,8 +3,8 @@ import { usersPageConfig } from "@/app/(app)/admin/users/_constants/page-config"
 import { getPaginatedUsersQuery } from "@/server/actions/user/queries";
 import { UsersTable } from "./_components/users-table";
 import { z } from "zod";
+import type { SearchParams } from "@/types/data-table";
 
-type SearchParams = Record<string, string | string[] | undefined>;
 
 type UsersPageProps = {
     searchParams: SearchParams;

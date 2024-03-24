@@ -32,6 +32,8 @@ type Role = (typeof usersRoleEnum.enumValues)[number];
 export function ColumnDropdown({ email, id, role }: UsersData) {
     const router = useRouter();
 
+    console.log(id, "id");
+
     const { mutateAsync: changeRoleMutate, isPending: changeRoleIsPending } =
         useMutation({
             mutationFn: ({ role }: { role: Role }) =>
