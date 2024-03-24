@@ -1,7 +1,7 @@
 import {
     WebPageHeading,
     WebPageWrapper,
-} from "@/app/(web)/_components/generals-components";
+} from "@/app/(web)/_components/general-components";
 import { buttonVariants } from "@/components/ui/button";
 import {
     Card,

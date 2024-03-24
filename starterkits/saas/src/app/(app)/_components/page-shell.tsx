@@ -16,7 +16,7 @@ export function AppPageShell({
     const Container = as ?? "main";
 
     return (
-        <Container className="w-full space-y-8 px-8">
+        <Container className="w-full space-y-8 pl-8">
             <PageHeader title={title} description={description} />
             <div className="space-y-8 pb-8">{children}</div>
         </Container>

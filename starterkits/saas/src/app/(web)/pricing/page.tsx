@@ -2,7 +2,7 @@ import { PricingTable } from "@/app/(web)/pricing/_components/pricing-table";
 import {
     WebPageHeading,
     WebPageWrapper,
-} from "@/app/(web)/_components/generals-components";
+} from "@/app/(web)/_components/general-components";
 
 /**
  * Customize the pricing page to your needs. You can use the `PricingPlans` component to display the pricing plans.
