@@ -130,7 +130,7 @@ export const organizations = createTable("organization", {
     createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
     ownerId: varchar("ownerId", { length: 255 })
         .notNull()
-        .references(() => users.id),
+        .references(() => users.id, { onDelete: "cascade" }),
 });
 
 export const createOrgInsertSchema = createInsertSchema(organizations, {
@@ -259,7 +259,7 @@ export const feedback = createTable("feedback", {
         .default(sql`gen_random_uuid()`),
     userId: varchar("userId", { length: 255 })
         .notNull()
-        .references(() => users.id),
+        .references(() => users.id, { onDelete: "cascade" }),
     title: varchar("title", { length: 255 }),
     message: text("message").notNull(),
     label: feedbackLabelEnum("label").notNull(),

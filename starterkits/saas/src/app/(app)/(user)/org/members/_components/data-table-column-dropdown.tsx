@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button";
 import { MoreHorizontalIcon } from "lucide-react";
 import { membersToOrganizationsRoleEnum } from "@/server/db/schema";
 import { toast } from "sonner";
-import { type UsersData } from "@/app/(app)/(user)/org/members/_components/columns";
+import { type MembersData } from "@/app/(app)/(user)/org/members/_components/columns";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import {
@@ -27,7 +27,7 @@ import {
 
 type Role = (typeof membersToOrganizationsRoleEnum.enumValues)[number];
 
-export function ColumnDropdown({ id, role }: UsersData) {
+export function ColumnDropdown({ id, role }: MembersData) {
     const router = useRouter();
 
     const { mutateAsync: changeRoleMutate, isPending: changeRoleIsPending } =

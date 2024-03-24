@@ -1,9 +1,5 @@
-import localFont from "next/font/local";
-import { GeistSans } from "geist/font/sans";
+import { Inter } from "next/font/google";
 
-export const fontSans = GeistSans;
-
-export const fontHeading = localFont({
-    src: "../assets/fonts/CabinetGrotesk-Variable.ttf",
-    variable: "--font-cabinet-grotesk",
+export const fontSans = Inter({
+    subsets: ["latin"],
 });

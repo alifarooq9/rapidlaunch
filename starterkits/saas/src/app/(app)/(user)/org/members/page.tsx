@@ -2,7 +2,7 @@ import { AppPageShell } from "@/app/(app)/_components/page-shell";
 import { orgMembersPageConfig } from "@/app/(app)/(user)/org/members/_constants/page-config";
 import { DataTable } from "@/app/(app)/(user)/org/members/_components/data-table";
 import {
-    type UsersData,
+    type MembersData,
     columns,
 } from "@/app/(app)/(user)/org/members/_components/columns";
 import { getOrgMembersQuery } from "@/server/actions/organization/queries";
@@ -10,7 +10,7 @@ import { getOrgMembersQuery } from "@/server/actions/organization/queries";
 export default async function OrgMembersPage() {
     const members = await getOrgMembersQuery();
 
-    const membersData: UsersData[] = members.map((member) => ({
+    const membersData: MembersData[] = members.map((member) => ({
         id: member.memberId,
         email: member.user.email,
         name: member.user.name,

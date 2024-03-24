@@ -10,7 +10,7 @@ import { format } from "date-fns";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type UsersData = {
+export type MembersData = {
     id: string;
     name: string | null;
     email: string;
@@ -18,7 +18,7 @@ export type UsersData = {
     createdAt: Date;
 };
 
-export const columns: ColumnDef<UsersData>[] = [
+export const columns: ColumnDef<MembersData>[] = [
     {
         accessorKey: "idx",
         header: () => <span className="px-1">IDX</span>,

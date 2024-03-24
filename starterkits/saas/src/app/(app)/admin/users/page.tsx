@@ -1,25 +1,29 @@
 import { AppPageShell } from "@/app/(app)/_components/page-shell";
-import { DataTable } from "@/app/(app)/admin/users/_components/data-table";
-import {
-    type UsersData,
-    columns,
-} from "@/app/(app)/admin/users/_components/columns";
 import { usersPageConfig } from "@/app/(app)/admin/users/_constants/page-config";
-import { getAllUsersQuery } from "@/server/actions/user/queries";
+import { getPaginatedUsersQuery } from "@/server/actions/user/queries";
+import { UsersTable } from "./_components/users-table";
+import { z } from "zod";
 
-export default async function UsersPage() {
-    const fetchedUsers = await getAllUsersQuery();
+type SearchParams = Record<string, string | string[] | undefined>;
 
-    const usersData: UsersData[] = fetchedUsers.map((user) => {
-        return {
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            role: user.role,
-            status: user.emailVerified ? "verified" : "unverified",
-            createdAt: user.createdAt,
-        };
-    });
+type UsersPageProps = {
+    searchParams: SearchParams;
+};
+
+const searchParamsSchema = z.object({
+    page: z.coerce.number().default(1),
+    per_page: z.coerce.number().default(10),
+    sort: z.string().optional(),
+    email: z.string().optional(),
+    status: z.string().optional(),
+    role: z.string().optional(),
+    operator: z.string().optional(),
+});
+
+export default async function UsersPage({ searchParams }: UsersPageProps) {
+    const search = searchParamsSchema.parse(searchParams);
+
+    const usersPromise = getPaginatedUsersQuery(search);
 
     return (
         <AppPageShell
@@ -27,9 +31,7 @@ export default async function UsersPage() {
             description={usersPageConfig.description}
         >
             <div className="w-full">
-                {/** @learn more about data-table at shadcn ui website @see https://ui.shadcn.com/docs/components/data-table */}
-
-                <DataTable columns={columns} data={usersData} />
+                <UsersTable usersPromise={usersPromise} />
             </div>
         </AppPageShell>
     );
