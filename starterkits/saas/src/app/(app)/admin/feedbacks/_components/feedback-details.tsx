@@ -8,11 +8,11 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
-import { type getAllFeedbacksQuery } from "@/server/actions/feedback/queries";
+import { type getAllPaginatedFeedbacksQuery } from "@/server/actions/feedback/queries";
 
 type FeedbackDetailsProps = Awaited<
-    ReturnType<typeof getAllFeedbacksQuery>
->[number];
+    ReturnType<typeof getAllPaginatedFeedbacksQuery>
+>["data"][number];
 
 export function FeedbackDetails(props: FeedbackDetailsProps) {
     return (

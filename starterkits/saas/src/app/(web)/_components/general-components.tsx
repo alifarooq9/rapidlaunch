@@ -35,7 +35,7 @@ export function WebPageHeading({
                     <p className="text-center text-base">{badge}</p>
                 </Badge>
             )}
-            <h1 className="font-heading max-w-2xl text-center text-5xl font-extrabold leading-none sm:text-7xl">
+            <h1 className="max-w-2xl text-center text-5xl font-extrabold leading-none sm:text-7xl">
                 {title}
             </h1>
 

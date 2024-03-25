@@ -4,17 +4,21 @@
 
 import { type ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
-import { ColumnDropdown } from "@/app/(app)/admin/feedbacks/_components/data-table-column-dropdown";
+import { ColumnDropdown } from "@/app/(app)/admin/feedbacks/_components/column-dropdown";
 import { FeedbackDetails } from "@/app/(app)/admin/feedbacks/_components/feedback-details";
 import { format } from "date-fns";
-import type { getAllFeedbacksQuery } from "@/server/actions/feedback/queries";
+import type { getAllPaginatedFeedbacksQuery } from "@/server/actions/feedback/queries";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 
 export type FeedbackData = Awaited<
-    ReturnType<typeof getAllFeedbacksQuery>
->[number];
+    ReturnType<typeof getAllPaginatedFeedbacksQuery>
+>["data"][number];
+
+export function getColumns(): ColumnDef<FeedbackData>[] {
+    return columns;
+}
 
 export const columns: ColumnDef<FeedbackData>[] = [
     {

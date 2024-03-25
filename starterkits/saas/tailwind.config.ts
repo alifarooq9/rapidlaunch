@@ -22,14 +22,6 @@ const config = {
             transitionDuration: {
                 400: "400ms",
             },
-            fontFamily: {
-                sans: ["var(--font-geist-sans)", ...fontFamily.sans],
-                heading: [
-                    "var(--font-cabinet-grotesk)",
-                    "var(--font-geist-sans)",
-                    ...fontFamily.sans,
-                ],
-            },
             colors: {
                 border: "hsl(var(--border))",
                 input: "hsl(var(--input))",

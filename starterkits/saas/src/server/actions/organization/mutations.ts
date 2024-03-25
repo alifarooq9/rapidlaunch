@@ -45,6 +45,7 @@ export async function createOrgMutation({ ...props }: CreateOrgProps) {
 
     await db.insert(membersToOrganizations).values({
         memberId: organizationParse.data.ownerId,
+        memberEmail: user.email!,
         organizationId: createOrg[0]!.id,
         role: "Admin",
     });
@@ -241,6 +242,9 @@ export async function acceptOrgRequestMutation({
     if (currentOrg.ownerId === user.id || memToOrg) {
         const request = await db.query.orgRequests.findFirst({
             where: eq(orgRequests.id, acceptReqParse.data.requestId),
+            with: {
+                user: true,
+            },
         });
 
         if (!request) {
@@ -250,6 +254,7 @@ export async function acceptOrgRequestMutation({
         await db.insert(membersToOrganizations).values({
             memberId: request.userId,
             organizationId: currentOrg.id,
+            memberEmail: request.user.email,
         });
 
         return await db
@@ -386,23 +391,18 @@ type RemoveUserProps = z.infer<typeof removeUserSchema>;
 
 export async function removeUserMutation({ memberId }: RemoveUserProps) {
     const { user } = await protectedProcedure();
-
     const { currentOrg } = await getOrganizations();
-
     const removeUserParse = await removeUserSchema.safeParseAsync({
         memberId,
     });
-
     if (!removeUserParse.success) {
         throw new Error("Invalid remove user data", {
             cause: removeUserParse.error.errors,
         });
     }
-
     if (currentOrg.ownerId === removeUserParse.data.memberId) {
         throw new Error("You can't remove the owner of the organization");
     }
-
     const memToOrg = await db.query.membersToOrganizations.findFirst({
         where: and(
             eq(membersToOrganizations.memberId, user.id),
@@ -410,9 +410,8 @@ export async function removeUserMutation({ memberId }: RemoveUserProps) {
             eq(membersToOrganizations.role, "Admin"),
         ),
     });
-
     if (currentOrg.ownerId === user.id || memToOrg) {
-        return await db
+        const result = await db
             .delete(membersToOrganizations)
             .where(
                 and(
@@ -424,7 +423,7 @@ export async function removeUserMutation({ memberId }: RemoveUserProps) {
                 ),
             )
             .execute();
+        return result;
     }
-
     throw new Error("You are not an admin of this organization");
 }

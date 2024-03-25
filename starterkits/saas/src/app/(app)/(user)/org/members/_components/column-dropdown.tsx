@@ -17,50 +17,78 @@ import { Button } from "@/components/ui/button";
 import { MoreHorizontalIcon } from "lucide-react";
 import { membersToOrganizationsRoleEnum } from "@/server/db/schema";
 import { toast } from "sonner";
-import { type UsersData } from "@/app/(app)/(user)/org/members/_components/columns";
+import { type MembersData } from "@/app/(app)/(user)/org/members/_components/columns";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import {
     removeUserMutation,
     updateMemberRoleMutation,
 } from "@/server/actions/organization/mutations";
+import { useAwaitableTransition } from "@/hooks/use-awaitable-transition";
 
 type Role = (typeof membersToOrganizationsRoleEnum.enumValues)[number];
 
-export function ColumnDropdown({ id, role }: UsersData) {
+export function ColumnDropdown({ role, memberId }: MembersData) {
     const router = useRouter();
 
     const { mutateAsync: changeRoleMutate, isPending: changeRoleIsPending } =
         useMutation({
-            mutationFn: ({ role }: { role: Role }) =>
-                updateMemberRoleMutation({ memberId: id, role }),
+            mutationFn: ({ role }: { role: Role }) => {
+                return updateMemberRoleMutation({ memberId, role });
+            },
             onSettled: () => {
                 router.refresh();
             },
         });
+
+    const [roleChangeIsTransitionPending, startAwaitableRoleChangeTransition] =
+        useAwaitableTransition();
 
     const onRoleChange = (role: Role) => {
-        toast.promise(async () => await changeRoleMutate({ role }), {
-            loading: "Updating user role...",
-            success: "User role updated!",
-            error: "Failed to update user role, Check your permissions.",
-        });
+        toast.promise(
+            async () => {
+                await changeRoleMutate({ role });
+                await startAwaitableRoleChangeTransition(() => {
+                    router.refresh();
+                });
+            },
+            {
+                loading: "Updating user role...",
+                success: "User role updated!",
+                error: "Failed to update user role, Check your permissions.",
+            },
+        );
     };
 
-    const { mutateAsync: removeUserMutate, isPending: removeUserIsPending } =
-        useMutation({
-            mutationFn: () => removeUserMutation({ memberId: id }),
-            onSettled: () => {
-                router.refresh();
-            },
-        });
+    const {
+        mutateAsync: removeMemberMutate,
+        isPending: removeMemberIsPending,
+    } = useMutation({
+        mutationFn: ({ memberId }: { memberId: string }) =>
+            removeUserMutation({ memberId }),
+    });
 
-    const removeUser = () => {
-        toast.promise(async () => await removeUserMutate(), {
-            loading: "Removing user...",
-            success: "User removed!",
-            error: "Failed to remove user.",
-        });
+    const [
+        removeMemberIsTransitionPending,
+        startAwaitableRemoveMemberTransition,
+    ] = useAwaitableTransition();
+
+    const onRemoveMember = async () => {
+        toast.promise(
+            async () => {
+                await removeMemberMutate({
+                    memberId,
+                });
+                await startAwaitableRemoveMemberTransition(() => {
+                    router.refresh();
+                });
+            },
+            {
+                loading: "Removing user...",
+                success: "User removed ",
+                error: "Failed to remove user.",
+            },
+        );
     };
 
     return (
@@ -88,7 +116,10 @@ export function ColumnDropdown({ id, role }: UsersData) {
                                     <DropdownMenuRadioItem
                                         key={currentRole}
                                         value={currentRole}
-                                        disabled={changeRoleIsPending}
+                                        disabled={
+                                            changeRoleIsPending ||
+                                            roleChangeIsTransitionPending
+                                        }
                                     >
                                         {currentRole}
                                     </DropdownMenuRadioItem>
@@ -101,8 +132,10 @@ export function ColumnDropdown({ id, role }: UsersData) {
                 <DropdownMenuSeparator />
 
                 <DropdownMenuItem
-                    disabled={removeUserIsPending}
-                    onClick={removeUser}
+                    disabled={
+                        removeMemberIsPending || removeMemberIsTransitionPending
+                    }
+                    onClick={onRemoveMember}
                     className="text-red-600"
                 >
                     Remove

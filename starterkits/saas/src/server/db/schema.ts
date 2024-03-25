@@ -130,7 +130,7 @@ export const organizations = createTable("organization", {
     createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
     ownerId: varchar("ownerId", { length: 255 })
         .notNull()
-        .references(() => users.id),
+        .references(() => users.id, { onDelete: "cascade" }),
 });
 
 export const createOrgInsertSchema = createInsertSchema(organizations, {
@@ -163,9 +163,10 @@ export const membersToOrganizations = createTable(
     "membersToOrganizations",
     {
         id: varchar("id", { length: 255 }).default(sql`gen_random_uuid()`),
-        memberId: varchar("userId", { length: 255 })
+        memberId: varchar("memberId", { length: 255 })
             .notNull()
             .references(() => users.id, { onDelete: "cascade" }),
+        memberEmail: varchar("memberEmail", { length: 255 }).notNull(),
         organizationId: varchar("organizationId", { length: 255 })
             .notNull()
             .references(() => organizations.id, { onDelete: "cascade" }),
@@ -186,7 +187,7 @@ export const membersToOrganizations = createTable(
 export const membersToOrganizationsRelations = relations(
     membersToOrganizations,
     ({ one }) => ({
-        user: one(users, {
+        member: one(users, {
             fields: [membersToOrganizations.memberId],
             references: [users.id],
         }),
@@ -211,6 +212,7 @@ export const orgRequests = createTable(
         userId: varchar("userId", { length: 255 })
             .notNull()
             .references(() => users.id, { onDelete: "cascade" }),
+
         organizationId: varchar("organizationId", {
             length: 255,
         })
@@ -259,7 +261,7 @@ export const feedback = createTable("feedback", {
         .default(sql`gen_random_uuid()`),
     userId: varchar("userId", { length: 255 })
         .notNull()
-        .references(() => users.id),
+        .references(() => users.id, { onDelete: "cascade" }),
     title: varchar("title", { length: 255 }),
     message: text("message").notNull(),
     label: feedbackLabelEnum("label").notNull(),

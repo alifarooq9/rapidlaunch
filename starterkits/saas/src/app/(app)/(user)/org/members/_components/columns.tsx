@@ -5,36 +5,40 @@
 import { type ColumnDef } from "@tanstack/react-table";
 import { type membersToOrganizations } from "@/server/db/schema";
 import { Badge } from "@/components/ui/badge";
-import { ColumnDropdown } from "@/app/(app)/(user)/org/members/_components/data-table-column-dropdown";
+import { ColumnDropdown } from "@/app/(app)/(user)/org/members/_components/column-dropdown";
 import { format } from "date-fns";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type UsersData = {
+export type MembersData = {
     id: string;
     name: string | null;
     email: string;
+    memberId: string;
     role: typeof membersToOrganizations.$inferSelect.role;
     createdAt: Date;
 };
 
-export const columns: ColumnDef<UsersData>[] = [
-    {
-        accessorKey: "idx",
-        header: () => <span className="px-1">IDX</span>,
-        cell: ({ row }) => (
-            <span className="px-2 text-center">{row.index + 1}</span>
-        ),
-    },
+export function getColumns(): ColumnDef<MembersData>[] {
+    return columns;
+}
+
+export const columns: ColumnDef<MembersData>[] = [
     {
         accessorKey: "name",
-        header: "Name",
+        header: () => <span className="pl-2">Name</span>,
         cell: ({ row }) => {
+            console.log(row.original);
+
             if (row.original.name) {
-                return <span className="font-medium">{row.original.name}</span>;
+                return (
+                    <span className="pl-2 font-medium">
+                        {row.original.name}
+                    </span>
+                );
             }
 
-            return <span className="text-muted-foreground">No name</span>;
+            return <span className="pl-2 text-muted-foreground">No name</span>;
         },
     },
     {

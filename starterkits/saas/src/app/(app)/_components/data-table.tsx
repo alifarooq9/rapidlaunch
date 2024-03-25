@@ -3,17 +3,8 @@
 import * as React from "react";
 import {
     type ColumnDef,
-    type SortingState,
-    type ColumnFiltersState,
-    type VisibilityState,
+    type Table as TanstackTable,
     flexRender,
-    getCoreRowModel,
-    useReactTable,
-    getFilteredRowModel,
-    getPaginationRowModel,
-    getSortedRowModel,
-    getFacetedRowModel,
-    getFacetedUniqueValues,
 } from "@tanstack/react-table";
 import {
     Table,
@@ -23,54 +14,39 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { DataTableToolbar } from "@/app/(app)/admin/users/_components/data-table-toolbar";
 import { DataTablePagination } from "@/app/(app)/_components/data-table-pagination";
+import { DataTableToolbar } from "@/app/(app)/_components/data-table-toolbar";
+import type {
+    DataTableFilterableColumn,
+    DataTableSearchableColumn,
+} from "@/types/data-table";
 
 /**
  * learn more about data-table at shadcn ui website @see https://ui.shadcn.com/docs/components/data-table
  */
 
-interface DataTableProps<TData, TValue> {
+type DataTableProps<TData, TValue> = {
     columns: ColumnDef<TData, TValue>[];
-    data: TData[];
-}
+    table: TanstackTable<TData>;
+    totalRows: number;
+    filterableColumns?: DataTableFilterableColumn<TData>[];
+    searchableColumns?: DataTableSearchableColumn<TData>[];
+};
 
 export function DataTable<TData, TValue>({
     columns,
-    data,
+    table,
+    totalRows,
+    searchableColumns = [],
+    filterableColumns = [],
 }: DataTableProps<TData, TValue>) {
-    const [rowSelection, setRowSelection] = React.useState({});
-    const [columnVisibility, setColumnVisibility] =
-        React.useState<VisibilityState>({});
-    const [columnFilters, setColumnFilters] =
-        React.useState<ColumnFiltersState>([]);
-    const [sorting, setSorting] = React.useState<SortingState>([]);
-
-    const table = useReactTable({
-        data,
-        columns,
-        state: {
-            sorting,
-            columnVisibility,
-            rowSelection,
-            columnFilters,
-        },
-        enableRowSelection: true,
-        onRowSelectionChange: setRowSelection,
-        onSortingChange: setSorting,
-        onColumnFiltersChange: setColumnFilters,
-        onColumnVisibilityChange: setColumnVisibility,
-        getCoreRowModel: getCoreRowModel(),
-        getFilteredRowModel: getFilteredRowModel(),
-        getPaginationRowModel: getPaginationRowModel(),
-        getSortedRowModel: getSortedRowModel(),
-        getFacetedRowModel: getFacetedRowModel(),
-        getFacetedUniqueValues: getFacetedUniqueValues(),
-    });
-
     return (
         <div className="space-y-4">
-            <DataTableToolbar table={table} />
+            <DataTableToolbar
+                table={table}
+                filterableColumns={filterableColumns}
+                searchableColumns={searchableColumns}
+            />
             <div className="flex-shrink rounded-md border border-border bg-background">
                 <Table>
                     <TableHeader>
@@ -126,7 +102,7 @@ export function DataTable<TData, TValue>({
                     </TableBody>
                 </Table>
             </div>
-            <DataTablePagination table={table} />
+            <DataTablePagination table={table} totalRows={totalRows} />
         </div>
     );
 }
