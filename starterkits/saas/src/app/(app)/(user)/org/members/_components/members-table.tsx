@@ -11,8 +11,6 @@ import type {
     DataTableSearchableColumn,
 } from "@/types/data-table";
 import { type getPaginatedOrgMembersQuery } from "@/server/actions/organization/queries";
-import { useMutation } from "@tanstack/react-query";
-import { removeUserMutation } from "@/server/actions/organization/mutations";
 
 /** @learn more about data-table at shadcn ui website @see https://ui.shadcn.com/docs/components/data-table */
 
@@ -48,8 +46,8 @@ export function MembersTable({ membersPromise }: MembersTableProps) {
             id: member.id!,
             role: member.role,
             createdAt: member.createdAt,
-            email: member.user.email,
-            name: member.user.name,
+            email: member.member.email,
+            name: member.member.name,
         };
     });
 
@@ -61,13 +59,6 @@ export function MembersTable({ membersPromise }: MembersTableProps) {
         filterableColumns,
     });
 
-    const { mutate, isPending } = useMutation({
-        mutationFn: () =>
-            removeUserMutation({
-                memberId: "4a0775c3-4ddf-480e-aa70-689d314ef640",
-            }),
-    });
-
     return (
         <>
             <DataTable
@@ -77,9 +68,6 @@ export function MembersTable({ membersPromise }: MembersTableProps) {
                 searchableColumns={searchableColumns}
                 totalRows={total}
             />
-            <button onClick={() => mutate()}>
-                {isPending ? "Removing user..." : "Remove user"}
-            </button>
         </>
     );
 }

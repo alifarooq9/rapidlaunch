@@ -24,7 +24,7 @@ export const Icons = {
                     className={cn("h-5 w-5 fill-primary", iconProps?.className)}
                     {...iconProps}
                 />
-                <span className="font-extrabold">{siteConfig.name}</span>
+                <span className="font-bold">{siteConfig.name}</span>
             </Comp>
         );
     },

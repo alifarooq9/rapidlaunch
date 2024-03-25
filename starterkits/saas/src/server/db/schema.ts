@@ -184,13 +184,16 @@ export const membersToOrganizations = createTable(
         memberEmailIdx: index("membersToOrganizations_memberEmail_idx").on(
             mto.memberEmail,
         ),
+        memebIdIdx: index("membersToOrganizations_memberId_idx").on(
+            mto.memberId,
+        ),
     }),
 );
 
 export const membersToOrganizationsRelations = relations(
     membersToOrganizations,
     ({ one }) => ({
-        user: one(users, {
+        member: one(users, {
             fields: [membersToOrganizations.memberId],
             references: [users.id],
         }),

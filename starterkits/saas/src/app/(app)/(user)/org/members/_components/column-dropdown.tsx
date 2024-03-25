@@ -32,8 +32,9 @@ export function ColumnDropdown({ id, role }: MembersData) {
 
     const { mutateAsync: changeRoleMutate, isPending: changeRoleIsPending } =
         useMutation({
-            mutationFn: ({ role }: { role: Role }) =>
-                updateMemberRoleMutation({ memberId: id, role }),
+            mutationFn: ({ role }: { role: Role }) => {
+                return updateMemberRoleMutation({ memberId: id, role });
+            },
             onSettled: () => {
                 router.refresh();
             },
@@ -56,14 +57,19 @@ export function ColumnDropdown({ id, role }: MembersData) {
         });
 
     const removeUser = () => {
-        toast.promise(async () => await removeUserMutate(), {
-            loading: "Removing user...",
-            success: "User removed!",
-            error: (e) => {
-                console.log(e);
-                return "Failed to remove user.";
+        toast.promise(
+            async () => {
+                await removeUserMutate();
             },
-        });
+            {
+                loading: "Removing user...",
+                success: "User removed!",
+                error: (e) => {
+                    console.log(e);
+                    return "Failed to remove user.";
+                },
+            },
+        );
     };
 
     return (

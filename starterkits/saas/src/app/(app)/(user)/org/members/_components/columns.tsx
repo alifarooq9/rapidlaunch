@@ -65,8 +65,6 @@ export const columns: ColumnDef<MembersData>[] = [
     },
     {
         id: "actions",
-        cell: ({ row }) => (
-            <ColumnDropdown {...row.original} id={row.original.id} />
-        ),
+        cell: ({ row }) => <ColumnDropdown {...row.original} />,
     },
 ];

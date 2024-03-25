@@ -1,11 +1,30 @@
 import { AppPageShell } from "@/app/(app)/_components/page-shell";
 import { adminFeedbackPageConfig } from "@/app/(app)/admin/feedbacks/_constants/page-config";
-import { DataTable } from "@/app/(app)/admin/feedbacks/_components/data-table";
-import { columns } from "@/app/(app)/admin/feedbacks/_components/columns";
-import { getAllFeedbacksQuery } from "@/server/actions/feedback/queries";
+import { getAllPaginatedFeedbacksQuery } from "@/server/actions/feedback/queries";
+import { FeedbacksTable } from "./_components/feedbacks-table";
+import { z } from "zod";
+import type { SearchParams } from "@/types/data-table";
 
-export default async function AdminFeedbackPage() {
-    const feedbackData = await getAllFeedbacksQuery();
+const searchParamsSchema = z.object({
+    page: z.coerce.number().default(1),
+    per_page: z.coerce.number().default(10),
+    sort: z.string().optional(),
+    title: z.string().optional(),
+    status: z.string().optional(),
+    label: z.string().optional(),
+    operator: z.string().optional(),
+});
+
+type AdminFeedbackPageProps = {
+    searchParams: SearchParams;
+};
+
+export default async function AdminFeedbackPage({
+    searchParams,
+}: AdminFeedbackPageProps) {
+    const search = searchParamsSchema.parse(searchParams);
+
+    const feedbacksPromise = getAllPaginatedFeedbacksQuery(search);
 
     return (
         <AppPageShell
@@ -13,9 +32,7 @@ export default async function AdminFeedbackPage() {
             description={adminFeedbackPageConfig.description}
         >
             <div className="w-full">
-                {/** @learn more about data-table at shadcn ui website @see https://ui.shadcn.com/docs/components/data-table */}
-
-                <DataTable columns={columns} data={feedbackData} />
+                <FeedbacksTable feedbacksPromise={feedbacksPromise} />
             </div>
         </AppPageShell>
     );

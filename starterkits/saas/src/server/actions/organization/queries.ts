@@ -141,7 +141,7 @@ export async function getPaginatedOrgMembersQuery(
                 ),
             ),
             with: {
-                user: {
+                member: {
                     columns: {
                         id: true,
                         email: true,
@@ -158,7 +158,6 @@ export async function getPaginatedOrgMembersQuery(
                     : desc(membersToOrganizations.createdAt),
         });
 
-        
         const total = await tx
             .select({
                 count: count(),
