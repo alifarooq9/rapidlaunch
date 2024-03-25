@@ -163,10 +163,10 @@ export const membersToOrganizations = createTable(
     "membersToOrganizations",
     {
         id: varchar("id", { length: 255 }).default(sql`gen_random_uuid()`),
-        memberId: varchar("userId", { length: 255 })
+        memberId: varchar("memberId", { length: 255 })
             .notNull()
             .references(() => users.id, { onDelete: "cascade" }),
-        memberEmail: varchar("userEmail", { length: 255 }).notNull(),
+        memberEmail: varchar("memberEmail", { length: 255 }).notNull(),
         organizationId: varchar("organizationId", { length: 255 })
             .notNull()
             .references(() => organizations.id, { onDelete: "cascade" }),
@@ -181,12 +181,6 @@ export const membersToOrganizations = createTable(
         compoundKey: primaryKey({
             columns: [mto.id, mto.memberId, mto.organizationId],
         }),
-        memberEmailIdx: index("membersToOrganizations_memberEmail_idx").on(
-            mto.memberEmail,
-        ),
-        memebIdIdx: index("membersToOrganizations_memberId_idx").on(
-            mto.memberId,
-        ),
     }),
 );
 

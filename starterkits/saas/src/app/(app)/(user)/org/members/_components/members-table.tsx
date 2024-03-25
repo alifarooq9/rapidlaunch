@@ -48,6 +48,7 @@ export function MembersTable({ membersPromise }: MembersTableProps) {
             createdAt: member.createdAt,
             email: member.member.email,
             name: member.member.name,
+            memberId: member.memberId,
         };
     });
 

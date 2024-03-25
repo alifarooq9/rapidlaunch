@@ -391,23 +391,18 @@ type RemoveUserProps = z.infer<typeof removeUserSchema>;
 
 export async function removeUserMutation({ memberId }: RemoveUserProps) {
     const { user } = await protectedProcedure();
-
     const { currentOrg } = await getOrganizations();
-
     const removeUserParse = await removeUserSchema.safeParseAsync({
         memberId,
     });
-
     if (!removeUserParse.success) {
         throw new Error("Invalid remove user data", {
             cause: removeUserParse.error.errors,
         });
     }
-
     if (currentOrg.ownerId === removeUserParse.data.memberId) {
         throw new Error("You can't remove the owner of the organization");
     }
-
     const memToOrg = await db.query.membersToOrganizations.findFirst({
         where: and(
             eq(membersToOrganizations.memberId, user.id),
@@ -415,7 +410,6 @@ export async function removeUserMutation({ memberId }: RemoveUserProps) {
             eq(membersToOrganizations.role, "Admin"),
         ),
     });
-
     if (currentOrg.ownerId === user.id || memToOrg) {
         const result = await db
             .delete(membersToOrganizations)
@@ -429,9 +423,7 @@ export async function removeUserMutation({ memberId }: RemoveUserProps) {
                 ),
             )
             .execute();
-
         return result;
     }
-
     throw new Error("You are not an admin of this organization");
 }
