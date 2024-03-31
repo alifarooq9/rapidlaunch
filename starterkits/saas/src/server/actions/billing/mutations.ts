@@ -81,7 +81,7 @@ export async function updateBillingMutation(props: UpdateBillingProps) {
     const fixedBilling = {
         ...billingParse.data,
         stripeCurrentPeriodEnd: new Date(
-            (billingParse.data.stripeCurrentPeriodEnd ?? 0) * 1000 
+            billingParse.data.stripeCurrentPeriodEnd! 
         ),
     };
     return await db
