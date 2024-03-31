@@ -1,5 +1,6 @@
 import { headers } from "next/headers"
-import Stripe from "stripe"
+import type Stripe from "stripe"
+
 import { env } from "@/env"
 
 import { stripe } from "@/lib/stripe"
@@ -7,7 +8,7 @@ import { updateBilling2Mutation, updateBillingMutation } from "@/server/actions/
 
 export async function POST(req: Request) {
   const body = await req.text()
-  const signature = headers().get("Stripe-Signature") as string
+  const signature = headers().get("Stripe-Signature")!
 
   let event: Stripe.Event
 
@@ -36,10 +37,10 @@ export async function POST(req: Request) {
     // Since this is the initial subscription, we need to update
     // the subscription id and customer id.
     await updateBillingMutation({
-      userId: session.metadata?.userId as string,
+      userId: session.metadata?.userId,
       stripeCustomerId: subscription.customer as string,
       stripeSubscriptionId: subscription.id,
-      stripePriceId: subscription.items.data[0]?.price.id as string,
+      stripePriceId: subscription.items.data[0]?.price.id ?? "",
       stripeCurrentPeriodEnd: subscription.current_period_end * 1000,
     })
   }
@@ -53,8 +54,8 @@ export async function POST(req: Request) {
     // Update the user using the mutation.
     // This will update the priceid and currentend in the database.
     await updateBilling2Mutation({
-      stripeCustomerId: subscription.customer as string,
-      stripePriceId: subscription.items.data[0]?.price.id as string,
+      stripeCustomerId: subscription.customer as string ?? "",
+      stripePriceId: subscription.items.data[0]?.price.id ?? "",
       stripeCurrentPeriodEnd: subscription.current_period_end * 1000,
     })
   }
@@ -63,7 +64,7 @@ export async function POST(req: Request) {
     // Retrieve the subscription details from Stripe.
     const subscription = await stripe.subscriptions.list({
       limit: 1,
-      customer: session2.customer as string,
+      customer: session2.customer,
     })
 
     // take the first subscription
@@ -74,9 +75,9 @@ export async function POST(req: Request) {
     // Update the user using the mutation.
     // This will update the priceid and currentend in the database.
     await updateBilling2Mutation({
-      stripeCustomerId: subscription2?.customer as string,
-      stripePriceId: subscription2?.items.data[0]?.price.id as string,
-      stripeCurrentPeriodEnd: subscription2?.current_period_end || 0 * 1000,
+      stripeCustomerId: subscription2?.customer as string ?? "",
+      stripePriceId: subscription2?.items.data[0]?.price.id ?? "",
+      stripeCurrentPeriodEnd: (subscription2?.current_period_end ?? 0) * 1000,
     })
   }
 

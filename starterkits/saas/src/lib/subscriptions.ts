@@ -13,7 +13,7 @@ export async function getUserSubscriptionPlan(): Promise<UserSubscriptionPlan> {
     stripeCustomerId: billing.stripeCustomerId,
     stripeSubscriptionId: billing.stripeSubscriptionId,
     stripeCurrentPeriodEnd: billing.stripeCurrentPeriodEnd,
-    stripePriceId: billing.stripePriceId || "",
+    stripePriceId: billing.stripePriceId ?? freePlan.stripePriceId,
   }
 
   const isPaid =

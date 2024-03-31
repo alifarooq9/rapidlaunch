@@ -8,7 +8,7 @@ import { env } from "@/env"
 
 const billingUrl = getAbsoluteUrl("/profile/billing")
 
-export async function GET(req: Request) {
+export async function GET() {
     try {
         const user = await getUser();
 

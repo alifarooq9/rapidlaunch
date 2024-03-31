@@ -1,6 +1,5 @@
 import { AppPageShell } from "@/app/(app)/_components/page-shell";
 import { profileSettingsPageConfig } from "@/app/(app)/(user)/profile/billing/_constants/page-config";
-import { getUser } from "@/server/auth";
 import { getUserSubscriptionPlan } from "@/lib/subscription";
 import { stripe } from "@/lib/stripe";
 import { BillingForm } from "@/app/(app)/(user)/profile/billing/_components/billing-form";
@@ -11,7 +10,6 @@ import { BillingForm } from "@/app/(app)/(user)/profile/billing/_components/bill
  */
 
 export default async function BillingPage() {
-  const user = await getUser();
 
   const subscriptionPlan = await getUserSubscriptionPlan()
 
