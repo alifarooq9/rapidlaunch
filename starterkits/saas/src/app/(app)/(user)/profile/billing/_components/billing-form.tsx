@@ -13,22 +13,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card"
-
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar"
-
 import { toast } from "sonner"
 import { Icons } from "@/components/ui/icons"
-import { DollarSign } from "lucide-react"
 
 interface BillingFormProps extends React.HTMLAttributes<HTMLFormElement> {
   subscriptionPlan: UserSubscriptionPlan & {
@@ -60,7 +46,6 @@ export function BillingForm({
         }
       )
     }
-
     if (!response?.ok) {
       return toast(
         "Something went wrong.", {
@@ -68,7 +53,6 @@ export function BillingForm({
         }
       )
     }
-
     // Redirect to the Stripe session.
     // This could be a checkout page for initial upgrade.
     // Or portal to manage existing subscription.

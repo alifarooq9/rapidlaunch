@@ -1,10 +1,10 @@
 import { z } from "zod"
-import { enterprisePlan, proPlan } from "@/config/subscriptions"
+import { proPlan } from "@/config/subscriptions"
 import { stripe } from "@/lib/stripe"
 import { getUser } from "@/server/auth";
 import { getUserSubscriptionPlan } from "@/lib/subscription"
 import { getAbsoluteUrl } from "@/lib/utils"
-import { sub } from "date-fns";
+import { env } from "@/env"
 
 const billingUrl = getAbsoluteUrl("/profile/billing")
 
@@ -23,7 +23,7 @@ export async function GET(req: Request) {
             const stripeSession = await stripe.billingPortal.sessions.create({
                 customer: subscriptionPlan.stripeCustomerId,
                 return_url: billingUrl,
-                configuration: "bpc_1P0RNBKMb0lRQctkO0Dm11Vg",
+                configuration: env.STRIPE_CONFIGURATION,
                         
             })
 
