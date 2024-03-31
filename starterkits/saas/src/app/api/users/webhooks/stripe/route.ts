@@ -36,7 +36,7 @@ export async function POST(req: Request) {
     // Since this is the initial subscription, we need to update
     // the subscription id and customer id.
     await updateBillingMutation({
-      userId: session.metadata.userId as string,
+      userId: session.metadata?.userId as string,
       stripeCustomerId: subscription.customer as string,
       stripeSubscriptionId: subscription.id,
       stripePriceId: subscription.items.data[0]?.price.id as string,
@@ -76,7 +76,7 @@ export async function POST(req: Request) {
     await updateBilling2Mutation({
       stripeCustomerId: subscription2?.customer as string,
       stripePriceId: subscription2?.items.data[0]?.price.id as string,
-      stripeCurrentPeriodEnd: subscription2?.current_period_end * 1000,
+      stripeCurrentPeriodEnd: subscription2?.current_period_end || 0 * 1000,
     })
   }
 

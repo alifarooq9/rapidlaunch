@@ -34,6 +34,6 @@ export async function getUserSubscriptionPlan(): Promise<UserSubscriptionPlan> {
     ...plan,
     ...billing2,
     stripeCurrentPeriodEnd: billing.stripeCurrentPeriodEnd ? billing.stripeCurrentPeriodEnd.getTime() : 0,
-    isPaid,
+    isPaid: isPaid as boolean,
   };
 }
