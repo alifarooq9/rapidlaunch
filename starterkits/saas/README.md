@@ -23,6 +23,14 @@ To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the fo
 
 You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
 
+## Stripe
+talk about how you need to add stripe keys and also fowrward the stripe webhook to the app
+- https://stripe.com/docs/webhooks/setup
+- You need to add the stripe keys to the `.env.local` file
+- You need to add the stripe webhook to the `.env.local` file
+- Use `stripe listen --forward-to localhost:3000/api/users/webhooks/stripe` to forward the stripe webhook to the app
+
+
 ## How do I deploy this?
 
 Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
