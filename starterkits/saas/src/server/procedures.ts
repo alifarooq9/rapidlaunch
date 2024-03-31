@@ -19,7 +19,7 @@ export const protectedProcedure = async () => {
     const user = await getUser();
 
     if (!user) {
-        throw new Error("You is not authenticated");
+        throw new Error("You are not authenticated");
     }
 
     return {

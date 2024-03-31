@@ -29,6 +29,10 @@ export const env = createEnv({
         RESEND_API_KEY: z.string(),
         UPLOADTHING_SECRET: z.string(),
         UPLOADTHING_ID: z.string(),
+        STRIPE_API_KEY: z.string().min(1),
+        STRIPE_WEBHOOK_SECRET: z.string().min(1),
+        STRIPE_PRO_MONTHLY_PLAN_ID: z.string().min(1),
+        STRIPE_ENTERPRISE_MONTHLY_PLAN_ID: z.string().min(1),
     },
 
     /**
@@ -56,6 +60,10 @@ export const env = createEnv({
         GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
         UPLOADTHING_SECRET: process.env.UPLOADTHING_SECRET,
         UPLOADTHING_ID: process.env.UPLOADTHING_ID,
+        STRIPE_API_KEY: process.env.STRIPE_API_KEY,
+        STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
+        STRIPE_PRO_MONTHLY_PLAN_ID: process.env.STRIPE_PRO_MONTHLY_PLAN_ID,
+        STRIPE_ENTERPRISE_MONTHLY_PLAN_ID: process.env.STRIPE_ENTERPRISE_MONTHLY_PLAN_ID,
     },
     /**
      * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

@@ -1,11 +1,12 @@
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
-import { Loader2Icon } from "lucide-react";
+import { Loader2Icon, AlertTriangle } from "lucide-react";
 import { type ElementType } from "react";
 
 export type IconProps = React.HTMLAttributes<SVGElement>;
 
 export const Icons = {
+    warning: AlertTriangle,
     logo: ({
         iconProps,
         as,

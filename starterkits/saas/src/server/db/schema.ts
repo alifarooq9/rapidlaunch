@@ -39,10 +39,11 @@ export const users = createTable("user", {
     createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
 });
 
-export const usersRelations = relations(users, ({ many }) => ({
+export const usersRelations = relations(users, ({ many, one }) => ({
     accounts: many(accounts),
     membersToOrganizations: many(membersToOrganizations),
     feedback: many(feedback),
+    billing: one(billing)
 }));
 
 export const userInsertSchema = createInsertSchema(users, {
@@ -53,6 +54,38 @@ export const userInsertSchema = createInsertSchema(users, {
         .max(50, "Name must be at most 50 characters long"),
     email: z.string().email(),
     image: z.string().url(),
+});
+
+export const billing = createTable("billing", {
+    id: varchar("id", { length: 255 })
+        .primaryKey()
+        .default(sql`gen_random_uuid()`),
+    userId: varchar("userId", { length: 255 })
+        .notNull()
+        .references(() => users.id),
+    stripeCustomerId: varchar("stripeCustomerId", { length: 255 }).unique(),
+    stripeSubscriptionId: varchar("stripeSubscriptionId", { length: 255 }).unique(),
+    stripePriceId: varchar("stripePriceId", { length: 255 }),
+    stripeCurrentPeriodEnd: timestamp("stripeCurrentPeriodEnd", { mode: "date" }),
+});
+
+export const billingRelations = relations(billing, ({ one }) => ({
+    user: one(users, { fields: [billing.userId], references: [users.id] }),
+
+}));
+
+export const billingInsertSchema = createInsertSchema(billing, {
+    stripeCustomerId: z.string(),
+    stripeSubscriptionId: z.string(),
+    stripePriceId: z.string(),
+    stripeCurrentPeriodEnd: z.number(),
+});
+
+export const billingSelectSchema = createSelectSchema(billing, {
+    stripeCustomerId: z.string(),
+    stripeSubscriptionId: z.string(),
+    stripePriceId: z.string(),
+    stripeCurrentPeriodEnd: z.number(),
 });
 
 export const accounts = createTable(
