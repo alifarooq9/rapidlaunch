@@ -8,10 +8,18 @@ type DocsSlugPageProps = {
     };
 };
 
-export async function getDocs() {
+async function getDocs() {
     const dir = "src/content/docs";
     return await getMDXData(dir);
 }
+
+// export async function generateStaticParams() {
+//     const docs = await getDocs();
+
+//     return docs.map((doc) => ({
+//         slug: doc.metaData.slug.split("/"),
+//     }));
+// }
 
 export default async function DocsSlugPage({ params }: DocsSlugPageProps) {
     if (!params.slug) {
