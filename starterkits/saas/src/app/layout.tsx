@@ -3,6 +3,7 @@ import Background from "@/components/background";
 import { Providers } from "@/components/providers";
 import { Toaster } from "@/components/ui/sonner";
 import "@/styles/globals.css";
+import "@/styles/prism.css";
 import { fontSans } from "@/lib/fonts";
 import { Analytics } from "@vercel/analytics/react";
 

@@ -38,4 +38,9 @@ export const navigation: NavigationItem[] = [
         href: siteUrls.blog,
         label: "Blog",
     },
+    {
+        id: "docs",
+        href: siteUrls.docs,
+        label: "Docs",
+    },
 ];
