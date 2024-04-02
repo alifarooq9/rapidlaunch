@@ -13,13 +13,13 @@ async function getDocs() {
     return await getMDXData(dir);
 }
 
-// export async function generateStaticParams() {
-//     const docs = await getDocs();
+export async function generateStaticParams() {
+    const docs = await getDocs();
 
-//     return docs.map((doc) => ({
-//         slug: doc.metaData.slug.split("/"),
-//     }));
-// }
+    return docs.map((doc) => ({
+        slug: doc.metaData.slug.split("/"),
+    }));
+}
 
 export default async function DocsSlugPage({ params }: DocsSlugPageProps) {
     if (!params.slug) {
