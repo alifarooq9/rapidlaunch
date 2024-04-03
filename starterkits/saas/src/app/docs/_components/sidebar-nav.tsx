@@ -53,7 +53,7 @@ export function DocsSidebarNav() {
                             className="grid gap-1"
                         >
                             {section.items.map((mainItem) => {
-                                if (mainItem.items) {
+                                if (mainItem.subItems) {
                                     return (
                                         <AccordionItem
                                             key={mainItem.id}
@@ -86,7 +86,7 @@ export function DocsSidebarNav() {
                                                 )}
                                             >
                                                 <ul className="grid gap-1">
-                                                    {mainItem.items.map(
+                                                    {mainItem.subItems.map(
                                                         (subItem) => (
                                                             <li
                                                                 key={subItem.id}

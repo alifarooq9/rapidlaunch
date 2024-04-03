@@ -27,10 +27,10 @@ type DocsNavItem = {
     label: string;
     badge?: string;
 } & (
-    | { href: string; items?: never; disabled?: boolean }
+    | { href: string; subItems?: never; disabled?: boolean }
     | {
           href?: never;
-          items: {
+          subItems: {
               id: string;
               label: string;
               href: string;
@@ -94,7 +94,7 @@ const nav: DocsSidebarNavItems[] = [
             {
                 id: "authentication",
                 label: "Authentication",
-                items: [
+                subItems: [
                     {
                         id: "sign-up",
                         label: "Sign Up",
