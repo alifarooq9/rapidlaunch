@@ -170,7 +170,7 @@ const components = {
     code: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
         <code
             className={cn(
-                "relative break-words bg-muted bg-zinc-950 p-[0.3rem] font-mono text-sm dark:bg-zinc-900",
+                "relative break-words bg-muted bg-zinc-950 p-[0.3rem] font-mono text-sm text-white dark:bg-zinc-900",
                 className,
             )}
             {...props}
@@ -179,7 +179,7 @@ const components = {
     pre: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
         <pre
             className={cn(
-                "overflow-auto rounded-[0.4rem] bg-zinc-950 p-3 dark:bg-zinc-900",
+                "overflow-auto rounded-[0.4rem] bg-zinc-950 p-3 text-white dark:bg-zinc-900",
                 className,
             )}
             {...props}

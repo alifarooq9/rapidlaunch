@@ -9,6 +9,7 @@
 
 export const siteUrls = {
     publicUrl: "https://saasdemo.rapidlaunch.xyz",
+    github: "https://github.com/alifarooq9/rapidlaunch",
     home: "/",
     auth: {
         login: "/auth/login",

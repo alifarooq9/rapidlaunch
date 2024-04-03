@@ -79,12 +79,6 @@ const nav: DocsSidebarNavItems[] = [
         label: "API",
         items: [
             {
-                id: "overview",
-                label: "Overview",
-                href: "/docs/overview",
-                disabled: true,
-            },
-            {
                 id: "endpoints",
                 label: "Endpoints",
                 href: "/docs/api/endpoints",
@@ -99,7 +93,6 @@ const nav: DocsSidebarNavItems[] = [
                         id: "sign-up",
                         label: "Sign Up",
                         href: "/docs/api/authentication/sign-up",
-                        disabled: true,
                     },
                     {
                         id: "sign-in",

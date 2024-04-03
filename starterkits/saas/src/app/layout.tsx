@@ -1,5 +1,4 @@
 import React from "react";
-import Background from "@/components/background";
 import { Providers } from "@/components/providers";
 import { Toaster } from "@/components/ui/sonner";
 import "@/styles/globals.css";
@@ -25,7 +24,7 @@ export default function RootLayout({
                 className={`${fontSans.className} overflow-x-hidden font-sans`}
             >
                 <Providers>
-                    <Background>{children}</Background>
+                    {children}
                     <Toaster richColors position="top-right" expand />
                 </Providers>
                 <Analytics />

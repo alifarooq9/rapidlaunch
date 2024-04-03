@@ -15,10 +15,6 @@ const config = {
             },
         },
         extend: {
-            // REMINDER: added for background.tsx
-            backgroundImage: {
-                "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-            },
             transitionDuration: {
                 400: "400ms",
             },

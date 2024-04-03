@@ -1,3 +1,4 @@
+import { DocsHeader } from "@/app/docs/_components/docs-header";
 import { DocsSidebar } from "@/app/docs/_components/sidebar";
 
 type DocsLayoutProps = {
@@ -7,9 +8,7 @@ type DocsLayoutProps = {
 export default function DocsLayout({ children }: DocsLayoutProps) {
     return (
         <div className="container relative min-h-screen">
-            <header className="sticky top-0 flex h-16 items-center justify-start">
-                Rapidlaunch
-            </header>
+            <DocsHeader />
 
             <main className="flex items-start gap-8">
                 <div className="sticky top-16 h-[calc(100vh-4rem)] w-56 flex-shrink-0">
