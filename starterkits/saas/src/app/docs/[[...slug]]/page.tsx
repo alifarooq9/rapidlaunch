@@ -36,7 +36,7 @@ export default async function DocsSlugPage({ params }: DocsSlugPageProps) {
 
     return (
         <>
-            <article className=" w-full max-w-max py-10">
+            <article className="flex-1 py-10">
                 <div className="space-y-2">
                     <h1 className="scroll-m-20 text-4xl font-semibold">
                         {doc.metaData.title}
