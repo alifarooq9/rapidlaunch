@@ -67,11 +67,6 @@ const nav: DocsSidebarNavItems[] = [
                 label: "Installation",
                 href: "/docs/getting-started/installation",
             },
-            {
-                id: "quick-start",
-                label: "Quick Start",
-                href: "/docs/getting-started/quick-start",
-            },
         ],
     },
     {
@@ -93,6 +88,7 @@ const nav: DocsSidebarNavItems[] = [
                         id: "sign-up",
                         label: "Sign Up",
                         href: "/docs/api/authentication/sign-up",
+                        disabled: true,
                     },
                     {
                         id: "sign-in",
