@@ -90,11 +90,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - name: Install dependencies
-        run: pnpm install
-
-      - run: pnpm turbo run build
-
       - name: Create Env file
         run: | 
           touch .env
@@ -105,5 +100,10 @@ jobs:
         working-directory: ./starterkits/saas
         run: | 
           touch .env
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - run: pnpm turbo run build
           echo SKIP_ENV_VALIDATION="true" >> .env
           cat .env
