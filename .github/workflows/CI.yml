@@ -101,6 +101,8 @@ jobs:
         run: | 
           touch .env
           echo SKIP_ENV_VALIDATION="true" >> .env
+          echo NEXTAUTH_URL="" >> .env
+          echo RESEND_API_KEY="" >> .env
           cat .env
 
       - name: Install dependencies
