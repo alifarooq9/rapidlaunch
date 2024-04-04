@@ -18,15 +18,18 @@ export function Toc({ toc, wrapperClassName }: TocProps) {
                         className="text-sm text-muted-foreground"
                     >
                         {item.items ? (
-                            <ul className="grid gap-2 pl-4">
-                                {item.items.map((subItem) => (
-                                    <li key={subItem.url}>
-                                        <Link href={subItem.url}>
-                                            {subItem.title}
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
+                            <>
+                                <Link href={item.url}>{item.title}</Link>
+                                <ul className="mt-2 grid gap-2 pl-4">
+                                    {item.items.map((subItem) => (
+                                        <li key={subItem.url}>
+                                            <Link href={subItem.url}>
+                                                {subItem.title}
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </>
                         ) : (
                             <Link href={item.url}>{item.title}</Link>
                         )}
