@@ -10,8 +10,6 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     name: Run ESLint
-    env:
-      skipValidation: true
     steps:
       - uses: actions/checkout@v3
         with:
@@ -40,17 +38,29 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
+
+      - name: Create Env file
+        run: | 
+          touch .env
+          echo SKIP_ENV_VALIDATION="true" >> .env
+          cat .env
+          
+      - name: Create Env for SaaS
+        working-directory: ./starterkits/saas
+        run: | 
+          touch .env
+          echo SKIP_ENV_VALIDATION="true" >> .env
+          cat .env
+      
 
       - name: Install dependencies
         run: pnpm install
 
       - run: pnpm turbo run lint
       
-  build-www:
+  build:
     runs-on: ubuntu-latest
-    name: Build www
-    env:
-      skipValidation: true
+    name: Build
     steps:
       - uses: actions/checkout@v3
         with:
@@ -83,4 +93,17 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - run: pnpm turbo --filter=www run build
+      - run: pnpm turbo run build
+
+      - name: Create Env file
+        run: | 
+          touch .env
+          echo SKIP_ENV_VALIDATION="true" >> .env
+          cat .env
+          
+      - name: Create Env for SaaS
+        working-directory: ./starterkits/saas
+        run: | 
+          touch .env
+          echo SKIP_ENV_VALIDATION="true" >> .env
+          cat .env
