@@ -15,10 +15,6 @@ const config = {
             },
         },
         extend: {
-            // REMINDER: added for background.tsx
-            backgroundImage: {
-                "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-            },
             transitionDuration: {
                 400: "400ms",
             },
@@ -79,7 +75,10 @@ const config = {
             },
         },
     },
-    plugins: [require("tailwindcss-animate")],
+    plugins: [
+        require("tailwindcss-animate"),
+        require("@tailwindcss/typography"),
+    ],
 } satisfies Config;
 
 export default config;

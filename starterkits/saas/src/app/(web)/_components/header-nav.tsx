@@ -28,6 +28,7 @@ export function WebHeaderNav() {
                                     variant: isLinkActive(item.href, pathname)
                                         ? "secondary"
                                         : "ghost",
+                                    size: "default",
                                 }),
                             )}
                         >

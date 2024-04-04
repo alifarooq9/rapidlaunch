@@ -38,7 +38,7 @@ type LinkStyleProps = {
     className?: string;
 } & VariantProps<typeof buttonVariants>;
 
-function LinkStyle({ active, disabled, className, ...props }: LinkStyleProps) {
+function linkStyle({ active, disabled, className, ...props }: LinkStyleProps) {
     return cn(
         buttonVariants({
             variant: active ? "secondary" : "ghost",
@@ -110,7 +110,7 @@ export function SidebarNav({
                                                 <Tooltip>
                                                     <TooltipTrigger asChild>
                                                         <AccordionTrigger
-                                                            className={LinkStyle(
+                                                            className={linkStyle(
                                                                 {
                                                                     className:
                                                                         "justify-between",
@@ -260,7 +260,7 @@ function NavLink({
     isCollapsed,
 }: NavLinkProps) {
     return (
-        <Link href={href} className={LinkStyle({ active, disabled, size })}>
+        <Link href={href} className={linkStyle({ active, disabled, size })}>
             <Icon
                 className={cn(
                     "flex-shrink-0",

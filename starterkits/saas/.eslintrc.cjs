@@ -35,6 +35,12 @@ const config = {
             },
         ],
     },
+    overrides: [
+        {
+            files: "*.mdx",
+            parser: "eslint-mdx",
+        },
+    ],
 };
 
 module.exports = config;

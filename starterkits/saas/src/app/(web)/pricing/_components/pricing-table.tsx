@@ -70,7 +70,7 @@ function PricingCard({ pricing }: PricingCardProps) {
                 </CardDescription>
                 <Button
                     size="lg"
-                    className="w-fit"
+                    className="w-full"
                     variant={
                         pricing.buttonHighlighted ? "default" : "secondary"
                     }

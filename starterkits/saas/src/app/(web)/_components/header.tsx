@@ -2,7 +2,7 @@ import Link from "next/link";
 import { WebHeaderNav } from "@/app/(web)/_components/header-nav";
 import { Icons } from "@/components/ui/icons";
 import { siteUrls } from "@/config/urls";
-import { ThemeToggle } from "@/app/(web)/_components/theme-toggle";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { HeaderAuth } from "@/app/(web)/_components/header-auth";
 import { Suspense } from "react";
 import { Button } from "@/components/ui/button";
