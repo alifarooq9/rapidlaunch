@@ -100,10 +100,11 @@ jobs:
         working-directory: ./starterkits/saas
         run: | 
           touch .env
+          echo SKIP_ENV_VALIDATION="true" >> .env
+          cat .env
 
       - name: Install dependencies
         run: pnpm install
 
       - run: pnpm turbo run build
-          echo SKIP_ENV_VALIDATION="true" >> .env
-          cat .env
+     
