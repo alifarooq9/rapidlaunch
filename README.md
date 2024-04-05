@@ -1,7 +1,7 @@
 # Rapidlaunch
 Elevate your development game with Rapidlaunch! Launch your apps faster with our SaaS starterkits, components, building blocks. Customizable. Open Source.
 
-https://utfs.io/f/4ae0ddb1-4260-46f5-aa7c-70408cc192b9-aadavt.png
+![Cover-Rapidlaunch](https://utfs.io/f/4ae0ddb1-4260-46f5-aa7c-70408cc192b9-aadavt.png)
 
 ## SaaS Starterkit
 
