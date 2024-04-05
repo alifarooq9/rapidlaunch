@@ -23,7 +23,9 @@ export const metadata: Metadata = {
         title: TITLE,
         description: DESCRIPTION,
         creator: "@AliFarooqDev",
-        images: ["https://rapidlaunch.xyz/og-image.jpg"],
+        images: [
+            "https://utfs.io/f/4ae0ddb1-4260-46f5-aa7c-70408cc192b9-aadavt.png",
+        ],
     },
     openGraph: {
         type: "website",
@@ -31,9 +33,9 @@ export const metadata: Metadata = {
         description: DESCRIPTION,
         images: [
             {
-                url: "https://rapidlaunch.xyz/og-image.jpg",
-                width: 1200,
-                height: 630,
+                url: "https://utfs.io/f/4ae0ddb1-4260-46f5-aa7c-70408cc192b9-aadavt.png",
+                width: 1280,
+                height: 760,
                 alt: "Rapidlaunch | Open Source Nextjs SaaS Starterkits and Components",
             },
         ],

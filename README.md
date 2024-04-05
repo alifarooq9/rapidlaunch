@@ -1,29 +1,18 @@
-# Next.js SaaS Starter Kit
+# Rapidlaunch
+Elevate your development game with Rapidlaunch! Launch your apps faster with our SaaS starterkits, components, building blocks. Customizable. Open Source.
 
-Current Progression so far:
+https://utfs.io/f/4ae0ddb1-4260-46f5-aa7c-70408cc192b9-aadavt.png
 
-https://github.com/alifarooq9/rapidlaunch/assets/79796123/4f636e2f-e6ec-4fbf-be7e-b5a861c79904
+## SaaS Starterkit
 
-# Roadmap
+Soon to be launch, In development, Almost completed.
+Documentation are coming soon aswell
+Want to explore by yourself? Head over to `/starterkits/saas`, and play with it!
 
-- [x] Authentication
-  - [x] Sign in, Sign up flows
-  - [x] New User Account Setup
-- [x] Profile Settings
-- [x] Organization
-  - [x] Create Organization
-  - [x] Organization Settings
-  - [x] Members
-    - [x] Invite Members
-    - [x] Manage Members
-- [x] Dashboard
-- [ ] Payments
-- [ ] Projects
-  - [ ] Create Project
-  - [ ] Manage Projects
-- [x] Feedback System
-- [ ] Blog
-- [ ] Admin
-  - [ ] Dashboard
-  - [x] User Management
-  - [x] Feeback Managment
+## Contribution
+
+Please read the [contributing guide](https://github.com/alifarooq9/rapidlaunch/blob/main/CONTRIBUTING.md).
+
+## License
+
+License under the [MIT License](https://github.com/alifarooq9/rapidlaunch/blob/main/LICENSE.md)
