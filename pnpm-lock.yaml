@@ -26,6 +26,15 @@ importers:
       '@hookform/resolvers':
         specifier: ^3.3.4
         version: 3.3.4(react-hook-form@7.50.1)
+      '@radix-ui/react-dropdown-menu':
+        specifier: ^2.0.6
+        version: 2.0.6(@types/react-dom@18.2.19)(@types/react@18.2.60)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-label':
+        specifier: ^2.0.2
+        version: 2.0.2(@types/react-dom@18.2.19)(@types/react@18.2.60)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-slot':
+        specifier: ^1.0.2
+        version: 1.0.2(@types/react@18.2.60)(react@18.2.0)
       '@t3-oss/env-nextjs':
         specifier: ^0.9.2
         version: 0.9.2(typescript@5.3.3)(zod@3.22.4)
@@ -35,6 +44,12 @@ importers:
       '@vercel/analytics':
         specifier: ^1.2.2
         version: 1.2.2(next@14.1.0)(react@18.2.0)
+      class-variance-authority:
+        specifier: ^0.7.0
+        version: 0.7.0
+      clsx:
+        specifier: ^2.1.0
+        version: 2.1.0
       geist:
         specifier: ^1.2.2
         version: 1.2.2(next@14.1.0)
@@ -59,6 +74,15 @@ importers:
       react-wrap-balancer:
         specifier: ^1.1.0
         version: 1.1.0(react@18.2.0)
+      sonner:
+        specifier: ^1.4.2
+        version: 1.4.2(react-dom@18.2.0)(react@18.2.0)
+      tailwind-merge:
+        specifier: ^2.2.1
+        version: 2.2.1
+      tailwindcss-animate:
+        specifier: ^1.0.7
+        version: 1.0.7(tailwindcss@3.4.1)
       zod:
         specifier: ^3.22.4
         version: 3.22.4
@@ -75,9 +99,6 @@ importers:
       '@rapidlaunch/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
-      '@rapidlaunch/ui':
-        specifier: workspace:*
-        version: link:../../packages/ui
       '@types/eslint':
         specifier: ^8.56.2
         version: 8.56.4

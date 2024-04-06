@@ -1,26 +1,26 @@
 {
-    "name": "rapidlaunch-turbo",
-    "private": true,
-    "scripts": {
-        "build": "turbo build",
-        "dev": "turbo dev",
-        "dev:www": "turbo --filter=www dev",
-        "start": "turbo start",
-        "start:www": "turbo --filter=www start",
-        "lint": "turbo lint",
-        "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-        "clean": "turbo clean && rm -rf node_modules",
-        "db:push": "pnpm -F db push",
-        "db:studio": "pnpm -F db studio"
-    },
-    "devDependencies": {
-        "@rapidlaunch/eslint-config": "workspace:*",
-        "@rapidlaunch/typescript-config": "workspace:*",
-        "prettier": "^3.2.5",
-        "turbo": "latest"
-    },
-    "packageManager": "pnpm@8.9.0",
-    "engines": {
-        "node": ">=18"
-    }
+  "name": "rapidlaunch-turbo",
+  "private": true,
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "dev:www": "turbo --filter=www dev",
+    "start": "turbo start",
+    "start:www": "turbo --filter=www start",
+    "lint": "turbo lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "clean": "turbo clean && rm -rf node_modules",
+    "db:push": "pnpm -F db push",
+    "db:studio": "pnpm -F db studio"
+  },
+  "devDependencies": {
+    "@rapidlaunch/eslint-config": "workspace:*",
+    "@rapidlaunch/typescript-config": "workspace:*",
+    "prettier": "^3.2.5",
+    "turbo": "latest"
+  },
+  "packageManager": "pnpm@8.9.0",
+  "engines": {
+    "node": ">=18"
+  }
 }

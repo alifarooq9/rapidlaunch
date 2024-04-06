@@ -1,11 +1,11 @@
-import { Badge } from "@rapidlaunch/ui/badge";
+import { Badge } from "@/components/ui/badge";
 import Balance from "react-wrap-balancer";
 import { EarlyAccessForm } from "@/components/early-access-form";
 
 export default function HomePage() {
     return (
         <main className="container flex flex-col items-center justify-center gap-4 py-20">
-            <Badge size="md" variant="secondary" className="gap-2">
+            <Badge variant="secondary" className="gap-2">
                 <span>🎉</span>{" "}
                 <p>Open Source SaaS Starterkits and components</p>
             </Badge>

@@ -1,13 +1,11 @@
-import Background from "@/components/background";
-import { Header } from "@/components/header";
 import Providers from "@/components/providers";
-import { Toaster } from "@rapidlaunch/ui/sonner";
+import { Toaster } from "@/components/ui/sonner";
 import "@/styles/globals.css";
 
-import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
 import { siteConfig } from "@/config/site";
 import { Analytics } from "@vercel/analytics/react";
+import { fontSans } from "@/lib/fonts";
 
 const TITLE =
     "Rapidlaunch | Open Source Nextjs SaaS Starterkits and Components";
@@ -15,6 +13,7 @@ const DESCRIPTION =
     "Launch your apps faster with our SaaS starterkits, components, building blocks. Customizable. Open Source";
 
 export const metadata: Metadata = {
+    metadataBase: new URL("https://www.rapidlaunch.xyz"),
     title: TITLE,
     description: DESCRIPTION,
     icons: [{ rel: "icon", url: "/favicon.ico" }],
@@ -50,13 +49,10 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <body className={`${GeistSans.className}`}>
+            <body className={`${fontSans.className}`}>
                 <Providers>
-                    <Background>
-                        <Header />
-                        {children}
-                        <Toaster position="top-center" />
-                    </Background>
+                    {children}
+                    <Toaster position="top-center" />
                 </Providers>
                 <Analytics />
             </body>
