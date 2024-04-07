@@ -1,6 +1,6 @@
 export const siteUrls = {
     home: "/",
-    starterkits: "/starterkits",
+    saasStarterkit: "/saas-starterkit",
     components: "/components",
     blog: "/blog",
     docs: "/docs",

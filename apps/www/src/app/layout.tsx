@@ -5,7 +5,7 @@ import "@/styles/globals.css";
 import type { Metadata } from "next";
 import { siteConfig } from "@/config/site";
 import { Analytics } from "@vercel/analytics/react";
-import { fontSans } from "@/lib/fonts";
+import { fontSans, fontHeading } from "@/lib/fonts";
 
 const TITLE =
     "Rapidlaunch | Open Source Nextjs SaaS Starterkits and Components";
@@ -49,7 +49,9 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <body className={`${fontSans.className}`}>
+            <body
+                className={`${fontSans.variable} ${fontHeading.variable} font-sans`}
+            >
                 <Providers>
                     {children}
                     <Toaster position="top-center" />
