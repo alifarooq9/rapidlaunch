@@ -1,16 +1,12 @@
 export const navConfig = {
     items: [
         {
-            label: "Starterkits",
-            href: "/starterkits",
+            label: "SaaS StarterKit",
+            href: "/saas-starterkit",
         },
         {
-            label: "Components",
-            href: "/components",
-        },
-        {
-            label: "Blog",
-            href: "/blog",
+            label: "Blocks",
+            href: "/blocks",
         },
         {
             label: "Docs",
