@@ -22,6 +22,8 @@ export function MainNav() {
                                         "text-foreground":
                                             pathname === item.href,
                                     },
+                                    item.disabled &&
+                                        "pointer-events-none opacity-60",
                                 )}
                             >
                                 {item.label}
