@@ -44,23 +44,21 @@ const saasStarterkitHighlights = [
 export function SaasStarterkitHighlight() {
     return (
         <div className="space-y-4">
-            <div>
-                <p className="text-sm">
-                    For more information, Visit the{" "}
-                    <Link
-                        href={siteUrls.saasStarterkit}
-                        className={badgeVariants({
-                            variant: "secondary",
-                            className: "ml-1 gap-0.5",
-                        })}
-                    >
-                        SaaS Starterkit
-                        <ArrowRightIcon className="h-3 w-3" />
-                    </Link>
-                </p>
-            </div>
-            <Tabs defaultValue="user-dashboard">
-                <TabsList className="gap-2 bg-transparent p-0">
+            <p className="gap-2 text-center text-sm sm:text-left">
+                For more information, Visit the{" "}
+                <Link
+                    href={siteUrls.saasStarterkit}
+                    className={badgeVariants({
+                        variant: "secondary",
+                        className: "ml-1 mt-1 gap-0.5 sm:mt-0",
+                    })}
+                >
+                    <span>SaaS Starterkit</span>
+                    <ArrowRightIcon className="h-3 w-3" />
+                </Link>
+            </p>
+            <Tabs defaultValue="user-dashboard" className="h-auto">
+                <TabsList className="h-auto flex-wrap items-center justify-center gap-2 bg-transparent p-0 sm:justify-start">
                     {saasStarterkitHighlights.map((tab) => (
                         <TabsTrigger
                             key={tab.id}

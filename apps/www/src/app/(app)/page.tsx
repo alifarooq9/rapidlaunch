@@ -21,7 +21,7 @@ export default async function HomePage() {
                     RapidLaunch is in development. Follow our progress on 𝕏
                     (formally Twitter)
                 </span>
-                <ExternalLinkIcon className="h-4 w-4" />
+                <ExternalLinkIcon className="h-4 w-4 flex-shrink-0" />
             </Link>
             <Balance
                 as="h1"
@@ -45,7 +45,7 @@ export default async function HomePage() {
                         className: "flex items-center gap-2",
                     })}
                 >
-                    Get Early Access
+                    Early Access
                 </Link>
                 <Link
                     href={siteUrls.github}
