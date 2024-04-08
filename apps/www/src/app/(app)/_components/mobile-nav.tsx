@@ -43,6 +43,7 @@ export function MobileNav() {
                             key={item.label}
                             href={item.href}
                             onOpenChange={setIsOpen}
+                            disabled={item.disabled}
                             className={cn(
                                 "text-base text-muted-foreground hover:text-foreground/80",
                                 {
