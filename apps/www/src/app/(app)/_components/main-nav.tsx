@@ -9,7 +9,7 @@ export function MainNav() {
     const pathname = usePathname();
 
     return (
-        <section className="flex items-center gap-6">
+        <section className="hidden gap-6 sm:flex sm:items-center">
             <nav className="flex items-center gap-2">
                 <ul className="flex items-center gap-5">
                     {navConfig.items.map((item) => (

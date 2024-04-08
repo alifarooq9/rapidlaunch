@@ -5,12 +5,15 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { siteUrls } from "@/config/urls";
 import Link from "next/link";
 import { Icons } from "@/components/icons";
+import { MobileNav } from "@/app/(app)/_components/mobile-nav";
 
 export function SiteHeader() {
     return (
         <header className="sticky top-0 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <div className="container flex h-14 max-w-screen-2xl items-center justify-between">
                 <div className="flex items-center gap-5">
+                    <MobileNav />
+
                     <Link href={siteUrls.home} className="left-4 z-10">
                         <Icons.logo
                             classNameText="hidden sm:block"
