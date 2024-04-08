@@ -17,7 +17,11 @@ export function MobileNav() {
     return (
         <Sheet open={isOpen} onOpenChange={(o: boolean) => setIsOpen(o)}>
             <SheetTrigger asChild>
-                <Button variant="outline" size="iconSm">
+                <Button
+                    variant="outline"
+                    size="iconSm"
+                    className="flex sm:hidden"
+                >
                     <Icons.hamburger className="h-4 w-4" />
                 </Button>
             </SheetTrigger>
