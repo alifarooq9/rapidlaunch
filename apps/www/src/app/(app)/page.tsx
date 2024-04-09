@@ -92,7 +92,7 @@ export default async function HomePage() {
 
 async function getRepoStars() {
     const response = await fetch(
-        "https://api.github.com/repos/afarooq-oss/rapidlaunch",
+        "https://api.github.com/repos/alifarooq9/rapidlaunch",
         {
             next: {
                 revalidate: 86400,
