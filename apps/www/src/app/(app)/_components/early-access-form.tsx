@@ -13,7 +13,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import { joinEarlyAccessAction } from "@/server/actions";
+import { joinEarlyAccessAction } from "@/server/actions/early-access";
 import { Icons } from "@/components/icons";
 import { toast } from "sonner";
 
@@ -62,7 +62,7 @@ export function EarlyAccessForm() {
         <Form {...form}>
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="w-full max-w-sm space-y-2"
+                className="w-full space-y-2"
             >
                 <FormField
                     control={form.control}
@@ -72,7 +72,7 @@ export function EarlyAccessForm() {
                             <FormControl>
                                 <Input
                                     placeholder="Name"
-                                    className="bg-background"
+                                    className="h-12 bg-background"
                                     {...field}
                                 />
                             </FormControl>
@@ -88,7 +88,7 @@ export function EarlyAccessForm() {
                             <FormControl>
                                 <Input
                                     placeholder="Email"
-                                    className="bg-background"
+                                    className="h-12 bg-background"
                                     {...field}
                                 />
                             </FormControl>
@@ -100,7 +100,8 @@ export function EarlyAccessForm() {
                     <Button
                         disabled={isPending}
                         type="submit"
-                        className="w-full gap-2"
+                        className="h-12 w-full gap-2"
+                        size="lg"
                     >
                         {isPending ? (
                             <Icons.loader className="h-4 w-4" />

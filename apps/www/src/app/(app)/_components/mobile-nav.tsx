@@ -23,6 +23,7 @@ export function MobileNav() {
                     className="flex sm:hidden"
                 >
                     <Icons.hamburger className="h-4 w-4" />
+                    <span className="sr-only">menu</span>
                 </Button>
             </SheetTrigger>
             <SheetContent side="left" className="pr-0">

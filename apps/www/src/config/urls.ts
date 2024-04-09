@@ -6,4 +6,5 @@ export const siteUrls = {
     docs: "/docs",
     twitter: "https://twitter.com/AliFarooqDev",
     github: "/gh",
+    earlyAccess: "/#early-access",
 } as const;
