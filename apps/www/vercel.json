@@ -1,0 +1,20 @@
+{
+    "redirects": [
+        {
+            "source": "/github",
+            "destination": "https://github.com/afarooq-oss/rapidlaunch"
+        },
+        {
+            "source": "/gh",
+            "destination": "https://github.com/afarooq-oss/rapidlaunch"
+        },
+        {
+            "source": "/alifarooq",
+            "destination": "https://alifarooq.xyz"
+        },
+        {
+            "source": "/ali",
+            "destination": "https://alifarooq.xyz"
+        }
+    ]
+}

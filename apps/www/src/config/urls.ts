@@ -1,9 +1,10 @@
 export const siteUrls = {
     home: "/",
-    starterkits: "/starterkits",
+    saasStarterkit: "/saas-starterkit",
     components: "/components",
     blog: "/blog",
     docs: "/docs",
     twitter: "https://twitter.com/AliFarooqDev",
     github: "/gh",
+    earlyAccess: "/#early-access",
 } as const;
