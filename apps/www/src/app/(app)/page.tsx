@@ -5,7 +5,6 @@ import { siteUrls } from "@/config/urls";
 import { buttonVariants } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
 import { HighlightTabs } from "@/app/(app)/_components/highlight-tabs";
-import { getRepoStars } from "@/server/actions/github";
 
 export default async function HomePage() {
     const repoStars = await getRepoStars();
@@ -65,4 +64,25 @@ export default async function HomePage() {
             <HighlightTabs className="mt-36" />
         </div>
     );
+}
+
+export async function getRepoStars() {
+    const response = await fetch(
+        "https://api.github.com/repos/afarooq-oss/rapidlaunch",
+        {
+            next: {
+                revalidate: 86400,
+            },
+        },
+    );
+
+    const data: unknown = await response.json();
+    const stars: number = (data as { stargazers_count?: string })
+        ?.stargazers_count
+        ? Number((data as { stargazers_count?: string }).stargazers_count)
+        : 0;
+
+    console.log(data);
+
+    return stars;
 }
