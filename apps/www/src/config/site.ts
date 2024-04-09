@@ -1,3 +1,3 @@
 export const siteConfig = {
-  name: "Rapidlaunch",
+    name: "RapidLaunch",
 } as const;

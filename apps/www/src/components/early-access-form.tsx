@@ -1,21 +1,21 @@
 "use client";
 
-import { Button } from "@rapidlaunch/ui/button";
-import { Input } from "@rapidlaunch/ui/input";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
     Form,
     FormControl,
     FormField,
     FormItem,
     FormMessage,
-} from "@rapidlaunch/ui/form";
+} from "@/components/ui/form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { joinEarlyAccessAction } from "@/server/actions";
 import { Icons } from "@/components/icons";
-import { toast } from "@rapidlaunch/ui/sonner";
+import { toast } from "sonner";
 
 const formSchema = z.object({
     name: z.string().min(2, {
