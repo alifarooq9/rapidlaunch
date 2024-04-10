@@ -51,7 +51,9 @@ function PricingCard({ pricing }: PricingCardProps) {
             )}
 
             <CardHeader>
-                <CardTitle className="text-2xl">{pricing.title}</CardTitle>
+                <CardTitle className="font-heading text-2xl font-bold">
+                    {pricing.title}
+                </CardTitle>
                 <CardDescription>{pricing.description}</CardDescription>
             </CardHeader>
 

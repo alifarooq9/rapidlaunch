@@ -19,7 +19,7 @@ export const siteUrls = {
     features: "/features",
     support: "/support",
     blog: "/blog",
-    docs: "/docs",
+    docs: "/docs/introduction",
     maintenance: "/maintenance",
     rapidlaunch: "https://www.rapidlaunch.xyz",
     dashboard: {

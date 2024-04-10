@@ -1,5 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { type ElementType } from "react";
+import Balancer from "react-wrap-balancer";
 
 // This is a page wrapper used in all public web pages
 export function WebPageWrapper({
@@ -35,9 +36,12 @@ export function WebPageHeading({
                     <p className="text-center text-base">{badge}</p>
                 </Badge>
             )}
-            <h1 className="max-w-2xl text-center text-5xl font-semibold leading-none sm:text-7xl">
+            <Balancer
+                as="h1"
+                className="font-heading max-w-2xl text-center text-5xl font-bold leading-none sm:text-6xl"
+            >
                 {title}
-            </h1>
+            </Balancer>
 
             {children && children}
         </div>
