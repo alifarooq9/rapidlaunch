@@ -7,7 +7,7 @@ export async function CreateFirstOrgForm() {
 
     const user = await getUser();
 
-    if (userOrgs.length === 0) {
+    if (userOrgs.length === 0 && !user!.isNewUser) {
         return (
             <div className="fixed inset-0 flex h-screen w-screen flex-col items-center justify-center bg-black/80">
                 <div className="w-full max-w-xl">

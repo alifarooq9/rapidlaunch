@@ -128,6 +128,7 @@ export const organizations = createTable("organization", {
         .primaryKey()
         .default(sql`gen_random_uuid()`),
     name: varchar("name", { length: 255 }).notNull(),
+    email: varchar("email", { length: 255 }).notNull(),
     image: varchar("image", { length: 255 }),
     createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
     ownerId: varchar("ownerId", { length: 255 })
@@ -151,6 +152,10 @@ export const organizationsRelations = relations(
             references: [users.id],
         }),
         membersToOrganizations: many(membersToOrganizations),
+        subscriptions: one(subscriptions, {
+            fields: [organizations.id],
+            references: [subscriptions.orgId],
+        }),
     }),
 );
 
@@ -329,6 +334,13 @@ export const subscriptions = createTable("subscription", {
     subscriptionItemId: serial("subscriptionItemId"),
     orgId: text("orgId")
         .notNull()
-        .references(() => organizations.id),
+        .references(() => organizations.id, { onDelete: "cascade" }),
     variantId: integer("variantId").notNull(),
 });
+
+export const subscriptionsRelations = relations(subscriptions, ({ one }) => ({
+    organization: one(organizations, {
+        fields: [subscriptions.orgId],
+        references: [organizations.id],
+    }),
+}));

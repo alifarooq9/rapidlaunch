@@ -10,11 +10,7 @@ import { db } from "@/server/db";
 import { subscriptions } from "@/server/db/schema";
 import { configureLemonSqueezy } from "@/server/lemonsqueezy";
 import { protectedProcedure } from "@/server/procedures";
-import {
-    createCheckout,
-    getSubscription,
-    SubscriptionItem,
-} from "@lemonsqueezy/lemonsqueezy.js";
+import { createCheckout, getSubscription } from "@lemonsqueezy/lemonsqueezy.js";
 import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 
@@ -45,7 +41,7 @@ export async function getCheckoutURL(variantId?: number, embed = false) {
                 dark: true,
             },
             checkoutData: {
-                email: user.email ?? undefined,
+                email: currentOrg.email ?? undefined,
                 custom: {
                     user_id: user.id,
                     org_id: currentOrg.id,
