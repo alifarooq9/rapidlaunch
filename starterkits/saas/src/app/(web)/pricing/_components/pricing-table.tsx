@@ -1,5 +1,3 @@
-"use client";
-
 import {
     Card,
     CardContent,
@@ -8,10 +6,12 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { CheckIcon, XIcon } from "lucide-react";
-import { type Pricing, pricings, features } from "@/config/pricing";
+import { type PrincingPlan, pricingPlans, features } from "@/config/pricing";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { redirect } from "next/navigation";
+import { siteUrls } from "@/config/urls";
 
 /**
  * This is a customizable design for pricing plans. You can customize the design to your needs.
@@ -22,7 +22,7 @@ import { cn } from "@/lib/utils";
 export function PricingTable() {
     return (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {pricings.map((pricing) => (
+            {pricingPlans.map((pricing) => (
                 <PricingCard key={pricing.id} pricing={pricing} />
             ))}
         </div>
@@ -30,7 +30,7 @@ export function PricingTable() {
 }
 
 type PricingCardProps = {
-    pricing: Pricing;
+    pricing: PrincingPlan;
 };
 
 function PricingCard({ pricing }: PricingCardProps) {
@@ -59,9 +59,9 @@ function PricingCard({ pricing }: PricingCardProps) {
 
             <CardContent className="flex flex-col gap-5">
                 <p className="flex items-end gap-2">
-                    <span className="text-4xl font-medium">
+                    <span className="font-heading text-4xl font-medium">
                         {pricing.currency.symbol}
-                        {pricing.price}
+                        {pricing.price.monthly}
                     </span>
                     <span className="font-light text-muted-foreground">
                         {pricing.currency.code} {pricing.duration}
@@ -70,15 +70,24 @@ function PricingCard({ pricing }: PricingCardProps) {
                 <CardDescription className="font-light">
                     {pricing.highlight}
                 </CardDescription>
-                <Button
-                    size="lg"
-                    className="w-full"
-                    variant={
-                        pricing.buttonHighlighted ? "default" : "secondary"
-                    }
+
+                <form
+                    action={async () => {
+                        "use server";
+                        redirect(siteUrls.dashboard.home);
+                    }}
                 >
-                    Get Started
-                </Button>
+                    <Button
+                        size="lg"
+                        className="w-full"
+                        type="submit"
+                        variant={
+                            pricing.buttonHighlighted ? "default" : "secondary"
+                        }
+                    >
+                        Get Started
+                    </Button>
+                </form>
 
                 <div className="flex flex-col gap-4 pt-10">
                     <p className="text-sm font-medium">

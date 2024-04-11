@@ -1,5 +1,6 @@
 import {
     BookTextIcon,
+    CreditCardIcon,
     HelpCircleIcon,
     LayoutDashboardIcon,
     MessageSquareIcon,
@@ -123,6 +124,11 @@ const navigation: SidebarNavItems[] = [
                         href: siteUrls.organization.members.invite,
                     },
                 ],
+            },
+            {
+                label: "Plans & Billing",
+                icon: CreditCardIcon,
+                href: siteUrls.organization.plansAndBilling,
             },
             {
                 label: "Settings",

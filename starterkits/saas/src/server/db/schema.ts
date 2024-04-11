@@ -3,9 +3,11 @@ import {
     boolean,
     index,
     integer,
+    jsonb,
     pgEnum,
     pgTableCreator,
     primaryKey,
+    serial,
     text,
     timestamp,
     varchar,
@@ -293,4 +295,40 @@ export const feedbackSelectSchema = createSelectSchema(feedback, {
         .string()
         .min(10, "Message is too short")
         .max(1000, "Message is too long"),
+});
+
+export const webhookEvents = createTable("webhookEvent", {
+    id: varchar("id", { length: 255 })
+        .notNull()
+        .primaryKey()
+        .default(sql`gen_random_uuid()`),
+    createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
+    eventName: text("eventName").notNull(),
+    processed: boolean("processed").default(false),
+    body: jsonb("body").notNull(),
+    processingError: text("processingError"),
+});
+
+export const subscriptions = createTable("subscription", {
+    id: varchar("id", { length: 255 })
+        .notNull()
+        .primaryKey()
+        .default(sql`gen_random_uuid()`),
+    lemonSqueezyId: text("lemonSqueezyId").unique().notNull(),
+    orderId: integer("orderId").notNull(),
+    name: text("name").notNull(),
+    email: text("email").notNull(),
+    status: text("status").notNull(),
+    statusFormatted: text("statusFormatted").notNull(),
+    renewsAt: text("renewsAt"),
+    endsAt: text("endsAt"),
+    trialEndsAt: text("trialEndsAt"),
+    price: text("price").notNull(),
+    isUsageBased: boolean("isUsageBased").default(false),
+    isPaused: boolean("isPaused").default(false),
+    subscriptionItemId: serial("subscriptionItemId"),
+    orgId: text("orgId")
+        .notNull()
+        .references(() => organizations.id),
+    variantId: integer("variantId").notNull(),
 });

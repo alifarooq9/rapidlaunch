@@ -32,11 +32,11 @@ export const siteUrls = {
             invite: "/org/members/invite",
         },
         settings: "/org/settings",
+        plansAndBilling: "/org/billing",
     },
     admin: {
         dashboard: "/admin/dashboard",
         users: "/admin/users",
-        blog: "/admin/blog",
         settings: "/admin/settings",
         feedbacks: "/admin/feedbacks",
     },
