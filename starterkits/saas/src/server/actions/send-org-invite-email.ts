@@ -7,6 +7,7 @@ import { siteUrls } from "@/config/urls";
 
 interface SendVerificationEmailProps {
     email: string;
+    orgName: string;
     invLink: string;
     name: string;
 }
@@ -15,6 +16,7 @@ interface SendVerificationEmailProps {
 
 export async function sendVerificationEmail({
     email,
+    orgName,
     invLink,
     name,
 }: SendVerificationEmailProps) {
@@ -23,23 +25,23 @@ export async function sendVerificationEmail({
         await resend.emails.send({
             from: siteConfig.noReplyEmail,
             to: email,
-            subject: `Verify your email address | ${siteConfig.name}`,
+            subject: `You have been Inited to a Team | ${siteConfig.name}`,
             html: `
                 <div>
                     <a href="${siteUrls.rapidlaunch}">${siteConfig.name}</a>
-                    <h1>🪄 Your magic link</h1>
+                    <h1>🪄 Your Invite to ${orgName}</h1>
                     <p>
-                        Click the link below to verify your email address and
-                        sign in.
+                        You have been invited to join ${orgName} by ${name}.
+                        Click the link below to verify to join ${orgName} on ${siteConfig.name}.
                     </p>
-                    <a href="${params.url}">Verify your email</a>
+                    <a href="${invLink}">Join Organisation</a>
 
                     <p> or </p>
 
                     <p>
                         Copy and paste the following link in your browser:
                         <br />
-                        ${params.url}
+                        ${invLink}
                     </p>
 
                     <hr />
@@ -47,7 +49,7 @@ export async function sendVerificationEmail({
                         If you didn't request this email, you can ignore it.
                     </p>
                 </div>`,
-            text: `Click the link below to verify your email address and sign in. ${params.url}`,
+            text: `Click the link below to join the orgaisation. ${invLink}`,
             tags: [
                 {
                     name: "category",
