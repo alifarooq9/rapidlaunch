@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { sendOrgInviteEmail } from "@/server/actions/send-org-invite-email";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
+
 
 type SendInviteLinkProps = {
     inviteLink: string;
@@ -17,13 +19,23 @@ export function SendInviteLink({ inviteLink, orgName }: SendInviteLinkProps) {
 
     const sendInvite = async () => {
         setIsPending(true);
-        await sendOrgInviteEmail({
+        const sendInvitePromise = () => sendOrgInviteEmail({
             email: sendInviteEmail,
             orgName: orgName,
             invLink: inviteLink
         });
-        setIsSent(true);
-        setIsPending(false);
+
+        toast.promise(sendInvitePromise(), {
+            loading: 'Sending invite...',
+            success: () => {
+                setIsSent(true);
+                return "Invite sent";
+            },
+            error: 'Error sending invite',
+            finally() {
+                setIsPending(false);
+            },
+        });
     };
 
     useEffect(() => {
