@@ -15,6 +15,7 @@ import {
 } from "@/server/actions/organization/queries";
 import { ShareInviteLink } from "@/app/(app)/(user)/org/members/invite/_components/share-invite-link";
 import { OrgRequests } from "@/app/(app)/(user)/org/members/invite/_components/org-requests";
+import { SendInviteLink } from "./_components/send-invite-link";
 
 export default async function OrgMemberInvite() {
     const { currentOrg } = await getOrganizations();
@@ -42,6 +43,19 @@ export default async function OrgMemberInvite() {
                         <Separator className="my-4" />
 
                         <OrgRequests requests={requests} />
+                    </CardContent>
+                </Card>
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Send invite link</CardTitle>
+                        <CardDescription>
+                            Send an invite link to a new member.
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+
+
+                        <SendInviteLink inviteLink={inviteLink} />
                     </CardContent>
                 </Card>
             </div>
