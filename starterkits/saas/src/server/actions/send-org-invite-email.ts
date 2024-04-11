@@ -1,25 +1,22 @@
 "use server";
 
-import { type SendVerificationRequestParams } from "next-auth/providers/email";
 import { resend } from "@/server/resend";
 import { siteConfig } from "@/config/site";
 import { siteUrls } from "@/config/urls";
 
-interface SendVerificationEmailProps {
+interface sendOrgInviteEmailProps {
     email: string;
     orgName: string;
     invLink: string;
-    name: string;
 }
 
 // Send a verification email to the user
 
-export async function sendVerificationEmail({
+export async function sendOrgInviteEmail({
     email,
     orgName,
     invLink,
-    name,
-}: SendVerificationEmailProps) {
+}: sendOrgInviteEmailProps) {
     try {
         //send email to user via resend
         await resend.emails.send({
@@ -31,7 +28,7 @@ export async function sendVerificationEmail({
                     <a href="${siteUrls.rapidlaunch}">${siteConfig.name}</a>
                     <h1>🪄 Your Invite to ${orgName}</h1>
                     <p>
-                        You have been invited to join ${orgName} by ${name}.
+                        You have been invited to join ${orgName}
                         Click the link below to verify to join ${orgName} on ${siteConfig.name}.
                     </p>
                     <a href="${invLink}">Join Organisation</a>
