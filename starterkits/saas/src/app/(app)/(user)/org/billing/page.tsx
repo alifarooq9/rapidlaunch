@@ -2,7 +2,7 @@ import { AvailablePlans } from "@/app/(app)/(user)/org/billing/_components/avail
 import { CurrentPlan } from "@/app/(app)/(user)/org/billing/_components/current-plan";
 import { AppPageShell } from "@/app/(app)/_components/page-shell";
 
-export default async function OrgBillingPage() {
+export default function OrgBillingPage() {
     return (
         <AppPageShell
             title="Billing"

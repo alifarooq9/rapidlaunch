@@ -2,6 +2,7 @@
 
 import { Button, type ButtonProps } from "@/components/ui/button";
 import { Icons } from "@/components/ui/icons";
+import { useAwaitableTransition } from "@/hooks/use-awaitable-transition";
 import { changePlan } from "@/server/actions/plans/mutations";
 import {
     getCheckoutURL,
@@ -18,8 +19,16 @@ type SubscribeBtnProps = {
 export function SubscribeBtn({ variantId, ...props }: SubscribeBtnProps) {
     const router = useRouter();
 
+    const [, startAwaitableTransition] = useAwaitableTransition();
+
     const { mutate, isPending } = useMutation({
-        mutationFn: () => handleSubscription(),
+        mutationFn: async () => {
+            const data = await handleSubscription();
+            await startAwaitableTransition(() => {
+                router.refresh();
+            });
+            return data;
+        },
         onError: (error) => {
             toast.error(error.message ?? "An error occurred.");
         },
@@ -32,6 +41,7 @@ export function SubscribeBtn({ variantId, ...props }: SubscribeBtnProps) {
 
     const handleSubscription = async () => {
         const subscription = await getOrgSubscription();
+
         if (!subscription?.id) {
             return getCheckoutURL(variantId);
         } else {

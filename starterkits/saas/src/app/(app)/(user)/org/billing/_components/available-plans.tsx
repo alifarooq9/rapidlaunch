@@ -16,7 +16,7 @@ export async function AvailablePlans() {
     const subscription = await getOrgSubscription();
 
     return (
-        <Card>
+        <Card key={subscription?.variantId}>
             <CardHeader>
                 <CardTitle>Available Plans</CardTitle>
                 <CardDescription>

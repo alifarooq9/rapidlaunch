@@ -174,6 +174,9 @@ export async function changePlan(
     const updatedSub = await updateSubscription(subscription.lemonSqueezyId, {
         variantId: newVariantId,
         invoiceImmediately: true,
+        // @ts-expect-error -- null is a valid value for pause
+        pause: null,
+        cancelled: false,
     });
 
     // Save in db
@@ -184,6 +187,11 @@ export async function changePlan(
                 variantId: newVariantId,
                 price: newPlan?.price.monthly.toString(),
                 endsAt: updatedSub.data?.data.attributes.ends_at,
+                renewsAt: updatedSub.data?.data.attributes.renews_at,
+                isPaused: updatedSub.data?.data.attributes.pause !== null,
+                status: updatedSub.data?.data.attributes.status,
+                statusFormatted:
+                    updatedSub.data?.data.attributes.status_formatted,
             })
             .where(
                 eq(subscriptions.lemonSqueezyId, subscription.lemonSqueezyId),
@@ -260,9 +268,13 @@ export async function pausePlan() {
                 endsAt: returnedSub.data?.data.attributes.ends_at,
                 isPaused: returnedSub.data?.data.attributes.pause !== null,
             })
-            .where(eq(subscriptions.lemonSqueezyId, subscription.lemonSqueezyId));
+            .where(
+                eq(subscriptions.lemonSqueezyId, subscription.lemonSqueezyId),
+            );
     } catch (error) {
-        throw new Error(`Failed to pause Subscription #${subscription.lemonSqueezyId} in the database.`);
+        throw new Error(
+            `Failed to pause Subscription #${subscription.lemonSqueezyId} in the database.`,
+        );
     }
 
     revalidatePath("/");
