@@ -5,7 +5,6 @@ import { siteConfig } from "@/config/site";
 import { siteUrls } from "@/config/urls";
 import { z } from "zod";
 
-
 const sendOrgInviteEmailProps = z.object({
     email: z.string().email("Please enter a valid email address"),
     orgName: z.string(),
@@ -21,6 +20,16 @@ export async function sendOrgInviteEmail({
     orgName,
     invLink,
 }: sendOrgInviteEmailProps) {
+    const { success } = sendOrgInviteEmailProps.safeParse({
+        email,
+        orgName,
+        invLink,
+    });
+
+    if (!success) {
+        throw new Error("Invalid email");
+    }
+
     try {
         //send email to user via resend
         await resend.emails.send({
