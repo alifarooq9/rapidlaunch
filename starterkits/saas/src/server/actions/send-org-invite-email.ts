@@ -3,12 +3,16 @@
 import { resend } from "@/server/resend";
 import { siteConfig } from "@/config/site";
 import { siteUrls } from "@/config/urls";
+import { z } from "zod";
 
-interface sendOrgInviteEmailProps {
-    email: string;
-    orgName: string;
-    invLink: string;
-}
+
+const sendOrgInviteEmailProps = z.object({
+    email: z.string().email("Please enter a valid email address"),
+    orgName: z.string(),
+    invLink: z.string(),
+});
+
+type sendOrgInviteEmailProps = z.infer<typeof sendOrgInviteEmailProps>;
 
 // Send a verification email to the user
 
