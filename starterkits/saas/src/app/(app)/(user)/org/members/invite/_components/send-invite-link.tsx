@@ -5,7 +5,27 @@ import { Input } from "@/components/ui/input";
 import { sendOrgInviteEmail } from "@/server/actions/send-org-invite-email";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+    Form,
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form";
+import { Icons } from "@/components/ui/icons";
 
+
+
+const formSchema = z.object({
+    email: z.string().email("Please enter a valid email address"),
+});
+
+type formSchemaType = z.infer<typeof formSchema>;
 
 type SendInviteLinkProps = {
     inviteLink: string;
@@ -13,14 +33,20 @@ type SendInviteLinkProps = {
 };
 
 export function SendInviteLink({ inviteLink, orgName }: SendInviteLinkProps) {
-    const [isPending, setIsPending] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [isSent, setIsSent] = useState(false);
-    const [sendInviteEmail, setSendInviteEmail] = useState("");
 
-    const sendInvite = async () => {
-        setIsPending(true);
+    const form = useForm<formSchemaType>({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            email: "",
+        },
+    });
+
+    const onSumbmit = async (data: formSchemaType) => {
+        setIsLoading(true);
         const sendInvitePromise = () => sendOrgInviteEmail({
-            email: sendInviteEmail,
+            email: data.email,
             orgName: orgName,
             invLink: inviteLink
         });
@@ -33,7 +59,8 @@ export function SendInviteLink({ inviteLink, orgName }: SendInviteLinkProps) {
             },
             error: 'Error sending invite',
             finally() {
-                setIsPending(false);
+                setIsLoading(false);
+                form.reset({ email: "" });
             },
         });
     };
@@ -53,18 +80,42 @@ export function SendInviteLink({ inviteLink, orgName }: SendInviteLinkProps) {
     }, [isSent]);
 
     return (
-        <div className="flex gap-4 md:flex-row md:items-center md:justify-between">
-            <div className="flex w-full space-x-2">
-                <Input value={sendInviteEmail} type="email" onChange={(e) => setSendInviteEmail(e.target.value)} placeholder="Email" />
-                <Button
-                    disabled={isPending}
-                    variant="secondary"
-                    className="shrink-0"
-                    onClick={sendInvite}
-                >
-                    {isSent ? "Invite Sent" : "Send Invite"}
-                </Button>
-            </div>
-        </div>
+        <Form {...form}>
+            <form
+                onSubmit={form.handleSubmit(onSumbmit)}
+                className="flex gap-4 md:flex-row md:items-center md:justify-between"
+            >
+                <div className="flex w-full space-x-2">
+                    <div className="w-full">
+                    <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormControl>
+                                    <Input
+                                        className="bg-background w-full"
+                                        placeholder="hey@example.com"
+                                        {...field}
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    </div>
+                    <Button
+                        disabled={isLoading}
+                        aria-disabled={isLoading}
+                        variant="secondary"
+                        className="shrink-0"
+                        type="submit"
+                    >
+                        {isLoading && <Icons.loader className="h-4 w-4 mr-2" />}
+                        {isSent ? "Invite Sent" : "Send Invite"}
+                    </Button>
+                </div>
+            </form>
+        </Form>
     );
 }
