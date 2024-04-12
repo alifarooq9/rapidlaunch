@@ -6,7 +6,11 @@ import { db } from "@/server/db";
 import { subscriptions, webhookEvents } from "@/server/db/schema";
 import { configureLemonSqueezy } from "@/server/lemonsqueezy";
 import { webhookHasData, webhookHasMeta } from "@/validations/lemonsqueezy";
-import { getPrice, updateSubscription } from "@lemonsqueezy/lemonsqueezy.js";
+import {
+    cancelSubscription,
+    getPrice,
+    updateSubscription,
+} from "@lemonsqueezy/lemonsqueezy.js";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
@@ -193,4 +197,115 @@ export async function changePlan(
     revalidatePath("/");
 
     return updatedSub;
+}
+
+export async function cancelPlan() {
+    configureLemonSqueezy();
+
+    const subscription = await getOrgSubscription();
+
+    if (!subscription) {
+        throw new Error("No subscription found.");
+    }
+
+    const cancelSub = await cancelSubscription(subscription.lemonSqueezyId);
+
+    // Save in db
+    try {
+        await db
+            .update(subscriptions)
+            .set({
+                status: cancelSub.data?.data.attributes.status,
+                statusFormatted:
+                    cancelSub.data?.data.attributes.status_formatted,
+                endsAt: cancelSub.data?.data.attributes.ends_at,
+            })
+            .where(
+                eq(subscriptions.lemonSqueezyId, subscription.lemonSqueezyId),
+            );
+    } catch (error) {
+        throw new Error(
+            `Failed to update Subscription #${subscription.lemonSqueezyId} in the database.`,
+        );
+    }
+
+    revalidatePath("/");
+
+    return cancelSub;
+}
+
+export async function pausePlan() {
+    configureLemonSqueezy();
+
+    const subscription = await getOrgSubscription();
+
+    if (!subscription) {
+        throw new Error("No subscription found.");
+    }
+
+    const returnedSub = await updateSubscription(subscription.lemonSqueezyId, {
+        pause: {
+            mode: "void",
+        },
+    });
+
+    // Update the db
+    try {
+        await db
+            .update(subscriptions)
+            .set({
+                status: returnedSub.data?.data.attributes.status,
+                statusFormatted:
+                    returnedSub.data?.data.attributes.status_formatted,
+                endsAt: returnedSub.data?.data.attributes.ends_at,
+                isPaused: returnedSub.data?.data.attributes.pause !== null,
+            })
+            .where(eq(subscriptions.lemonSqueezyId, subscription.lemonSqueezyId));
+    } catch (error) {
+        throw new Error(`Failed to pause Subscription #${subscription.lemonSqueezyId} in the database.`);
+    }
+
+    revalidatePath("/");
+
+    return returnedSub;
+}
+
+export async function resumePlan() {
+    configureLemonSqueezy();
+
+    const subscription = await getOrgSubscription();
+
+    if (!subscription) {
+        throw new Error("No subscription found.");
+    }
+
+    const returnedSub = await updateSubscription(subscription.lemonSqueezyId, {
+        cancelled: false,
+        // @ts-expect-error -- null is a valid value for pause
+        pause: null,
+    });
+
+    // Update the db
+    try {
+        await db
+            .update(subscriptions)
+            .set({
+                status: returnedSub.data?.data.attributes.status,
+                statusFormatted:
+                    returnedSub.data?.data.attributes.status_formatted,
+                endsAt: returnedSub.data?.data.attributes.ends_at,
+                isPaused: returnedSub.data?.data.attributes.pause !== null,
+            })
+            .where(
+                eq(subscriptions.lemonSqueezyId, subscription.lemonSqueezyId),
+            );
+    } catch (error) {
+        throw new Error(
+            `Failed to resume Subscription #${subscription.lemonSqueezyId} in the database.`,
+        );
+    }
+
+    revalidatePath("/");
+
+    return returnedSub;
 }

@@ -1,3 +1,4 @@
+import { CancelPauseResumeBtns } from "@/app/(app)/(user)/org/billing/_components/cancel-pause-resume-btns";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -23,7 +24,7 @@ export async function CurrentPlan() {
                 </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
-                <div>
+                <div className="space-y-1">
                     <div className="flex items-center gap-2">
                         <p>
                             <span className="font-semibold">Plan:</span>{" "}
@@ -59,21 +60,25 @@ export async function CurrentPlan() {
                             "No expiration"
                         )}
                     </p>
-                    <p></p>
                 </div>
-                <form
-                    action={async () => {
-                        "use server";
 
-                        if (subscription?.customerPortalUrl) {
-                            redirect(subscription?.customerPortalUrl);
-                        }
-                    }}
-                >
-                    <Button disabled={!subscription} variant="outline">
-                        Manage your billing settings
-                    </Button>
-                </form>
+                <div className="flex items-center justify-between">
+                    <form
+                        action={async () => {
+                            "use server";
+
+                            if (subscription?.customerPortalUrl) {
+                                redirect(subscription?.customerPortalUrl);
+                            }
+                        }}
+                    >
+                        <Button disabled={!subscription} variant="outline">
+                            Manage your billing settings
+                        </Button>
+                    </form>
+
+                    <CancelPauseResumeBtns subscription={subscription} />
+                </div>
             </CardContent>
         </Card>
     );
