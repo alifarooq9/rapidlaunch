@@ -143,6 +143,7 @@ export async function changePlan(
         // @ts-expect-error -- null is a valid value for pause
         pause: null,
         cancelled: false,
+        
     });
 
     // Save in db

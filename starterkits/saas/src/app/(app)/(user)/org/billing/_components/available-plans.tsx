@@ -1,5 +1,5 @@
-import { SubscribeBtn } from "@/app/(app)/(user)/org/billing/_components/subscribe-btn";
-import { Button } from "@/components/ui/button";
+import { SwitchPlanModal } from "@/app/(app)/(user)/org/billing/_components/switch-plan-modal";
+import { buttonVariants } from "@/components/ui/button";
 import {
     Card,
     CardContent,
@@ -65,34 +65,50 @@ export function AvailablePlans({ subscription }: AvailablePlansProps) {
                             </ul>
 
                             {plan.id === subscription?.plan?.id ? (
-                                <Button
-                                    variant="outline"
-                                    disabled
-                                    className="w-full"
+                                <div
+                                    className={buttonVariants({
+                                        className: "w-full ",
+                                        variant: "outline",
+                                    })}
                                 >
                                     Current Plan
-                                </Button>
+                                </div>
                             ) : (
                                 plan.variantId && (
                                     <div className="flex w-full flex-col gap-2">
-                                        <SubscribeBtn
-                                            variant={"outline"}
+                                        <SwitchPlanModal
+                                            cardBrand={
+                                                subscription?.card_brand ?? ""
+                                            }
+                                            lastCardDigits={
+                                                subscription?.card_last_four ??
+                                                ""
+                                            }
+                                            currencyCode={plan.currency.code}
+                                            currencySymbol={
+                                                plan.currency.symbol
+                                            }
+                                            planName={plan.title}
+                                            price={plan.price.monthly}
                                             variantId={plan.variantId?.monthly}
-                                            className="w-full"
-                                        >
-                                            Switch to {plan.currency.symbol}
-                                            {plan.price.monthly}{" "}
-                                            {plan.currency.code} per month
-                                        </SubscribeBtn>
-                                        <SubscribeBtn
-                                            variant={"outline"}
+                                        />
+
+                                        <SwitchPlanModal
+                                            cardBrand={
+                                                subscription?.card_brand ?? ""
+                                            }
+                                            lastCardDigits={
+                                                subscription?.card_last_four ??
+                                                ""
+                                            }
+                                            currencyCode={plan.currency.code}
+                                            currencySymbol={
+                                                plan.currency.symbol
+                                            }
+                                            planName={plan.title}
+                                            price={plan.price.yearly}
                                             variantId={plan.variantId?.yearly}
-                                            className="w-full"
-                                        >
-                                            Switch to {plan.currency.symbol}
-                                            {plan.price.yearly}{" "}
-                                            {plan.currency.code} per year
-                                        </SubscribeBtn>
+                                        />
                                     </div>
                                 )
                             )}
