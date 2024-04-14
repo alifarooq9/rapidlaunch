@@ -29,6 +29,9 @@ export const env = createEnv({
         RESEND_API_KEY: z.string(),
         UPLOADTHING_SECRET: z.string(),
         UPLOADTHING_ID: z.string(),
+        LEMONSQUEEZY_API_KEY: z.string(),
+        LEMONSQUEEZY_STORE_ID: z.string(),
+        LEMONSQUEEZY_WEBHOOK_SECRET: z.string(),
     },
 
     /**
@@ -56,6 +59,9 @@ export const env = createEnv({
         GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
         UPLOADTHING_SECRET: process.env.UPLOADTHING_SECRET,
         UPLOADTHING_ID: process.env.UPLOADTHING_ID,
+        LEMONSQUEEZY_API_KEY: process.env.LEMONSQUEEZY_API_KEY,
+        LEMONSQUEEZY_STORE_ID: process.env.LEMONSQUEEZY_STORE_ID,
+        LEMONSQUEEZY_WEBHOOK_SECRET: process.env.LEMONSQUEEZY_WEBHOOK_SECRET,
     },
     /**
      * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

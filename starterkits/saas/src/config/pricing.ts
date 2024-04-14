@@ -11,12 +11,15 @@
  * 2. Add title and inludedIn to the new feature object. (inludedIn is an array of pricing plan ids that include this feature)
  */
 
-export type Pricing = {
+export type PrincingPlan = {
     id: string;
     badge?: string;
     title: string;
     description: string;
-    price: number;
+    price: {
+        monthly: number;
+        yearly: number;
+    };
     currency: {
         code: string;
         symbol: string;
@@ -25,6 +28,10 @@ export type Pricing = {
     highlight: string;
     buttonHighlighted: boolean;
     uniqueFeatures?: string[];
+    variantId?: {
+        monthly: number;
+        yearly: number;
+    };
 };
 
 export type Feature = {
@@ -102,13 +109,16 @@ export const features: Feature[] = [
     },
 ];
 
-export const pricings: Pricing[] = [
+export const pricingPlans: PrincingPlan[] = [
     {
         id: pricingIds.free,
         title: "Free",
         description:
             "Everything you need to get started with 10,500 free MAU. No setup fees, monthly fees, or hidden fees.",
-        price: 0,
+        price: {
+            monthly: 0,
+            yearly: 0,
+        },
         currency: {
             code: "USD",
             symbol: "$",
@@ -125,7 +135,11 @@ export const pricings: Pricing[] = [
         title: "Pro",
         description:
             "Advanced features to help you scale any business without limits.",
-        price: 49,
+        price: {
+            monthly: 99,
+            yearly: 999,
+        },
+        variantId: { monthly: 335144, yearly: 335149 },
         currency: {
             code: "USD",
             symbol: "$",
@@ -141,7 +155,11 @@ export const pricings: Pricing[] = [
         title: "Premium",
         description:
             "For teams with more complex needs requiring the highest levels of support.",
-        price: 199,
+        price: {
+            monthly: 199,
+            yearly: 1999,
+        },
+        variantId: { monthly: 335161, yearly: 335167 },
         currency: {
             code: "USD",
             symbol: "$",

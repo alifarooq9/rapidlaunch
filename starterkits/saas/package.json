@@ -15,6 +15,7 @@
     "dependencies": {
         "@auth/drizzle-adapter": "^0.7.0",
         "@hookform/resolvers": "^3.3.4",
+        "@lemonsqueezy/lemonsqueezy.js": "^2.2.0",
         "@mdx-js/react": "^3.0.1",
         "@radix-ui/react-accordion": "^1.1.2",
         "@radix-ui/react-alert-dialog": "^1.0.5",

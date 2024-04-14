@@ -3,6 +3,7 @@ import {
     boolean,
     index,
     integer,
+    jsonb,
     pgEnum,
     pgTableCreator,
     primaryKey,
@@ -126,6 +127,7 @@ export const organizations = createTable("organization", {
         .primaryKey()
         .default(sql`gen_random_uuid()`),
     name: varchar("name", { length: 255 }).notNull(),
+    email: varchar("email", { length: 255 }).notNull(),
     image: varchar("image", { length: 255 }),
     createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
     ownerId: varchar("ownerId", { length: 255 })
@@ -149,6 +151,10 @@ export const organizationsRelations = relations(
             references: [users.id],
         }),
         membersToOrganizations: many(membersToOrganizations),
+        subscriptions: one(subscriptions, {
+            fields: [organizations.id],
+            references: [subscriptions.orgId],
+        }),
     }),
 );
 
@@ -294,3 +300,35 @@ export const feedbackSelectSchema = createSelectSchema(feedback, {
         .min(10, "Message is too short")
         .max(1000, "Message is too long"),
 });
+
+export const webhookEvents = createTable("webhookEvent", {
+    id: varchar("id", { length: 255 })
+        .notNull()
+        .primaryKey()
+        .default(sql`gen_random_uuid()`),
+    createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
+    eventName: text("eventName").notNull(),
+    processed: boolean("processed").default(false),
+    body: jsonb("body").notNull(),
+    processingError: text("processingError"),
+});
+
+export const subscriptions = createTable("subscription", {
+    id: varchar("id", { length: 255 })
+        .notNull()
+        .primaryKey()
+        .default(sql`gen_random_uuid()`),
+    lemonSqueezyId: text("lemonSqueezyId").unique().notNull(),
+    orderId: integer("orderId").notNull(),
+    orgId: text("orgId")
+        .notNull()
+        .references(() => organizations.id, { onDelete: "cascade" }),
+    variantId: integer("variantId").notNull(),
+});
+
+export const subscriptionsRelations = relations(subscriptions, ({ one }) => ({
+    organization: one(organizations, {
+        fields: [subscriptions.orgId],
+        references: [organizations.id],
+    }),
+}));

@@ -37,6 +37,7 @@ const createOrgFormSchema = z.object({
         .trim()
         .min(3, "Name must be at least 3 characters long")
         .max(50, "Name must be at most 50 characters long"),
+    email: z.string().email("Invalid email address"),
 });
 
 type CreateOrgFormSchema = z.infer<typeof createOrgFormSchema>;
@@ -76,11 +77,13 @@ export function NewUserOrgForm({
         resolver: zodResolver(createOrgFormSchema),
         defaultValues: {
             name: "",
+            email: "",
         },
     });
 
     const { mutateAsync, isPending: isMutatePending } = useMutation({
-        mutationFn: ({ name }: { name: string }) => createOrgMutation({ name }),
+        mutationFn: ({ name, email }: { name: string; email: string }) =>
+            createOrgMutation({ name, email }),
     });
 
     const [isPending, startAwaitableTransition] = useAwaitableTransition();
@@ -118,7 +121,28 @@ export function NewUserOrgForm({
                             Create an organization to get started
                         </CardDescription>
                     </CardHeader>
-                    <CardContent className="grid gap-2">
+                    <CardContent className="grid gap-3">
+                        <FormField
+                            control={form.control}
+                            name="email"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Org Email</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            placeholder="hey@example.com"
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormDescription>
+                                        Enter the email of your organization.
+                                        This could be your personal email or a
+                                        shared email.
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
                         <FormField
                             control={form.control}
                             name="name"
