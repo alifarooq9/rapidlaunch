@@ -79,8 +79,12 @@ export async function getOrgSubscription() {
         orgSubscription?.lemonSqueezyId,
     );
 
+    if (!lemonSubscription.data?.data) {
+        return null;
+    }
+
     const customerPortalUrl =
-        lemonSubscription.data?.data?.attributes?.urls?.customer_portal;
+        lemonSubscription.data.data.attributes.urls.customer_portal;
 
     // add plan details to the subscription
     const plan = pricingPlans.find(
@@ -90,8 +94,10 @@ export async function getOrgSubscription() {
     );
 
     return {
-        ...orgSubscription,
+        ...lemonSubscription.data.data.attributes,
+        lemonSqueezyId: lemonSubscription.data.data.id,
         customerPortalUrl,
+        id: orgSubscription.id,
         plan,
     };
 }

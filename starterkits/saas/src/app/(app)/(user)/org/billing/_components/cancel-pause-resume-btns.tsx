@@ -6,15 +6,15 @@ import {
     pausePlan,
     resumePlan,
 } from "@/server/actions/plans/mutations";
-import { type getOrgSubscription } from "@/server/actions/plans/query";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useAwaitableTransition } from "@/hooks/use-awaitable-transition";
 import { Icons } from "@/components/ui/icons";
+import type { OrgSubscription } from "@/types/org-subscription";
 
 type CancelAndPauseBtnProps = {
-    subscription: Awaited<ReturnType<typeof getOrgSubscription>>;
+    subscription: OrgSubscription;
 };
 
 export function CancelPauseResumeBtns({

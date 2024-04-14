@@ -2,6 +2,7 @@
 
 import { Button, type ButtonProps } from "@/components/ui/button";
 import { Icons } from "@/components/ui/icons";
+import { siteUrls } from "@/config/urls";
 import { useAwaitableTransition } from "@/hooks/use-awaitable-transition";
 import { changePlan } from "@/server/actions/plans/mutations";
 import {
@@ -24,9 +25,14 @@ export function SubscribeBtn({ variantId, ...props }: SubscribeBtnProps) {
     const { mutate, isPending } = useMutation({
         mutationFn: async () => {
             const data = await handleSubscription();
-            await startAwaitableTransition(() => {
-                router.refresh();
-            });
+
+            if (typeof data !== "string") {
+                await startAwaitableTransition(() => {
+                    router.refresh();
+                    router.push(siteUrls.organization.plansAndBilling);
+                });
+            }
+
             return data;
         },
         onError: (error) => {
@@ -42,10 +48,10 @@ export function SubscribeBtn({ variantId, ...props }: SubscribeBtnProps) {
     const handleSubscription = async () => {
         const subscription = await getOrgSubscription();
 
-        if (!subscription?.id) {
+        if (!subscription) {
             return getCheckoutURL(variantId);
         } else {
-            return await changePlan(subscription?.variantId, variantId!);
+            return await changePlan(subscription.variant_id, variantId!);
         }
     };
 

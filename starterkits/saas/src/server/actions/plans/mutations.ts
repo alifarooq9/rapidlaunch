@@ -8,7 +8,6 @@ import { configureLemonSqueezy } from "@/server/lemonsqueezy";
 import { webhookHasData, webhookHasMeta } from "@/validations/lemonsqueezy";
 import {
     cancelSubscription,
-    getPrice,
     updateSubscription,
 } from "@lemonsqueezy/lemonsqueezy.js";
 import { eq } from "drizzle-orm";
@@ -79,35 +78,9 @@ export async function processWebhookEvent(webhookEvent: NewWebhookEvent) {
             } else {
                 // Update the subscription in the database.
 
-                const priceId = attributes.first_subscription_item.price_id;
-
-                // Get the price data from Lemon Squeezy.
-                const priceData = await getPrice(priceId);
-                if (priceData.error) {
-                    processingError = `Failed to get the price data for the subscription ${eventBody.data.id}.`;
-                }
-
-                const isUsageBased =
-                    attributes.first_subscription_item.is_usage_based;
-                const price = isUsageBased
-                    ? priceData.data?.data.attributes.unit_price_decimal
-                    : priceData.data?.data.attributes.unit_price;
-
                 const updateData: NewSubscription = {
                     lemonSqueezyId: eventBody.data.id,
                     orderId: attributes.order_id as number,
-                    name: attributes.user_name as string,
-                    email: attributes.user_email as string,
-                    status: attributes.status as string,
-                    statusFormatted: attributes.status_formatted as string,
-                    renewsAt: attributes.renews_at as string,
-                    endsAt: attributes.ends_at as string,
-                    trialEndsAt: attributes.trial_ends_at as string,
-                    price: price?.toString() ?? "",
-                    isPaused: false,
-                    subscriptionItemId: attributes.first_subscription_item.id,
-                    isUsageBased:
-                        attributes.first_subscription_item.is_usage_based,
                     orgId: eventBody.meta.custom_data.org_id,
                     variantId: Number(variantId),
                 };
@@ -163,13 +136,6 @@ export async function changePlan(
         );
     }
 
-    // Get the new plan details from the database.
-    const newPlan = pricingPlans.find(
-        (p) =>
-            p.variantId?.monthly === newVariantId ||
-            p.variantId?.yearly === newVariantId,
-    );
-
     // Send request to Lemon Squeezy to change the subscription.
     const updatedSub = await updateSubscription(subscription.lemonSqueezyId, {
         variantId: newVariantId,
@@ -184,14 +150,8 @@ export async function changePlan(
         await db
             .update(subscriptions)
             .set({
+                lemonSqueezyId: updatedSub.data?.data.id,
                 variantId: newVariantId,
-                price: newPlan?.price.monthly.toString(),
-                endsAt: updatedSub.data?.data.attributes.ends_at,
-                renewsAt: updatedSub.data?.data.attributes.renews_at,
-                isPaused: updatedSub.data?.data.attributes.pause !== null,
-                status: updatedSub.data?.data.attributes.status,
-                statusFormatted:
-                    updatedSub.data?.data.attributes.status_formatted,
             })
             .where(
                 eq(subscriptions.lemonSqueezyId, subscription.lemonSqueezyId),
@@ -223,10 +183,8 @@ export async function cancelPlan() {
         await db
             .update(subscriptions)
             .set({
-                status: cancelSub.data?.data.attributes.status,
-                statusFormatted:
-                    cancelSub.data?.data.attributes.status_formatted,
-                endsAt: cancelSub.data?.data.attributes.ends_at,
+                lemonSqueezyId: cancelSub.data?.data.id,
+                variantId: cancelSub.data?.data.attributes.variant_id,
             })
             .where(
                 eq(subscriptions.lemonSqueezyId, subscription.lemonSqueezyId),
@@ -262,11 +220,8 @@ export async function pausePlan() {
         await db
             .update(subscriptions)
             .set({
-                status: returnedSub.data?.data.attributes.status,
-                statusFormatted:
-                    returnedSub.data?.data.attributes.status_formatted,
-                endsAt: returnedSub.data?.data.attributes.ends_at,
-                isPaused: returnedSub.data?.data.attributes.pause !== null,
+                lemonSqueezyId: returnedSub.data?.data.id,
+                variantId: returnedSub.data?.data.attributes.variant_id,
             })
             .where(
                 eq(subscriptions.lemonSqueezyId, subscription.lemonSqueezyId),
@@ -302,11 +257,8 @@ export async function resumePlan() {
         await db
             .update(subscriptions)
             .set({
-                status: returnedSub.data?.data.attributes.status,
-                statusFormatted:
-                    returnedSub.data?.data.attributes.status_formatted,
-                endsAt: returnedSub.data?.data.attributes.ends_at,
-                isPaused: returnedSub.data?.data.attributes.pause !== null,
+                lemonSqueezyId: returnedSub.data?.data.id,
+                variantId: returnedSub.data?.data.attributes.variant_id,
             })
             .where(
                 eq(subscriptions.lemonSqueezyId, subscription.lemonSqueezyId),

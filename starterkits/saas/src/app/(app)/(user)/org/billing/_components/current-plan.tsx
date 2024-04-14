@@ -8,15 +8,17 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import { getOrgSubscription } from "@/server/actions/plans/query";
+import type { OrgSubscription } from "@/types/org-subscription";
 import { format } from "date-fns";
 import { redirect } from "next/navigation";
 
-export async function CurrentPlan() {
-    const subscription = await getOrgSubscription();
+type CurrentPlanProps = {
+    subscription: OrgSubscription;
+};
 
+export function CurrentPlan({ subscription }: CurrentPlanProps) {
     return (
-        <Card key={subscription?.id}>
+        <Card>
             <CardHeader>
                 <CardTitle>Current Plan</CardTitle>
                 <CardDescription>
@@ -31,9 +33,9 @@ export async function CurrentPlan() {
                             {subscription ? subscription.plan?.title : "Free"}
                         </p>
 
-                        {subscription?.statusFormatted && (
+                        {subscription?.status_formatted && (
                             <Badge variant="secondary">
-                                {subscription.statusFormatted}
+                                {subscription.status_formatted}
                             </Badge>
                         )}
                     </div>
@@ -42,19 +44,19 @@ export async function CurrentPlan() {
                             <>
                                 {subscription.status === "active" &&
                                     "Renews at " +
-                                        format(subscription.renewsAt!, "PP")}
+                                        format(subscription.renews_at, "PP")}
 
                                 {subscription.status === "paused" &&
                                     "Your subscription is paused"}
 
                                 {subscription.status === "cancelled" &&
-                                    subscription.endsAt &&
+                                    subscription.ends_at &&
                                     `${
-                                        new Date(subscription.endsAt) >
+                                        new Date(subscription.ends_at) >
                                         new Date()
                                             ? "Ends at "
                                             : "Ended on "
-                                    }` + format(subscription.endsAt, "PP")}
+                                    }` + format(subscription.ends_at, "PP")}
                             </>
                         ) : (
                             "No expiration"

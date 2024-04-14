@@ -9,14 +9,16 @@ import {
 } from "@/components/ui/card";
 import { features, pricingPlans } from "@/config/pricing";
 import { cn } from "@/lib/utils";
-import { getOrgSubscription } from "@/server/actions/plans/query";
+import type { OrgSubscription } from "@/types/org-subscription";
 import { CheckIcon, XIcon } from "lucide-react";
 
-export async function AvailablePlans() {
-    const subscription = await getOrgSubscription();
+type AvailablePlansProps = {
+    subscription: OrgSubscription;
+};
 
+export function AvailablePlans({ subscription }: AvailablePlansProps) {
     return (
-        <Card key={subscription?.variantId}>
+        <Card>
             <CardHeader>
                 <CardTitle>Available Plans</CardTitle>
                 <CardDescription>
