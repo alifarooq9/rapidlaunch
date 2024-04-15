@@ -4,6 +4,8 @@ import { orgBillingPageConfig } from "@/app/(app)/(user)/org/billing/_constants/
 import { AppPageShell } from "@/app/(app)/_components/page-shell";
 import { getOrgSubscription } from "@/server/actions/plans/query";
 
+export const dynamic = "force-dynamic";
+
 export default async function OrgBillingPage() {
     const subscription = await getOrgSubscription();
 
