@@ -93,7 +93,7 @@ export function OrgSelectDropdown({
                         <span className="sr-only">org select menu</span>
                     </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-60 p-0" align="start">
+                <PopoverContent className="z-50 w-60 p-0" align="start">
                     <Command>
                         <CommandList>
                             <CommandInput placeholder="Search team..." />
