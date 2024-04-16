@@ -11,6 +11,7 @@ const nextConfig = {
     experimental: {
         optimizePackageImports: ["lucide-react"],
     },
+    images: { remotePatterns: [{ hostname: "fakeimg.pl" }] },
 };
 
 export default nextConfig;
