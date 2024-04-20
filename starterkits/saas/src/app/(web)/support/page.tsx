@@ -1,5 +1,5 @@
 import {
-    WebPageHeading,
+    WebPageHeader,
     WebPageWrapper,
 } from "@/app/(web)/_components/general-components";
 import { buttonVariants } from "@/components/ui/button";
@@ -16,15 +16,12 @@ import Link from "next/link";
 export default function ContactPage() {
     return (
         <WebPageWrapper>
-            <WebPageHeading
-                title="Support for You"
-                badge="Get in touch with us"
-            >
+            <WebPageHeader title="Support for You" badge="Get in touch with us">
                 <p>
                     If you have any questions or need help, feel free to reach
                     out to us.
                 </p>
-            </WebPageHeading>
+            </WebPageHeader>
 
             <div className="grid max-w-4xl grid-cols-1 gap-5 sm:grid-cols-2">
                 {supportInfos.map((supportInfo) => (
