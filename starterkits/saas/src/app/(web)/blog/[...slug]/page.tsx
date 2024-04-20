@@ -5,6 +5,8 @@ import { format } from "date-fns";
 import Image from "next/image";
 import { notFound, redirect } from "next/navigation";
 
+export const dynamic = "force-static";
+
 type BlogSlugPageProps = {
     params: {
         slug: string[];

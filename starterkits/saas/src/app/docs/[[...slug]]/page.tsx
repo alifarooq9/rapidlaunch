@@ -3,6 +3,8 @@ import { Toc } from "@/components/toc";
 import { getDocs } from "@/server/actions/docs";
 import { siteUrls } from "@/config/urls";
 
+export const dynamic = "force-static";
+
 type DocsSlugPageProps = {
     params: {
         slug: string[];
