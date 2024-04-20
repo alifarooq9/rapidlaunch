@@ -1,17 +1,12 @@
 import { notFound, redirect } from "next/navigation";
 import { Toc } from "@/components/toc";
-import { getMDXData } from "@/lib/mdx";
+import { getDocs } from "@/server/actions/docs";
 
 type DocsSlugPageProps = {
     params: {
         slug: string[];
     };
 };
-
-async function getDocs() {
-    const dir = "src/content/docs";
-    return await getMDXData(dir);
-}
 
 export async function generateStaticParams() {
     const docs = await getDocs();
@@ -38,7 +33,7 @@ export default async function DocsSlugPage({ params }: DocsSlugPageProps) {
         <>
             <article className="flex-1 py-10">
                 <div className="space-y-2">
-                    <h1 className="font-heading scroll-m-20 text-4xl font-bold">
+                    <h1 className="scroll-m-20 font-heading text-4xl font-bold">
                         {doc.metaData.title}
                     </h1>
                     {doc.metaData.description && (
