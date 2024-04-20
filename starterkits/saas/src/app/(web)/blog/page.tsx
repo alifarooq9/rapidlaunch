@@ -9,6 +9,8 @@ import { format } from "date-fns";
 import Image from "next/image";
 import Link from "next/link";
 
+export const dynamic = "force-static";
+
 export default async function BlogsPage() {
     const blogs = await getBlogs();
 
