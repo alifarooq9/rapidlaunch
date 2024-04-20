@@ -103,6 +103,7 @@ jobs:
           echo SKIP_ENV_VALIDATION="true" >> .env
           echo NEXTAUTH_URL="http://localhost:3000" >> .env
           echo RESEND_API_KEY="${{ secrets.RESEND_API_KEY }}" >> .env
+          echo NEXTAUTH_SECRET="123" >> .env
           cat .env
 
       - name: Install dependencies
