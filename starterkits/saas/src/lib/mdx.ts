@@ -1,13 +1,13 @@
 import { compileMDX } from "next-mdx-remote/rsc";
 import { readdir, readFile } from "fs/promises";
-import { mdxMetaSchema, type MDXMetaData } from "@/validations/mdx";
+import { docsMetaSchema } from "@/validations/mdx";
 import path from "path";
 import { getTableOfContents } from "@/lib/toc";
 import { mdxComponents } from "@/components/mdx-components";
 import { AutoIdsToHeading } from "@/lib/rehype-plugins";
 import rehypePrism from "rehype-prism-plus";
 
-export async function getMDXData(dir: string) {
+export async function getMDXData<MetaData>(dir: string) {
     const files = (await readdir(dir, "utf-8")).filter(
         (file) => path.extname(file) === ".mdx",
     );
@@ -17,7 +17,7 @@ export async function getMDXData(dir: string) {
     return await Promise.all(
         files.map(async (file) => {
             const fileData = await readFile(`${dir}/${file}`, "utf-8");
-            const mdxData = await compileMDX<MDXMetaData>({
+            const mdxData = await compileMDX<MetaData>({
                 source: fileData,
                 options: {
                     parseFrontmatter: true,
@@ -30,7 +30,7 @@ export async function getMDXData(dir: string) {
                 components,
             });
 
-            const validate = await mdxMetaSchema.safeParseAsync(
+            const validate = await docsMetaSchema.safeParseAsync(
                 mdxData.frontmatter,
             );
 

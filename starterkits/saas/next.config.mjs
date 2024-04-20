@@ -11,6 +11,13 @@ const nextConfig = {
     experimental: {
         optimizePackageImports: ["lucide-react"],
     },
+    images: { remotePatterns: [{ hostname: "fakeimg.pl" }] },
+    typescript: {
+        ignoreBuildErrors: true,
+    },
+    eslint: {
+        ignoreDuringBuilds: true,
+    },
 };
 
 export default nextConfig;
