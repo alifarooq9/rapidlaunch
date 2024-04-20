@@ -1,6 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 import { Toc } from "@/components/toc";
 import { getDocs } from "@/server/actions/docs";
+import { siteUrls } from "@/config/urls";
 
 type DocsSlugPageProps = {
     params: {
@@ -18,7 +19,7 @@ export async function generateStaticParams() {
 
 export default async function DocsSlugPage({ params }: DocsSlugPageProps) {
     if (!params.slug) {
-        return redirect("/docs/introduction");
+        return redirect(siteUrls.docs);
     }
 
     const doc = (await getDocs()).find(

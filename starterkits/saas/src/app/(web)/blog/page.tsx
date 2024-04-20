@@ -47,23 +47,21 @@ export default async function BlogsPage() {
                             <p>{blog.metaData.description}</p>
                             <div className="grid gap-0.5 font-light">
                                 <p className="text-sm text-muted-foreground">
-                                    Created at{" "}
                                     {format(
                                         new Date(blog.metaData.publishedAt),
                                         "PPP",
-                                    )}
+                                    )}{" "}
+                                    • {blog.metaData.readTime} read
                                 </p>
-
-                                <p className="text-sm text-muted-foreground">
-                                    Updated at{" "}
-                                    {format(
-                                        new Date(blog.metaData.updatedAt),
-                                        "PPP",
-                                    )}
-                                </p>
-                                <p className="text-sm text-muted-foreground">
-                                    {blog.metaData.readTime} read
-                                </p>
+                                {blog.metaData.updatedAt && (
+                                    <p className="text-sm text-muted-foreground">
+                                        Last updated at{" "}
+                                        {format(
+                                            new Date(blog.metaData.updatedAt),
+                                            "PPP",
+                                        )}
+                                    </p>
+                                )}
                             </div>
                         </Link>
                     ))}

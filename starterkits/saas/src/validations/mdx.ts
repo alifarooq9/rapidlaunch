@@ -14,7 +14,7 @@ export const blogMetaSchema = z.object({
     title: z.string(),
     slug: z.string(),
     publishedAt: z.string().datetime(),
-    updatedAt: z.string().datetime(),
+    updatedAt: z.string().datetime().optional(),
     readTime: z.string(),
     tags: z.array(z.string()).optional(),
     description: z.string(),

@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 import { type ElementType } from "react";
 import Balancer from "react-wrap-balancer";
 
@@ -6,14 +7,21 @@ import Balancer from "react-wrap-balancer";
 export function WebPageWrapper({
     children,
     as,
+    className,
 }: {
     children: React.ReactNode;
     as?: ElementType;
+    className?: string;
 }) {
     const Comp: ElementType = as ?? "main";
 
     return (
-        <Comp className="container flex flex-col items-center justify-center gap-24 py-10">
+        <Comp
+            className={cn(
+                "container flex flex-col items-center justify-center gap-24 py-10",
+                className,
+            )}
+        >
             {children}
         </Comp>
     );
@@ -38,7 +46,7 @@ export function WebPageHeading({
             )}
             <Balancer
                 as="h1"
-                className="font-heading max-w-2xl text-center text-5xl font-bold leading-none sm:text-6xl"
+                className="max-w-2xl text-center font-heading text-5xl font-bold leading-none sm:text-6xl"
             >
                 {title}
             </Balancer>
