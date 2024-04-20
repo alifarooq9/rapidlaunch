@@ -1,4 +1,5 @@
 import { WebPageWrapper } from "@/app/(web)/_components/general-components";
+import { Badge } from "@/components/ui/badge";
 import { siteUrls } from "@/config/urls";
 import { getBlogs } from "@/server/actions/blog";
 import { format } from "date-fns";
@@ -50,10 +51,20 @@ export default async function BlogSlugPage({ params }: BlogSlugPageProps) {
                             fill
                         />
                     </div>
+                    {blog.metaData?.tags && blog.metaData.tags.length > 0 && (
+                        <div className="flex flex-wrap gap-2">
+                            {blog.metaData.tags.map((tag) => (
+                                <Badge variant="outline" key={tag}>
+                                    {tag}
+                                </Badge>
+                            ))}
+                        </div>
+                    )}
                     <p className="text-sm text-muted-foreground">
                         {format(new Date(blog.metaData.publishedAt), "PPP")} •{" "}
                         {blog.metaData.readTime} read
                     </p>
+
                     {blog.metaData.updatedAt && (
                         <p className="text-sm text-muted-foreground">
                             Last updated at{" "}
