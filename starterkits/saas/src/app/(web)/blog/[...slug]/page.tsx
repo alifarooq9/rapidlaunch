@@ -1,5 +1,4 @@
 import { WebPageWrapper } from "@/app/(web)/_components/general-components";
-import { Toc } from "@/components/toc";
 import { siteUrls } from "@/config/urls";
 import { getBlogs } from "@/server/actions/blog";
 import { format } from "date-fns";
@@ -11,6 +10,14 @@ type BlogSlugPageProps = {
         slug: string[];
     };
 };
+
+export async function generateStaticParams() {
+    const blogs = await getBlogs();
+
+    return blogs.map((blog) => ({
+        slug: blog.metaData.slug.split("/"),
+    }));
+}
 
 export default async function BlogSlugPage({ params }: BlogSlugPageProps) {
     if (!params.slug) {
