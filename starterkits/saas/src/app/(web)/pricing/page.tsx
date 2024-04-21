@@ -1,6 +1,6 @@
 import { PricingTable } from "@/app/(web)/pricing/_components/pricing-table";
 import {
-    WebPageHeading,
+    WebPageHeader,
     WebPageWrapper,
 } from "@/app/(web)/_components/general-components";
 
@@ -14,7 +14,7 @@ import {
 export default function PricingPage() {
     return (
         <WebPageWrapper>
-            <WebPageHeading
+            <WebPageHeader
                 title="Flexible Pricing Plans for You"
                 badge="Beta Pricing"
             >
@@ -24,7 +24,7 @@ export default function PricingPage() {
                         - Cancel at any time
                     </span>
                 </p>
-            </WebPageHeading>
+            </WebPageHeader>
 
             <PricingTable />
         </WebPageWrapper>

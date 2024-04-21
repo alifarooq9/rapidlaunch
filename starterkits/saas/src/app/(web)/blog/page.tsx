@@ -1,5 +1,5 @@
 import {
-    WebPageHeading,
+    WebPageHeader,
     WebPageWrapper,
 } from "@/app/(web)/_components/general-components";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -16,11 +16,11 @@ export default async function BlogsPage() {
 
     return (
         <WebPageWrapper>
-            <WebPageHeading title="Blog">
+            <WebPageHeader title="Blog">
                 <p className="text-center text-base">
                     <span>Get the latest news and updates</span>
                 </p>
-            </WebPageHeading>
+            </WebPageHeader>
 
             <Card className="w-full">
                 <CardHeader>

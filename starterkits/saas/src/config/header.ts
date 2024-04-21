@@ -19,6 +19,7 @@ interface NavigationItem {
     href: string;
     label: string;
     badge?: string;
+    external?: boolean;
 }
 
 export const navigation: NavigationItem[] = [

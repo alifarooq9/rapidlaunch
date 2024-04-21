@@ -28,7 +28,7 @@ export function WebPageWrapper({
 }
 
 // This is a page heading used in all public web pages
-export function WebPageHeading({
+export function WebPageHeader({
     title,
     badge,
     children,
@@ -46,7 +46,7 @@ export function WebPageHeading({
             )}
             <Balancer
                 as="h1"
-                className="max-w-2xl text-center font-heading text-5xl font-bold leading-none sm:text-6xl"
+                className="max-w-2xl text-center font-heading text-5xl font-bold leading-none sm:text-5xl"
             >
                 {title}
             </Balancer>

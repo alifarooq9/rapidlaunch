@@ -7,7 +7,11 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckIcon, XIcon } from "lucide-react";
-import { type PrincingPlan, pricingPlans, features } from "@/config/pricing";
+import {
+    type PrincingPlan,
+    pricingPlans,
+    pricingFeatures,
+} from "@/config/pricing";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { redirect } from "next/navigation";
@@ -104,7 +108,7 @@ function PricingCard({ pricing }: PricingCardProps) {
                             </li>
                         ))}
 
-                        {features.map((feature) => (
+                        {pricingFeatures.map((feature) => (
                             <li
                                 key={feature.id}
                                 className="flex items-start gap-3"
