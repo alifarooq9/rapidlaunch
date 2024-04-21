@@ -7,7 +7,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import { features, pricingPlans } from "@/config/pricing";
+import { pricingFeatures, pricingPlans } from "@/config/pricing";
 import { cn } from "@/lib/utils";
 import type { OrgSubscription } from "@/types/org-subscription";
 import { CheckIcon, XIcon } from "lucide-react";
@@ -44,7 +44,7 @@ export function AvailablePlans({ subscription }: AvailablePlansProps) {
                                     </li>
                                 ))}
 
-                                {features.map((feature) => (
+                                {pricingFeatures.map((feature) => (
                                     <li
                                         key={feature.id}
                                         className={cn(

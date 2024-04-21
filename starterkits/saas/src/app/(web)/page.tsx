@@ -1,3 +1,4 @@
+import Features from "@/app/(web)/_components/features";
 import {
     WebPageHeader,
     WebPageWrapper,
@@ -71,6 +72,8 @@ export default async function HomePage() {
             </div>
 
             <Promotion />
+
+            <Features />
         </WebPageWrapper>
     );
 }

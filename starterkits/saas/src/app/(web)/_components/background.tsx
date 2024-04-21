@@ -6,7 +6,7 @@ export function Background({ children }: BackgroundProps) {
     return (
         <>
             <svg
-                className="absolute inset-0 -z-10 h-full w-full stroke-muted-foreground/25 [mask-image:radial-gradient(100%_150%_at_top,white,transparent)]"
+                className="absolute inset-0 -z-10 h-full w-full stroke-muted-foreground/25 [mask-image:radial-gradient(100%_130%_at_top,white,transparent)]"
                 aria-hidden="true"
             >
                 <defs>

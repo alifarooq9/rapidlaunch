@@ -34,7 +34,7 @@ export type PrincingPlan = {
     };
 };
 
-export type Feature = {
+export type PricingFeature = {
     id: string;
     title: string;
     inludedIn: string[];
@@ -46,7 +46,7 @@ const pricingIds = {
     premium: "premium",
 } as const;
 
-export const features: Feature[] = [
+export const pricingFeatures: PricingFeature[] = [
     {
         id: "1",
         title: "SSO with unlimited social connections and MFA",
