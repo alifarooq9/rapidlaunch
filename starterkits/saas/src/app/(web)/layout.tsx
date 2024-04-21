@@ -1,4 +1,5 @@
 import { Background } from "@/app/(web)/_components/background";
+import { WebFooter } from "@/app/(web)/_components/footer";
 import { WebHeader } from "@/app/(web)/_components/header";
 
 type WebLayoutProps = {
@@ -11,6 +12,7 @@ export default function WebLayout({ children }: WebLayoutProps) {
             <Background>
                 <WebHeader />
                 {children}
+                <WebFooter />
             </Background>
         </div>
     );

@@ -54,7 +54,7 @@ export async function Sidebar({
         <aside className={cn("h-full w-full")}>
             <div className={cn(" flex h-16 items-center justify-between")}>
                 <Link
-                    href={siteUrls.home}
+                    href={siteUrls.dashboard.home}
                     className={cn("z-10 transition-transform hover:scale-90")}
                 >
                     <Icons.logo
