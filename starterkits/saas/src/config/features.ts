@@ -42,14 +42,6 @@ export const features: Feature[] = [
             "https://utfs.io/f/fddea366-51c6-45f4-bd54-84d273ad9fb9-1ly324.png",
     },
     {
-        title: "Admin Panel",
-        description:
-            "Rapidlaunch provides an admin panel that allows you to manage your SaaS project. With our starterkits, components, and building guides, you can quickly set up an admin panel for your project.",
-        image: "https://utfs.io/f/43bbc3c8-cf3c-4fae-a0eb-9183f1779489-294m81.png",
-        imageDark:
-            "https://utfs.io/f/fddea366-51c6-45f4-bd54-84d273ad9fb9-1ly324.png",
-    },
-    {
         title: "User Management",
         description:
             "Rapidlaunch provides a user management system that allows you to manage your SaaS project's users. With our starterkits, components, and building guides, you can quickly set up a robust user management system for your project.",

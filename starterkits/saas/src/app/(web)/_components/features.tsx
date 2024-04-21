@@ -18,7 +18,7 @@ export default function Features() {
                     and scalable SaaS project.
                 </Balancer>
             </div>
-            <div className="grid max-w-5xl gap-24">
+            <div className="grid max-w-6xl grid-cols-2 gap-4">
                 {features.map((feature, idx) => (
                     <FeatureCard
                         key={feature.title + idx}
@@ -43,7 +43,7 @@ function FeatureCard({
     index,
 }: FeatureCardProps) {
     return (
-        <div className="grid gap-10 md:grid-cols-2">
+        <div className="grid gap-10 rounded-[25px] border border-border p-10 transition-colors duration-300 hover:bg-muted/50 md:grid-cols-1">
             <div
                 className={cn(
                     "-m-2 w-full rounded-xl bg-foreground/5 p-2 ring-1 ring-inset ring-foreground/10 lg:rounded-2xl",
