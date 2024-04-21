@@ -4,6 +4,7 @@ import {
     WebPageWrapper,
 } from "@/app/(web)/_components/general-components";
 import { Promotion } from "@/app/(web)/_components/promotion";
+import { Testimonials } from "@/app/(web)/_components/testimonials";
 import { buttonVariants } from "@/components/ui/button";
 import { Icons } from "@/components/ui/icons";
 import { siteUrls } from "@/config/urls";
@@ -74,6 +75,8 @@ export default async function HomePage() {
             <Promotion />
 
             <Features />
+
+            <Testimonials />
         </WebPageWrapper>
     );
 }
