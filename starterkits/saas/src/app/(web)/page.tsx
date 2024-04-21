@@ -2,6 +2,7 @@ import {
     WebPageHeader,
     WebPageWrapper,
 } from "@/app/(web)/_components/general-components";
+import { Promotion } from "@/app/(web)/_components/promotion";
 import { buttonVariants } from "@/components/ui/button";
 import { Icons } from "@/components/ui/icons";
 import { siteUrls } from "@/config/urls";
@@ -68,6 +69,8 @@ export default async function HomePage() {
                     />
                 </div>
             </div>
+
+            <Promotion />
         </WebPageWrapper>
     );
 }
