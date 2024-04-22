@@ -1,5 +1,14 @@
 ## Roadmap
 
+### Rapidlaunch.xyz
+- [x] Landing Page
+- [x] Waitlist
+- [ ] Documentation - (Using Next-Remote-mdx)
+- [ ] Starterkit Page
+- [ ] Guides Page
+- [ ] Blocks Page
+- [ ] Mobile Responsive all pages
+
 ### SaaS Starterkit
 
 - [x] Marketing Site (Header, Footer)
