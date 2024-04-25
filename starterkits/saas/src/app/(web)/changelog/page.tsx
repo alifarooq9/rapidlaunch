@@ -17,7 +17,12 @@ import Image from "next/image";
 export const dynamic = "force-static";
 
 export default async function ChangeLogPage() {
-    const changelogs = await getChangelogs();
+    //filter changelogs by date
+    const changelogs = (await getChangelogs()).sort(
+        (a, b) =>
+            Number(new Date(b.metaData.publishedAt)) -
+            Number(new Date(a.metaData.publishedAt)),
+    );
 
     return (
         <WebPageWrapper>
@@ -47,7 +52,12 @@ function ChangeLogCard({ metaData, content }: ChangeLogCardProps) {
     return (
         <Card className="overflow-hidden">
             <div className="relative h-[400px] w-full">
-                <Image src={metaData.thumbnail} alt={metaData.title} fill />
+                <Image
+                    src={metaData.thumbnail}
+                    alt={metaData.title}
+                    fill
+                    className="object-cover"
+                />
             </div>
             <CardHeader>
                 <CardTitle className="text-3xl">v{metaData.version}</CardTitle>
