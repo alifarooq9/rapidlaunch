@@ -45,7 +45,7 @@ export default async function BlogSlugPage({ params }: BlogSlugPageProps) {
 
                     <div className="relative aspect-video max-h-[350px] w-full overflow-hidden rounded-md bg-muted/60">
                         <Image
-                            src={blog.metaData.tumbnail}
+                            src={blog.metaData.thumbnail}
                             alt={blog.metaData.title}
                             className="rounded-md"
                             fill
