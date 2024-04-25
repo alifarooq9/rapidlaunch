@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { cn, isLinkActive } from "@/lib/utils";
 import { navigation } from "@/config/header";
+import { buttonVariants } from "@/components/ui/button";
 
 /**
  *  For adding a new navigation item:
@@ -17,13 +18,13 @@ export function WebHeaderNav() {
 
     return (
         <nav className="flex items-center justify-center">
-            <ul className="flex items-center gap-6">
+            <ul className="flex items-center">
                 {navigation.map((item) => (
                     <li key={item.id}>
                         <Link
                             href={item.href}
                             className={cn(
-                                "text-sm  hover:underline hover:underline-offset-4",
+                                buttonVariants({ variant: "link" }),
                                 isLinkActive(item.href, pathname)
                                     ? "font-semibold"
                                     : "font-medium",

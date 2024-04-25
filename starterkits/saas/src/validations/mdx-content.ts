@@ -18,7 +18,7 @@ export const blogMetaSchema = z.object({
     readTime: z.string(),
     tags: z.array(z.string()).optional(),
     description: z.string(),
-    tumbnail: z.string().url(),
+    thumbnail: z.string().url(),
     featured: z.boolean().optional(),
     isDraft: z.boolean().optional(),
 });
@@ -29,7 +29,7 @@ export const changelogMetaSchema = z.object({
     title: z.string(),
     slug: z.string(),
     publishedAt: z.date(),
-    tumbnail: z.string().url(),
+    thumbnail: z.string().url(),
     description: z.string(),
     version: z.string(),
     isDraft: z.boolean().optional(),
