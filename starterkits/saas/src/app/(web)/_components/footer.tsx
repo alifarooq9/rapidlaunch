@@ -12,7 +12,7 @@ import Balancer from "react-wrap-balancer";
 export function WebFooter() {
     return (
         <div className="py-8">
-            <footer className="container grid grid-cols-2 gap-8 rounded-lg border border-border p-8">
+            <footer className="container grid grid-cols-2 gap-8 rounded-lg border border-border bg-background p-8">
                 <div className="grid place-content-between gap-2">
                     <div className="grid gap-2">
                         <Link
