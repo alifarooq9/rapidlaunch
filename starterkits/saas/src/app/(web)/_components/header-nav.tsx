@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { cn, isLinkActive } from "@/lib/utils";
 import { navigation } from "@/config/header";
-import { buttonVariants } from "@/components/ui/button";
 
 /**
  *  For adding a new navigation item:
@@ -18,30 +17,24 @@ export function WebHeaderNav() {
 
     return (
         <nav className="flex items-center justify-center">
-            <ul className="flex items-center gap-1">
+            <ul className="flex items-center gap-8">
                 {navigation.map((item) => (
                     <li key={item.id}>
                         <Link
                             href={item.href}
                             className={cn(
-                                buttonVariants({
-                                    variant: isLinkActive(item.href, pathname)
-                                        ? "secondary"
-                                        : "ghost",
-                                    size: "default",
-                                }),
+                                "text-sm  hover:underline hover:underline-offset-4",
+                                isLinkActive(item.href, pathname)
+                                    ? "font-semibold"
+                                    : "font-medium",
                             )}
                         >
                             <span>{item.label}</span>
                             {item.badge && (
                                 <Badge
-                                    variant={
-                                        isLinkActive(item.href, pathname)
-                                            ? "background"
-                                            : "secondary"
-                                    }
+                                    variant="outline"
                                     size="sm"
-                                    className="ml-2"
+                                    className="ml-1"
                                 >
                                     {item.badge}
                                 </Badge>
