@@ -44,4 +44,9 @@ export const navigation: NavigationItem[] = [
         href: siteUrls.docs,
         label: "Docs",
     },
+    {
+        id: "changelog",
+        href: siteUrls.changelog,
+        label: "Changelog",
+    },
 ];

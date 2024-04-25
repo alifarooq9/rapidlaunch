@@ -1,13 +1,13 @@
 import { compileMDX } from "next-mdx-remote/rsc";
 import { readdir, readFile } from "fs/promises";
-import { docsMetaSchema } from "@/validations/mdx";
 import path from "path";
 import { getTableOfContents } from "@/lib/toc";
 import { mdxComponents } from "@/components/mdx-components";
 import { AutoIdsToHeading } from "@/lib/rehype-plugins";
 import rehypePrism from "rehype-prism-plus";
+import type { SomeZodObject } from "zod";
 
-export async function getMDXData<MetaData>(dir: string) {
+export async function getMDXData<MetaData>(dir: string, schema: SomeZodObject) {
     const files = (await readdir(dir, "utf-8")).filter(
         (file) => path.extname(file) === ".mdx",
     );
@@ -30,9 +30,7 @@ export async function getMDXData<MetaData>(dir: string) {
                 components,
             });
 
-            const validate = await docsMetaSchema.safeParseAsync(
-                mdxData.frontmatter,
-            );
+            const validate = await schema.safeParseAsync(mdxData.frontmatter);
 
             if (!validate.success) {
                 throw new Error(
