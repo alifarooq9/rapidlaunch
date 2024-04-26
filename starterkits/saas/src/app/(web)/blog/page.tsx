@@ -37,7 +37,7 @@ export default async function BlogsPage() {
                         >
                             <div className="relative h-screen max-h-[350px] w-full overflow-hidden rounded-md bg-muted/60">
                                 <Image
-                                    src={blog.metaData.tumbnail}
+                                    src={blog.metaData.thumbnail}
                                     alt={blog.metaData.title}
                                     fill
                                     className="object-cover"

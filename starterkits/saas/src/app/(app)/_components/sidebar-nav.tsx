@@ -64,7 +64,7 @@ export function SidebarNav({
 
     const pathname = usePathname();
 
-    const sidebarNavitems = sidebarConfig.filterNavItems({
+    const sidebarNavitems = sidebarConfig.filteredNavItems({
         removeIds: sidebarNavRemoveIds,
         includedIds: sidebarNavIncludeIds,
     });

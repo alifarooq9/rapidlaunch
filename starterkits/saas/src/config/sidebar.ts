@@ -180,7 +180,7 @@ type FilterNavItemsProps = {
  * @returns The filtered navigation items for the sidebar.
  * */
 
-export function filterNavItems({
+export function filteredNavItems({
     removeIds = [],
     includedIds = [],
 }: FilterNavItemsProps) {
@@ -209,5 +209,5 @@ export function filterNavItems({
 export const sidebarConfig = {
     navIds,
     navigation,
-    filterNavItems,
+    filteredNavItems,
 } as const;

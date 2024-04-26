@@ -20,6 +20,7 @@ export const siteUrls = {
     support: "/support",
     blog: "/blog",
     docs: "/docs/introduction",
+    changelog: "/changelog",
     maintenance: "/maintenance",
     rapidlaunch: "https://www.rapidlaunch.xyz",
     dashboard: {
