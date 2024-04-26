@@ -43,7 +43,7 @@
 - [x] User Feedback System
   - [x] Create Feedback
   - [x] Delete Feedback
-- [ ] Changelog System
+- [x] Changelog System
 - [x] Organisation
   - [x] Create Organisation
   - [x] Edit Organisation
