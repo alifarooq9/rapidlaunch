@@ -1,8 +1,4 @@
-import {
-    CreditCardIcon,
-    LayoutDashboardIcon,
-    Settings2Icon,
-} from "lucide-react";
+import { LayoutDashboardIcon, Settings2Icon } from "lucide-react";
 import { siteUrls } from "@/config/urls";
 
 type IconProps = React.HTMLAttributes<SVGElement>;

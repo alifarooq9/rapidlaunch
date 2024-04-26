@@ -107,6 +107,8 @@ export function OrgImageForm({ currentOrg }: OrgImageFormProps) {
     return (
         <Dialog
             onOpenChange={(o) => {
+                if (isUploading) return;
+
                 setModalOpen(o);
                 setFiles([]);
             }}
@@ -208,7 +210,12 @@ export function OrgImageForm({ currentOrg }: OrgImageFormProps) {
                     </DialogClose>
                     <Button
                         onClick={handleUpdateImage}
-                        disabled={isUploading || isPending || isMutatePending}
+                        disabled={
+                            isUploading ||
+                            isPending ||
+                            isMutatePending ||
+                            files.length === 0
+                        }
                         type="button"
                         className="gap-2"
                     >
