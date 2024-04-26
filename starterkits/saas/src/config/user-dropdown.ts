@@ -53,11 +53,6 @@ const navigation: UserDropdownNavItems[] = [
                 icon: Settings2Icon,
                 href: siteUrls.profile.settings,
             },
-            {
-                label: "Billing",
-                icon: CreditCardIcon,
-                href: siteUrls.profile.billing,
-            },
         ],
     },
     {
