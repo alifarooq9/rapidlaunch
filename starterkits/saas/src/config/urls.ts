@@ -40,6 +40,7 @@ export const siteUrls = {
         users: "/admin/users",
         settings: "/admin/settings",
         feedbacks: "/admin/feedbacks",
+        analytics: "https://us.posthog.com/project/12312/dashboard",
     },
     profile: {
         settings: "/profile/settings",
