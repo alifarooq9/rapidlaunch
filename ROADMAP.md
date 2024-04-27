@@ -61,15 +61,13 @@
   - [x] Get Subscription
   - [x] Get Checkout details
   - [x] Webhooks
-- [ ] Analytics - (Using PostHog)
-  - [ ] User Analytics
+- [x] Analytics - (Using PostHog)
 - [ ] Admin Panel
   - [ ] Dashboard Page
-  - [ ] Analytics
     - [ ] User Analytics
     - [ ] Organisation Analytics
-    - [ ] Application Analytics
     - [ ] Payment Analytics
+    - [ ] Detail Analytics (Using PostHog)
   - [x] User Management
   - [ ] Organisation Management
   - [x] Feedback Management
@@ -78,7 +76,6 @@
     - [ ] Maintenance Mode
     - [ ] Disable Analytics
     - [ ] Disable Payments
-  - [ ] Changelog Management
   - [ ] Mobile Responsive all pages
 
 - If you have any other feature ideas, feel free to add it in the roadmap.
