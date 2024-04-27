@@ -1,4 +1,5 @@
 import {
+    BarChart4Icon,
     BookTextIcon,
     CreditCardIcon,
     HelpCircleIcon,
@@ -84,6 +85,11 @@ const navigation: SidebarNavItems[] = [
                 label: "Users",
                 icon: UsersRoundIcon,
                 href: siteUrls.admin.users,
+            },
+            {
+                label: "Analytics",
+                icon: BarChart4Icon,
+                href: siteUrls.admin.analytics,
             },
             {
                 label: "Feedback List",
