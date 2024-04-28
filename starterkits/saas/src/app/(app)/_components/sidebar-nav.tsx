@@ -18,7 +18,7 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, ExternalLinkIcon } from "lucide-react";
 import { sidebarConfig } from "@/config/sidebar";
 import { type VariantProps } from "class-variance-authority";
 
@@ -248,6 +248,7 @@ type NavLinkProps = {
     active?: boolean;
     isCollapsed?: boolean;
     size?: ButtonProps["size"];
+    external?: boolean;
 };
 
 function NavLink({
@@ -258,16 +259,33 @@ function NavLink({
     active,
     size = "default",
     isCollapsed,
+    external,
 }: NavLinkProps) {
+    const isExternal = href.startsWith("http") ?? external;
+
+    const linkTarget = isExternal ? "_blank" : "_self";
+
     return (
-        <Link href={href} className={linkStyle({ active, disabled, size })}>
+        <Link
+            href={href}
+            className={linkStyle({ active, disabled, size })}
+            target={linkTarget}
+            rel="noreferrer"
+        >
             <Icon
                 className={cn(
                     "flex-shrink-0",
                     isCollapsed ? "h-5 w-5" : "h-4 w-4 ",
                 )}
             />
-            {!isCollapsed && <span className="truncate">{label}</span>}
+            {!isCollapsed && (
+                <span className="flex-grow truncate text-left">{label}</span>
+            )}
+            {isExternal && (
+                <span className="text-muted-foreground">
+                    <ExternalLinkIcon className="ml-2 h-3 w-3" />
+                </span>
+            )}
         </Link>
     );
 }

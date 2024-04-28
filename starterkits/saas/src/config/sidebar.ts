@@ -41,6 +41,7 @@ type NavItemBase = {
 
 type NavItemWithHref = NavItemBase & {
     href: string;
+    external?: boolean;
     subMenu?: never;
 };
 
@@ -50,6 +51,7 @@ type NavItemWithSubMenu = NavItemBase & {
         label: string;
         href: string;
         icon: React.ComponentType<IconProps>;
+        external?: boolean;
         disabled?: boolean;
     }[];
 };
