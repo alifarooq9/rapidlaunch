@@ -11,9 +11,10 @@ export function UsersChart({ data }: UsersChartProps) {
     return (
         <LineChart
             data={data}
-            lineDataKeys={["Users", "Active Users"]}
             xAxisDataKey="Date"
             yAxisDataKey="Users"
+            lineDataKeys={["Users", "Active Users"]}
+            lineProps={[{ stroke: "hsl(var(--primary))" }, { stroke: "green" }]}
             yAxisProps={{
                 tickFormatter: (value) => {
                     if (value >= 10000) {

@@ -19,7 +19,7 @@ type LineChartProps = {
     lineDataKeys: string[];
     xAxisDataKey: string;
     yAxisDataKey: string;
-    lineProps?: React.ComponentPropsWithoutRef<typeof Line>;
+    lineProps?: React.ComponentPropsWithoutRef<typeof Line>[];
     CartesionGridProps?: CartesianGridProps;
     yAxisProps?: YAxisProps;
     xAxisProps?: XAxisProps;
@@ -38,14 +38,14 @@ export const LineChart = ({
     return (
         <ResponsiveContainer width="100%" minHeight={250}>
             <LineReCharts data={data}>
-                {lineDataKeys.map((lineDataKey) => (
+                {lineDataKeys.map((lineDataKey, index) => (
                     <Line
                         key={lineDataKey}
                         type="monotone"
                         dataKey={lineDataKey}
                         stroke="hsl(var(--primary))"
                         dot={false}
-                        {...lineProps}
+                        {...(lineProps?.[index] ?? {})}
                     />
                 ))}
 
@@ -86,17 +86,28 @@ export const LineChart = ({
                         stroke: "hsl(var(--border))",
                     }}
                     content={({ active, payload }) => {
-                        if (active) {
-                            const payloadItem = payload?.[0]?.payload as Record<
-                                string,
-                                string
-                            >;
-
-                            const payloadItemArray = Object.entries(
-                                payloadItem,
-                            ).map(([key, value]) => ({ key, value }));
-
-                            console.log(payloadItemArray);
+                        if (active && payload) {
+                            const payloadItemArray =
+                                payload.length > 0
+                                    ? [
+                                          {
+                                              key: xAxisDataKey,
+                                              value: (
+                                                  payload[0]?.payload as Record<
+                                                      string,
+                                                      unknown
+                                                  >
+                                              )[xAxisDataKey] as string,
+                                          },
+                                          ...payload?.map((pl) => ({
+                                              key: pl.dataKey ?? "",
+                                              value: pl.value as string,
+                                              stroke:
+                                                  pl.stroke ??
+                                                  "hsl(var(--primary))",
+                                          })),
+                                      ]
+                                    : [];
 
                             return <CustomTooltip payload={payloadItemArray} />;
                         }
@@ -110,16 +121,27 @@ export const LineChart = ({
 };
 
 type CustomTooltipProps = {
-    payload: { key: string; value: string }[];
+    payload: { key: string | number; value: string; stroke?: string }[];
 };
 
 export const CustomTooltip = ({ payload }: CustomTooltipProps) => {
+    if (payload.length === 0) return null;
+
     return (
         <div className="grid divide-y rounded-sm border border-border bg-background shadow-md">
-            {payload.map(({ key, value }) => (
-                <p key={key} className="flex flex-row gap-2 p-2 text-xs">
+            {payload.map(({ key, value, stroke }) => (
+                <p
+                    key={key}
+                    className="flex flex-row items-center justify-start gap-2 p-2 text-xs"
+                >
+                    {stroke && (
+                        <span
+                            className="h-1.5 w-1.5 rounded-full"
+                            style={{ backgroundColor: stroke }}
+                        />
+                    )}
                     <span className="font-medium text-muted-foreground">
-                        {key}:
+                        {String(key)}:
                     </span>
                     <span className="font-medium">{value}</span>
                 </p>
