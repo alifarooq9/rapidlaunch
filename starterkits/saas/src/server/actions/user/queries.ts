@@ -1,11 +1,12 @@
-"use server";
+import "server-only";
 
 import { db } from "@/server/db";
 import { users } from "@/server/db/schema";
 import { adminProcedure } from "@/server/procedures";
-import { asc, count, desc, ilike, inArray, or } from "drizzle-orm";
+import { asc, count, desc, gt, ilike, inArray, or } from "drizzle-orm";
 import { unstable_noStore as noStore } from "next/cache";
 import { z } from "zod";
+import { eachMonthOfInterval, format, startOfMonth, subMonths } from "date-fns";
 
 /**
  * Get paginated users
@@ -93,4 +94,44 @@ export async function getPaginatedUsersQuery(
     const pageCount = Math.ceil(total / input.per_page);
 
     return { data, pageCount, total };
+}
+
+export async function getUsersCount() {
+    await adminProcedure();
+
+    const dateBeforeMonths = subMonths(new Date(), 6);
+
+    const startDateOfTheMonth = startOfMonth(dateBeforeMonths);
+
+    const { total, data } = await db.transaction(async (tx) => {
+        const data = await db.query.users.findMany({
+            where: gt(users.createdAt, startDateOfTheMonth),
+        });
+
+        const total = await tx
+            .select({ count: count() })
+            .from(users)
+            .execute()
+            .then((res) => res[0]?.count ?? 0);
+
+        return { total, data };
+    });
+
+    const months = eachMonthOfInterval({
+        start: startDateOfTheMonth,
+        end: new Date(),
+    });
+
+    const usersCountByMonth = months.map((month) => {
+        const monthStr = format(month, "MMM-yyy");
+        const count = data.filter(
+            (user) => format(new Date(user.createdAt), "MMM-yyy") === monthStr,
+        ).length;
+        return { Date: monthStr, Users: count };
+    });
+
+    return {
+        usersCountByMonth,
+        totalCount: total,
+    };
 }

@@ -25,6 +25,6 @@ export function thousandToK(value: number) {
     return value / 1000;
 }
 
-export function formatDate(date: string) {
+export function formatDate(date: string | number | Date) {
     return format(new Date(date), "PP");
 }

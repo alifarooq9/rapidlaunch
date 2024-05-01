@@ -1,11 +1,20 @@
 "use client";
 
 import { LineChart } from "@/components/charts";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { formatDate, thousandToK } from "@/lib/utils";
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card";
+import { thousandToK } from "@/lib/utils";
 
 type UsersChartProps = {
-    data: unknown[];
+    data: {
+        Date: string;
+        Users: number;
+    }[];
 };
 
 export function UsersChart({ data }: UsersChartProps) {
@@ -13,13 +22,16 @@ export function UsersChart({ data }: UsersChartProps) {
         <Card>
             <CardHeader>
                 <CardTitle>Users Analytics</CardTitle>
+                <CardDescription>
+                    Count of users joined each month for last 6 months
+                </CardDescription>
             </CardHeader>
             <CardContent>
                 <LineChart
                     data={data}
                     xAxisDataKey="Date"
                     yAxisDataKey="Users"
-                    lineDataKeys={["Users", "Active Users"]}
+                    lineDataKeys={["Users"]}
                     lineProps={[
                         { stroke: "hsl(var(--primary))" },
                         { stroke: "green" },
@@ -32,9 +44,6 @@ export function UsersChart({ data }: UsersChartProps) {
                                 return value as string;
                             }
                         },
-                    }}
-                    xAxisProps={{
-                        tickFormatter: formatDate,
                     }}
                 />
             </CardContent>
