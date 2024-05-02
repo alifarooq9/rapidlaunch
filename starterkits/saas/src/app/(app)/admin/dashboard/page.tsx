@@ -5,14 +5,16 @@ import { adminDashConfig } from "@/app/(app)/admin/dashboard/_constants/page-con
 import { buttonVariants } from "@/components/ui/button";
 import { siteUrls } from "@/config/urls";
 import { cn } from "@/lib/utils";
+import { getSubscriptionsCount } from "@/server/actions/plans/query";
 import { getUsersCount } from "@/server/actions/user/queries";
 import { DollarSignIcon, Users2Icon } from "lucide-react";
 import Link from "next/link";
 
 export default async function AdminDashPage() {
     const usersCountData = await getUsersCount();
-
     const usersChartData = usersCountData.usersCountByMonth;
+
+    const subscriptionsCountData = await getSubscriptionsCount({});
 
     return (
         <AppPageShell
@@ -54,7 +56,7 @@ export default async function AdminDashPage() {
 
                     <StatsCard
                         title="Subscriptions"
-                        value="100"
+                        value={String(subscriptionsCountData.totalCount)}
                         Icon={DollarSignIcon}
                         subText="Total subscriptions made"
                     />

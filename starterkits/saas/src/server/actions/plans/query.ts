@@ -10,9 +10,15 @@ import { db } from "@/server/db";
 import { subscriptions } from "@/server/db/schema";
 import { configureLemonSqueezy } from "@/server/lemonsqueezy";
 import { protectedProcedure } from "@/server/procedures";
-import { createCheckout, getSubscription } from "@lemonsqueezy/lemonsqueezy.js";
+import {
+    createCheckout,
+    getSubscription,
+    listSubscriptions,
+    type Subscription,
+} from "@lemonsqueezy/lemonsqueezy.js";
 import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
+import { eachMonthOfInterval, format, startOfMonth, subMonths } from "date-fns";
 
 export async function getCheckoutURL(variantId?: number, embed = false) {
     await protectedProcedure();
@@ -62,42 +68,91 @@ export async function getCheckoutURL(variantId?: number, embed = false) {
 }
 
 export async function getOrgSubscription() {
-    configureLemonSqueezy();
+    try {
+        await protectedProcedure();
+        configureLemonSqueezy();
+
+        const { currentOrg } = await getOrganizations();
+
+        const orgSubscription = await db.query.subscriptions.findFirst({
+            where: eq(subscriptions.orgId, currentOrg.id),
+        });
+
+        if (!orgSubscription) {
+            return null;
+        }
+
+        const lemonSubscription = await getSubscription(
+            orgSubscription?.lemonSqueezyId,
+        );
+
+        if (!lemonSubscription.data?.data) {
+            return null;
+        }
+
+        const customerPortalUrl =
+            lemonSubscription.data.data.attributes.urls.customer_portal;
+
+        // add plan details to the subscription
+        const plan = pricingPlans.find(
+            (p) =>
+                p.variantId?.monthly === orgSubscription?.variantId ||
+                p.variantId?.yearly === orgSubscription?.variantId,
+        );
+
+        return {
+            ...lemonSubscription.data.data.attributes,
+            lemonSqueezyId: lemonSubscription.data.data.id,
+            customerPortalUrl,
+            id: orgSubscription.id,
+            plan,
+        };
+    } catch (error) {
+        return null;
+    }
+}
+
+type SubscriptionCountByMonth = {
+    status?: Subscription["data"]["attributes"]["status"];
+};
+
+export async function getSubscriptionsCount({
+    status,
+}: SubscriptionCountByMonth) {
     await protectedProcedure();
+    configureLemonSqueezy();
 
-    const { currentOrg } = await getOrganizations();
+    const dateBeforeMonths = subMonths(new Date(), 6);
 
-    const orgSubscription = await db.query.subscriptions.findFirst({
-        where: eq(subscriptions.orgId, currentOrg.id),
+    const startDateOfTheMonth = startOfMonth(dateBeforeMonths);
+
+    const subscriptions = await listSubscriptions({
+        filter: {
+            storeId: env.LEMONSQUEEZY_STORE_ID,
+            status,
+        },
     });
 
-    if (!orgSubscription) {
-        return null;
-    }
+    const months = eachMonthOfInterval({
+        start: startDateOfTheMonth,
+        end: new Date(),
+    });
 
-    const lemonSubscription = await getSubscription(
-        orgSubscription?.lemonSqueezyId,
-    );
-
-    if (!lemonSubscription.data?.data) {
-        return null;
-    }
-
-    const customerPortalUrl =
-        lemonSubscription.data.data.attributes.urls.customer_portal;
-
-    // add plan details to the subscription
-    const plan = pricingPlans.find(
-        (p) =>
-            p.variantId?.monthly === orgSubscription?.variantId ||
-            p.variantId?.yearly === orgSubscription?.variantId,
-    );
+    const subscriptionsCountByMonth = months.map((month) => {
+        const monthStr = format(month, "MMM-yyy");
+        const count =
+            subscriptions.data?.data.filter(
+                (subscription) =>
+                    format(
+                        new Date(subscription.attributes.created_at),
+                        "MMM-yyy",
+                    ) === monthStr,
+            )?.length ?? 0;
+        return { Date: monthStr, Count: count };
+    });
 
     return {
-        ...lemonSubscription.data.data.attributes,
-        lemonSqueezyId: lemonSubscription.data.data.id,
-        customerPortalUrl,
-        id: orgSubscription.id,
-        plan,
+        totalCount: subscriptions.data?.data.length ?? 0,
+        subscriptionsCountByMonth,
     };
 }
