@@ -7,7 +7,12 @@ import { siteUrls } from "@/config/urls";
 import { cn } from "@/lib/utils";
 import { getSubscriptionsCount } from "@/server/actions/plans/query";
 import { getUsersCount } from "@/server/actions/user/queries";
-import { DollarSignIcon, Users2Icon } from "lucide-react";
+import {
+    DollarSignIcon,
+    UserRoundCheckIcon,
+    UserRoundPlusIcon,
+    Users2Icon,
+} from "lucide-react";
 import Link from "next/link";
 
 export default async function AdminDashPage() {
@@ -15,6 +20,10 @@ export default async function AdminDashPage() {
     const usersChartData = usersCountData.usersCountByMonth;
 
     const subscriptionsCountData = await getSubscriptionsCount({});
+
+    const activeSubscriptionsCountData = await getSubscriptionsCount({
+        status: "active",
+    });
 
     return (
         <AppPageShell
@@ -39,7 +48,7 @@ export default async function AdminDashPage() {
                     </Link>
                 </p>
 
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-4 gap-4">
                     <StatsCard
                         title="Users"
                         value={String(usersCountData.totalCount)}
@@ -57,8 +66,15 @@ export default async function AdminDashPage() {
                     <StatsCard
                         title="Subscriptions"
                         value={String(subscriptionsCountData.totalCount)}
-                        Icon={DollarSignIcon}
+                        Icon={UserRoundPlusIcon}
                         subText="Total subscriptions made"
+                    />
+
+                    <StatsCard
+                        title="Active Subscriptions"
+                        value={String(activeSubscriptionsCountData.totalCount)}
+                        Icon={UserRoundCheckIcon}
+                        subText="Current active subscriptions"
                     />
                 </div>
 
