@@ -3,7 +3,7 @@ import type { IconProps } from "@/components/ui/icons";
 
 type StatsCardProps = {
     title: string;
-    value: string;
+    value: string | number;
     subText: string;
     Icon: React.ComponentType<IconProps>;
 };

@@ -1,4 +1,5 @@
 import { AppPageShell } from "@/app/(app)/_components/page-shell";
+import { RevenueChart } from "@/app/(app)/admin/dashboard/_components/revenue-chart";
 import { StatsCard } from "@/app/(app)/admin/dashboard/_components/stats-card";
 import { SubsChart } from "@/app/(app)/admin/dashboard/_components/subs-chart";
 import { UsersChart } from "@/app/(app)/admin/dashboard/_components/users-chart";
@@ -6,7 +7,10 @@ import { adminDashConfig } from "@/app/(app)/admin/dashboard/_constants/page-con
 import { buttonVariants } from "@/components/ui/button";
 import { siteUrls } from "@/config/urls";
 import { cn } from "@/lib/utils";
-import { getSubscriptionsCount } from "@/server/actions/subscription/query";
+import {
+    getRevenueCount,
+    getSubscriptionsCount,
+} from "@/server/actions/subscription/query";
 import { getUsersCount } from "@/server/actions/user/queries";
 import {
     DollarSignIcon,
@@ -26,6 +30,9 @@ export default async function AdminDashPage() {
         status: "active",
     });
     const subsChartData = subscriptionsCountData.subscriptionsCountByMonth;
+
+    const revenueCountData = await getRevenueCount();
+    const revenueChartData = revenueCountData.revenueCountByMonth;
 
     return (
         <AppPageShell
@@ -60,7 +67,7 @@ export default async function AdminDashPage() {
 
                     <StatsCard
                         title="Revenue"
-                        value="$10,000"
+                        value={revenueCountData.totalRevenue}
                         Icon={DollarSignIcon}
                         subText="Total revenue generated"
                     />
@@ -84,6 +91,8 @@ export default async function AdminDashPage() {
                     <UsersChart data={usersChartData} />
 
                     <SubsChart data={subsChartData} />
+
+                    <RevenueChart data={revenueChartData} />
                 </div>
             </div>
         </AppPageShell>

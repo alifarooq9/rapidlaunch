@@ -14,6 +14,7 @@ import {
     createCheckout,
     getSubscription,
     listSubscriptions,
+    listOrders,
     type Subscription,
 } from "@lemonsqueezy/lemonsqueezy.js";
 import { eq } from "drizzle-orm";
@@ -154,5 +155,53 @@ export async function getSubscriptionsCount({
     return {
         totalCount: subscriptions.data?.data.length ?? 0,
         subscriptionsCountByMonth,
+    };
+}
+
+export async function getRevenueCount() {
+    await protectedProcedure();
+    configureLemonSqueezy();
+
+    const dateBeforeMonths = subMonths(new Date(), 6);
+
+    const startDateOfTheMonth = startOfMonth(dateBeforeMonths);
+
+    const orders = await listOrders({
+        filter: {
+            storeId: env.LEMONSQUEEZY_STORE_ID,
+        },
+    });
+
+    const totalRevenue =
+        orders.data?.data.reduce(
+            (acc, order) => acc + order.attributes.total,
+            0,
+        ) ?? 0;
+
+    const months = eachMonthOfInterval({
+        start: startDateOfTheMonth,
+        end: new Date(),
+    });
+
+    const revenueCountByMonth = months.map((month) => {
+        const monthStr = format(month, "MMM-yyy");
+        const revenueCount =
+            orders.data?.data
+                .filter(
+                    (order) =>
+                        format(
+                            new Date(order.attributes.created_at),
+                            "MMM-yyy",
+                        ) === monthStr,
+                )
+                ?.reduce((acc, order) => acc + order.attributes.total, 0) ?? 0;
+
+        const count = revenueCount / 100;
+        return { Date: monthStr, RevenueCount: count };
+    });
+
+    return {
+        totalRevenue: totalRevenue / 100,
+        revenueCountByMonth,
     };
 }
