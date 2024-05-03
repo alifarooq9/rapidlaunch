@@ -148,7 +148,7 @@ export async function getSubscriptionsCount({
                         "MMM-yyy",
                     ) === monthStr,
             )?.length ?? 0;
-        return { Date: monthStr, Count: count };
+        return { Date: monthStr, SubsCount: count };
     });
 
     return {

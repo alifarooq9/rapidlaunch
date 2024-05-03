@@ -1,5 +1,6 @@
 import { AppPageShell } from "@/app/(app)/_components/page-shell";
 import { StatsCard } from "@/app/(app)/admin/dashboard/_components/stats-card";
+import { SubsChart } from "@/app/(app)/admin/dashboard/_components/subs-chart";
 import { UsersChart } from "@/app/(app)/admin/dashboard/_components/users-chart";
 import { adminDashConfig } from "@/app/(app)/admin/dashboard/_constants/page-config";
 import { buttonVariants } from "@/components/ui/button";
@@ -24,6 +25,7 @@ export default async function AdminDashPage() {
     const activeSubscriptionsCountData = await getSubscriptionsCount({
         status: "active",
     });
+    const subsChartData = subscriptionsCountData.subscriptionsCountByMonth;
 
     return (
         <AppPageShell
@@ -80,6 +82,8 @@ export default async function AdminDashPage() {
 
                 <div className="grid grid-cols-2 gap-4">
                     <UsersChart data={usersChartData} />
+
+                    <SubsChart data={subsChartData} />
                 </div>
             </div>
         </AppPageShell>

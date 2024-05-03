@@ -127,7 +127,7 @@ export async function getUsersCount() {
         const count = data.filter(
             (user) => format(new Date(user.createdAt), "MMM-yyy") === monthStr,
         ).length;
-        return { Date: monthStr, Users: count };
+        return { Date: monthStr, UsersCount: count };
     });
 
     return {

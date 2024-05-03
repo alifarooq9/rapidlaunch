@@ -10,28 +10,28 @@ import {
 } from "@/components/ui/card";
 import { thousandToK } from "@/lib/utils";
 
-type UsersChartProps = {
+type SubsChartProps = {
     data: {
         Date: string;
-        UsersCount: number;
+        SubsCount: number;
     }[];
 };
 
-export function UsersChart({ data }: UsersChartProps) {
+export function SubsChart({ data }: SubsChartProps) {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Users Analytics</CardTitle>
+                <CardTitle>Subscription Analytics</CardTitle>
                 <CardDescription>
-                    Count of users joined each month for last 6 months
+                    Count of subscriptions each month for last 6 months
                 </CardDescription>
             </CardHeader>
             <CardContent>
                 <LineChart
                     data={data}
                     xAxisDataKey="Date"
-                    yAxisDataKey="UsersCount"
-                    lineDataKeys={["UsersCount"]}
+                    yAxisDataKey="SubsCount"
+                    lineDataKeys={["SubsCount"]}
                     lineProps={[{ stroke: "hsl(var(--primary))" }]}
                     yAxisProps={{
                         tickFormatter: (value) => {
