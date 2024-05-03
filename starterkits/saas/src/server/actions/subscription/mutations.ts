@@ -1,7 +1,7 @@
 "use server";
 
 import { pricingPlans } from "@/config/pricing";
-import { getOrgSubscription } from "@/server/actions/plans/query";
+import { getOrgSubscription } from "@/server/actions/subscription/query";
 import { db } from "@/server/db";
 import { subscriptions, webhookEvents } from "@/server/db/schema";
 import { configureLemonSqueezy } from "@/server/lemonsqueezy";
@@ -143,7 +143,6 @@ export async function changePlan(
         // @ts-expect-error -- null is a valid value for pause
         pause: null,
         cancelled: false,
-        
     });
 
     // Save in db

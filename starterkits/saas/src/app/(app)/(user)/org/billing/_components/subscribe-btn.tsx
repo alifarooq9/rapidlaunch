@@ -4,11 +4,11 @@ import { Button, type ButtonProps } from "@/components/ui/button";
 import { Icons } from "@/components/ui/icons";
 import { siteUrls } from "@/config/urls";
 import { useAwaitableTransition } from "@/hooks/use-awaitable-transition";
-import { changePlan } from "@/server/actions/plans/mutations";
+import { changePlan } from "@/server/actions/subscription/mutations";
 import {
     getCheckoutURL,
     getOrgSubscription,
-} from "@/server/actions/plans/query";
+} from "@/server/actions/subscription/query";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";

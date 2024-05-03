@@ -5,7 +5,7 @@ import {
     cancelPlan,
     pausePlan,
     resumePlan,
-} from "@/server/actions/plans/mutations";
+} from "@/server/actions/subscription/mutations";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";

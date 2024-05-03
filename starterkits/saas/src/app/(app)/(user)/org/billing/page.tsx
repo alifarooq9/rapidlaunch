@@ -2,7 +2,7 @@ import { AvailablePlans } from "@/app/(app)/(user)/org/billing/_components/avail
 import { CurrentPlan } from "@/app/(app)/(user)/org/billing/_components/current-plan";
 import { orgBillingPageConfig } from "@/app/(app)/(user)/org/billing/_constants/page-config";
 import { AppPageShell } from "@/app/(app)/_components/page-shell";
-import { getOrgSubscription } from "@/server/actions/plans/query";
+import { getOrgSubscription } from "@/server/actions/subscription/query";
 
 export const dynamic = "force-dynamic";
 

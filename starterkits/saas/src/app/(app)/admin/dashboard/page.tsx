@@ -6,7 +6,7 @@ import { adminDashConfig } from "@/app/(app)/admin/dashboard/_constants/page-con
 import { buttonVariants } from "@/components/ui/button";
 import { siteUrls } from "@/config/urls";
 import { cn } from "@/lib/utils";
-import { getSubscriptionsCount } from "@/server/actions/plans/query";
+import { getSubscriptionsCount } from "@/server/actions/subscription/query";
 import { getUsersCount } from "@/server/actions/user/queries";
 import {
     DollarSignIcon,
