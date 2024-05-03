@@ -4,7 +4,7 @@ import { webhookHasMeta } from "@/validations/lemonsqueezy";
 import {
     processWebhookEvent,
     storeWebhookEvent,
-} from "@/server/actions/plans/mutations";
+} from "@/server/actions/subscription/mutations";
 
 export async function POST(request: Request) {
     const rawBody = await request.text();

@@ -57,6 +57,7 @@
         "react-dom": "18.2.0",
         "react-hook-form": "^7.51.3",
         "react-wrap-balancer": "^1.1.0",
+        "recharts": "^2.12.6",
         "rehype-prism-plus": "^2.0.0",
         "remark": "^15.0.1",
         "resend": "^3.2.0",
