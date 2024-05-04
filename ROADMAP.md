@@ -70,11 +70,9 @@
   - [x] User Management
   - [ ] Organisation Management
   - [x] Feedback Management
-  - [ ] Application Settings - (Store application settings on redis database, Fetch on middleware and take action accordingly)
-    - [ ] Waitlist Mode
-    - [ ] Maintenance Mode
-    - [ ] Disable Analytics
-    - [ ] Disable Payments
+  - [x] Application Settings - (Store application settings on redis database, Fetch on middleware and take action accordingly)
+    - [x] Waitlist Mode
+    - [x] Maintenance Mode
   - [ ] Mobile Responsive all pages
 
 - If you have any other feature ideas, feel free to add it in the roadmap.
