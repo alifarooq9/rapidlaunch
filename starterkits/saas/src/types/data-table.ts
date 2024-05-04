@@ -2,7 +2,7 @@ export type SearchParams = Record<string, string | string[] | undefined>;
 
 export type Option = {
     label: string;
-    value: string;
+    value: string | number | boolean;
     icon?: React.ComponentType<{ className?: string }>;
 };
 

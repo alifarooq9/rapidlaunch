@@ -40,6 +40,7 @@ export const siteUrls = {
     admin: {
         dashboard: "/admin/dashboard",
         users: "/admin/users",
+        organizations: "/admin/organizations",
         settings: "/admin/settings",
         feedbacks: "/admin/feedbacks",
         analytics: "https://us.posthog.com/project/12312/dashboard",

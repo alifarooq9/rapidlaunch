@@ -7,7 +7,7 @@ import {
     orgRequests,
     organizations,
 } from "@/server/db/schema";
-import { protectedProcedure } from "@/server/procedures";
+import { adminProcedure, protectedProcedure } from "@/server/procedures";
 import { and, asc, count, desc, eq, ilike, inArray, or } from "drizzle-orm";
 import { cookies } from "next/headers";
 import { z } from "zod";
@@ -92,7 +92,7 @@ export async function getOrgByIdQuery({ orgId }: GetOrgByIdProps) {
  * @returns Paginated users
  */
 
-const panginatedUserPropsSchema = z.object({
+const panginatedOrgMembersPropsSchema = z.object({
     page: z.coerce.number().default(1),
     per_page: z.coerce.number().default(10),
     sort: z.string().optional(),
@@ -101,10 +101,12 @@ const panginatedUserPropsSchema = z.object({
     operator: z.string().optional(),
 });
 
-type GetPaginatedUsersQueryProps = z.infer<typeof panginatedUserPropsSchema>;
+type GetPaginatedOrgMembersQueryProps = z.infer<
+    typeof panginatedOrgMembersPropsSchema
+>;
 
 export async function getPaginatedOrgMembersQuery(
-    input: GetPaginatedUsersQueryProps,
+    input: GetPaginatedOrgMembersQueryProps,
 ) {
     const { currentOrg } = await getOrganizations();
 
@@ -178,6 +180,87 @@ export async function getPaginatedOrgMembersQuery(
                             ? inArray(membersToOrganizations.role, roles)
                             : undefined,
                     ),
+                ),
+            )
+            .execute()
+            .then((res) => res[0]?.count ?? 0);
+
+        return { data, total };
+    });
+
+    const pageCount = Math.ceil(total / input.per_page);
+
+    return { data, pageCount, total };
+}
+
+const panginatedOrgPropsSchema = z.object({
+    page: z.coerce.number().default(1),
+    per_page: z.coerce.number().default(10),
+    sort: z.string().optional(),
+    email: z.string().optional(),
+    name: z.string().optional(),
+    operator: z.string().optional(),
+});
+
+type GetPaginatedOrgsQueryProps = z.infer<typeof panginatedOrgPropsSchema>;
+
+export async function getPaginatedOrgsQuery(input: GetPaginatedOrgsQueryProps) {
+    noStore();
+    await adminProcedure();
+
+    const offset = (input.page - 1) * input.per_page;
+
+    const [column, order] = (input.sort?.split(".") as [
+        keyof typeof organizations.$inferSelect | undefined,
+        "asc" | "desc" | undefined,
+    ]) ?? ["title", "desc"];
+
+    const { data, total } = await db.transaction(async (tx) => {
+        const response = await tx.query.organizations.findMany({
+            where: input.email
+                ? ilike(organizations.email, `%${input.email}%`)
+                : undefined,
+            with: {
+                owner: true,
+                membersToOrganizations: {
+                    with: {
+                        member: true,
+                    },
+                },
+                subscriptions: true,
+            },
+            offset,
+            limit: input.per_page,
+            orderBy:
+                column && column in organizations
+                    ? order === "asc"
+                        ? asc(organizations[column])
+                        : desc(organizations[column])
+                    : desc(organizations.createdAt),
+        });
+
+        const data = response.map((org) => {
+            return {
+                ...org,
+                members: org.membersToOrganizations.map((mto) => {
+                    return {
+                        ...mto.member,
+                        role: mto.role,
+                    };
+                }),
+            };
+        });
+
+        const total = await tx
+            .select({
+                count: count(),
+            })
+            .from(organizations)
+            .where(
+                or(
+                    input.email
+                        ? ilike(organizations.email, `%${input.email}%`)
+                        : undefined,
                 ),
             )
             .execute()
