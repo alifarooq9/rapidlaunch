@@ -9,7 +9,7 @@ import {
     orgRequests,
     organizations,
 } from "@/server/db/schema";
-import { protectedProcedure } from "@/server/procedures";
+import { adminProcedure, protectedProcedure } from "@/server/procedures";
 import { and, eq } from "drizzle-orm";
 import { getOrganizations } from "@/server/actions/organization/queries";
 import { z } from "zod";
@@ -162,6 +162,15 @@ export async function deleteOrgMutation() {
     return await db
         .delete(organizations)
         .where(eq(organizations.id, currentOrg.id))
+        .execute();
+}
+
+export async function deleteOrgAdminMutation({ id }: { id: string }) {
+    await adminProcedure();
+
+    return await db
+        .delete(organizations)
+        .where(eq(organizations.id, id))
         .execute();
 }
 
