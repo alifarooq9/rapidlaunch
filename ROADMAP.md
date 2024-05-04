@@ -63,11 +63,10 @@
   - [x] Webhooks
 - [x] Analytics - (Using PostHog)
 - [ ] Admin Panel
-  - [ ] Dashboard Page
-    - [ ] User Analytics
-    - [ ] Organisation Analytics
-    - [ ] Payment Analytics
-    - [ ] Detail Analytics (Using PostHog)
+  - [x] Dashboard Page
+    - [x] User Analytics
+    - [x] Payment Analytics
+    - [x] Detail Analytics (Using PostHog)
   - [x] User Management
   - [ ] Organisation Management
   - [x] Feedback Management
