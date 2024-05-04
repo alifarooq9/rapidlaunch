@@ -11,18 +11,16 @@ export const siteUrls = {
     publicUrl: "https://saasdemo.rapidlaunch.xyz",
     github: "https://github.com/alifarooq9/rapidlaunch",
     home: "/",
-    auth: {
-        login: "/auth/login",
-        signup: "/auth/signup",
-    },
     pricing: "/pricing",
     features: "/features",
     support: "/support",
     blog: "/blog",
-    docs: "/docs/introduction",
+    docs: "/docs/",
     changelog: "/changelog",
     maintenance: "/maintenance",
+    waitlist: "/waitlist",
     rapidlaunch: "https://www.rapidlaunch.xyz",
+
     dashboard: {
         home: "/dashboard",
     },
@@ -34,6 +32,10 @@ export const siteUrls = {
         },
         settings: "/org/settings",
         plansAndBilling: "/org/billing",
+    },
+    auth: {
+        login: "/auth/login",
+        signup: "/auth/signup",
     },
     admin: {
         dashboard: "/admin/dashboard",
@@ -56,5 +58,8 @@ export const publicRoutes: string[] = [
     siteUrls.support,
     siteUrls.blog,
     siteUrls.docs,
+    siteUrls.changelog,
     siteUrls.maintenance,
+    siteUrls.waitlist,
+    siteUrls.rapidlaunch,
 ];

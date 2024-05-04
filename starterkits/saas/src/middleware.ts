@@ -1,10 +1,42 @@
 import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { siteUrls } from "@/config/urls";
+import { publicRoutes, siteUrls } from "@/config/urls";
 import { getAbsoluteUrl } from "@/lib/utils";
+import { env } from "@/env";
 
 export async function middleware(request: NextRequest) {
+    const isAdminPath = request.nextUrl.pathname.startsWith("/admin");
+
+    /** check if application setting is on or off */
+    const maintenanceMode = env.NEXT_PUBLIC_MAINTENANCE_MODE === "on";
+    const waitlistMode = env.NEXT_PUBLIC_WAITLIST_MODE === "on";
+
+    if (
+        maintenanceMode &&
+        !request.nextUrl.pathname.startsWith("/maintenance") &&
+        !isAdminPath
+    ) {
+        return NextResponse.redirect(getAbsoluteUrl(siteUrls.maintenance));
+    }
+
+    if (
+        waitlistMode &&
+        !request.nextUrl.pathname.startsWith("/waitlist") &&
+        !isAdminPath
+    ) {
+        return NextResponse.redirect(getAbsoluteUrl(siteUrls.waitlist));
+    }
+
+    /** if path is public route than do nothing */
+    if (
+        publicRoutes
+            .map((route) => route.startsWith(request.nextUrl.pathname))
+            .includes(true)
+    ) {
+        return NextResponse.next();
+    }
+
     const session = await getToken({ req: request });
 
     /** if path name starts from /auth, and session is there redirect to dashboard */
@@ -28,12 +60,5 @@ export async function middleware(request: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-    matcher: [
-        "/auth/:path*",
-        "/dashboard/:path*",
-        "/profile/:path*",
-        "/org/:path*",
-        "/invite/:path*",
-        "/admin/:path*",
-    ],
+    matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
 };
