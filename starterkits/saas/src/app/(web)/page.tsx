@@ -23,7 +23,7 @@ export default async function HomePage() {
             >
                 <Balancer
                     as="p"
-                    className="text-center text-lg text-muted-foreground"
+                    className="text-center text-base text-muted-foreground sm:text-lg"
                 >
                     Elevate your development game with Rapidlaunch! Launch your
                     apps faster with our SaaS starterkits, components, building
