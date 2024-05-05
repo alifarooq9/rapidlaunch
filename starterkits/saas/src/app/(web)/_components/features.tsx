@@ -7,18 +7,18 @@ export default function Features() {
     return (
         <section className="flex flex-col items-center justify-center gap-20 py-20">
             <div className="grid gap-3">
-                <h2 className="text-center text-4xl font-bold text-foreground">
+                <h2 className="text-center text-2xl font-bold text-foreground sm:text-3xl">
                     Starterkit Features
                 </h2>
                 <Balancer
                     as="p"
-                    className="max-w-2xl text-center text-xl text-muted-foreground"
+                    className="max-w-2xl text-center text-base text-muted-foreground sm:text-xl"
                 >
                     Starterkit features are designed to help you build a robust
                     and scalable SaaS project.
                 </Balancer>
             </div>
-            <div className="grid max-w-6xl grid-cols-2 gap-4">
+            <div className="grid max-w-6xl grid-cols-1 gap-4 md:grid-cols-2">
                 {features.map((feature, idx) => (
                     <FeatureCard
                         key={feature.title + idx}
@@ -43,7 +43,7 @@ function FeatureCard({
     index,
 }: FeatureCardProps) {
     return (
-        <div className="grid gap-10 rounded-[25px] border border-border p-10 transition-colors duration-300 hover:bg-muted/50 md:grid-cols-1">
+        <div className="grid gap-10 rounded-[25px] border border-border bg-muted/50 p-10 transition-colors duration-300 hover:bg-muted/20 md:grid-cols-1">
             <div
                 className={cn(
                     "-m-2 w-full rounded-xl bg-foreground/5 p-2 ring-1 ring-inset ring-foreground/10 lg:rounded-2xl",
@@ -80,7 +80,9 @@ function FeatureCard({
                     index % 2 === 0 ? "order-2" : "order-1",
                 )}
             >
-                <h3 className="text-2xl font-bold text-foreground">{title}</h3>
+                <h3 className="text-xl font-bold text-foreground sm:text-2xl">
+                    {title}
+                </h3>
                 <Balancer as="p" className="text-base text-muted-foreground">
                     {description}
                 </Balancer>
