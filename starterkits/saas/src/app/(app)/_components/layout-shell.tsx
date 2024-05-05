@@ -25,7 +25,7 @@ export function AppLayoutShell({
     showOrgSwitcher,
 }: AppLayoutProps) {
     return (
-        <div className="container flex items-start ">
+        <div className="container flex items-start gap-8">
             <div className="sticky left-0 top-0 hidden h-screen w-52 flex-shrink-0 md:block lg:w-60 ">
                 <Suspense fallback={<SidebarLoading />}>
                     <Sidebar
