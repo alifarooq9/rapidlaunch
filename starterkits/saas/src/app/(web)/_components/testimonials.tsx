@@ -6,8 +6,10 @@ export function Testimonials() {
     return (
         <section className="flex flex-col items-center justify-center gap-20">
             <div className="grid gap-3 ">
-                <h2 className="text-center text-3xl font-bold">Testimonials</h2>
-                <p className="text-center text-xl text-muted-foreground">
+                <h2 className="text-center text-2xl font-bold sm:text-3xl">
+                    Testimonials
+                </h2>
+                <p className="text-center text-base text-muted-foreground sm:text-xl">
                     People have said...
                 </p>
             </div>

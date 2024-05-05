@@ -40,13 +40,13 @@ export function WebPageHeader({
     return (
         <div className="flex flex-col items-center justify-center gap-5">
             {badge && (
-                <Badge>
+                <Badge size="md" variant="secondary">
                     <p className="text-center text-base">{badge}</p>
                 </Badge>
             )}
             <Balancer
                 as="h1"
-                className="max-w-2xl text-center font-heading text-5xl font-bold leading-none sm:text-5xl"
+                className="max-w-2xl text-center font-heading text-4xl font-bold leading-none sm:text-5xl"
             >
                 {title}
             </Balancer>
