@@ -32,7 +32,7 @@ export function MobileNav() {
                     <Icons.logo />
                 </SheetHeader>
                 <ul className="space-y-3 py-8">
-                    <li>
+                    <li onClick={() => setIsOpen(false)}>
                         <Link
                             href={siteUrls.home}
                             className={buttonVariants({
