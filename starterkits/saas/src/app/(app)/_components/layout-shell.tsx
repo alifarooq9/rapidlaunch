@@ -22,11 +22,11 @@ export function AppLayoutShell({
     children,
     sideNavIncludedIds,
     sideNavRemoveIds,
-    showOrgSwitcher
+    showOrgSwitcher,
 }: AppLayoutProps) {
     return (
         <div className="container flex items-start ">
-            <div className="sticky left-0 top-0 h-screen w-60 flex-shrink-0 ">
+            <div className="sticky left-0 top-0 hidden h-screen w-52 flex-shrink-0 md:block lg:w-60 ">
                 <Suspense fallback={<SidebarLoading />}>
                     <Sidebar
                         sidebarNavIncludeIds={sideNavIncludedIds}
