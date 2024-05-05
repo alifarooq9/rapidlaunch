@@ -21,10 +21,15 @@ export const Icons = {
                 className={cn("flex items-center space-x-2 text-lg", className)}
             >
                 <Icons.logoIcon
-                    className={cn("h-5 w-5 fill-primary", iconProps?.className)}
+                    className={cn(
+                        "h-6 w-6 fill-primary sm:h-5 sm:w-5",
+                        iconProps?.className,
+                    )}
                     {...iconProps}
                 />
-                <span className="font-bold">{siteConfig.name}</span>
+                <span className="hidden font-bold sm:block">
+                    {siteConfig.name}
+                </span>
             </Comp>
         );
     },

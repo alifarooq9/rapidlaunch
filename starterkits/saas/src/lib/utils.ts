@@ -9,7 +9,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 // it tells you if the current link is active or not based on the pathname
-export function isLinkActive(href: string, pathname: string) {
+export function isLinkActive(href: string, pathname: string | null) {
     return pathname === href;
 }
 
