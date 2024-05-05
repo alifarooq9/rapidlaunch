@@ -15,7 +15,7 @@ export const siteUrls = {
     features: "/features",
     support: "/support",
     blog: "/blog",
-    docs: "/docs/",
+    docs: "/docs",
     changelog: "/changelog",
     maintenance: "/maintenance",
     waitlist: "/waitlist",

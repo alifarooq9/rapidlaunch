@@ -1,7 +1,6 @@
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { Toc } from "@/components/toc";
 import { getDocs } from "@/server/actions/docs";
-import { siteUrls } from "@/config/urls";
 
 export const dynamic = "force-static";
 
@@ -14,19 +13,19 @@ type DocsSlugPageProps = {
 export async function generateStaticParams() {
     const docs = await getDocs();
 
+    docs.map((doc) => {
+        console.log(doc.metaData.slug.split("/") || ["/"]);
+    });
+
     return docs.map((doc) => ({
-        slug: doc.metaData.slug.split("/"),
+        slug: doc.metaData.slug.split("/") || ["/"],
     }));
 }
 
 export default async function DocsSlugPage({ params }: DocsSlugPageProps) {
-    if (!params.slug) {
-        return redirect(siteUrls.docs);
-    }
+    const slug = Array.isArray(params.slug) ? params.slug.join("/") : "/";
 
-    const doc = (await getDocs()).find(
-        (doc) => doc.metaData.slug === params.slug.join("/"),
-    );
+    const doc = (await getDocs()).find((doc) => doc.metaData.slug === slug);
 
     if (!doc) {
         return notFound();

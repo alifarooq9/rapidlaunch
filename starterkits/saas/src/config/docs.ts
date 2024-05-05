@@ -54,7 +54,7 @@ const nav: DocsSidebarNavItems[] = [
             {
                 id: "introduction",
                 label: "What is Rapidlaunch?",
-                href: "/docs/introduction",
+                href: "/docs",
             },
         ],
     },
