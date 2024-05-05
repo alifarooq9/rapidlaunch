@@ -53,9 +53,11 @@ export function MobileNav() {
                                 )}
                             >
                                 <span className="text-lg">{item.label}</span>
-                                <Badge variant="secondary" className="ml-2">
-                                    {item.badge}
-                                </Badge>
+                                {item.badge ? (
+                                    <Badge variant="secondary" className="ml-2">
+                                        {item.badge}
+                                    </Badge>
+                                ) : null}
                             </Link>
                         </li>
                     ))}
