@@ -37,7 +37,7 @@ export function AppLayoutShell({
                 </Suspense>
             </div>
             <section className="min-h-screen w-full flex-grow">
-                <div className="sticky left-0 right-0 top-0 block lg:hidden">
+                <div className="sticky left-0 right-0 top-0 z-50 block border-b border-border bg-background lg:hidden">
                     <AppHeader
                         showOrgSwitcher={showOrgSwitcher}
                         sidebarNavIncludeIds={sideNavIncludedIds}
