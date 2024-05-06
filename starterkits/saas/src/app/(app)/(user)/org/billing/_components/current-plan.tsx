@@ -64,7 +64,7 @@ export function CurrentPlan({ subscription }: CurrentPlanProps) {
                     </p>
                 </div>
 
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <form
                         action={async () => {
                             "use server";

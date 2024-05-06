@@ -29,7 +29,7 @@ export function MobileNav() {
             </SheetTrigger>
             <SheetContent side="left">
                 <SheetHeader>
-                    <Icons.logo />
+                    <Icons.logo hideTextOnMobile={false} />
                 </SheetHeader>
                 <ul className="space-y-3 py-8">
                     <li onClick={() => setIsOpen(false)}>

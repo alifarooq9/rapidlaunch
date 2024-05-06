@@ -13,7 +13,7 @@ export default async function OrgSettingsPage() {
             title={orgSettingsPageConfig.title}
             description={orgSettingsPageConfig.description}
         >
-            <div className="grid w-full grid-cols-2 gap-4">
+            <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2">
                 <OrgImageForm currentOrg={currentOrg} />
 
                 <OrgNameForm currentOrg={currentOrg} key={currentOrg.id} />

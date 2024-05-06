@@ -10,10 +10,12 @@ export const Icons = {
         iconProps,
         as,
         className,
+        hideTextOnMobile = true,
     }: {
         iconProps?: IconProps;
         as?: ElementType;
         className?: string;
+        hideTextOnMobile?: boolean;
     }) => {
         const Comp = as ?? "div";
         return (
@@ -22,12 +24,18 @@ export const Icons = {
             >
                 <Icons.logoIcon
                     className={cn(
-                        "h-6 w-6 fill-primary sm:h-5 sm:w-5",
+                        "fill-primary",
                         iconProps?.className,
+                        hideTextOnMobile ? "h-6 w-6 sm:h-5 sm:w-5" : "h-5 w-5",
                     )}
                     {...iconProps}
                 />
-                <span className="hidden font-bold sm:block">
+                <span
+                    className={cn(
+                        "font-bold",
+                        hideTextOnMobile && "hidden sm:block",
+                    )}
+                >
                     {siteConfig.name}
                 </span>
             </Comp>

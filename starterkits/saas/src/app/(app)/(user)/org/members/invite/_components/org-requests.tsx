@@ -134,7 +134,7 @@ function RequestItem({ request }: RequestItemProps) {
     };
 
     return (
-        <div className="flex items-center justify-between space-x-4">
+        <div className="flex flex-col items-start justify-start gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center space-x-4">
                 <Avatar>
                     <AvatarImage src={request.user.image!} />

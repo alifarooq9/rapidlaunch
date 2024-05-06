@@ -47,10 +47,9 @@ export default async function DocsSlugPage({ params }: DocsSlugPageProps) {
                 {doc.content}
             </article>
 
-            <Toc
-                toc={doc.toc}
-                wrapperClassName="max-w-48 w-full py-4 sticky top-16"
-            />
+            <div className="sticky top-16 hidden w-full max-w-48 py-4 lg:block">
+                <Toc toc={doc.toc} wrapperClassName="w-full" />
+            </div>
         </>
     );
 }

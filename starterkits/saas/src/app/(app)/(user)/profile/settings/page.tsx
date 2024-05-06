@@ -20,7 +20,7 @@ export default async function SettingsPage() {
             title={profileSettingsPageConfig.title}
             description={profileSettingsPageConfig.description}
         >
-            <div className="mt-10 grid w-full grid-cols-2 gap-4">
+            <div className="mt-10 grid w-full grid-cols-1 gap-4 sm:grid-cols-2">
                 <UserImageForm user={user as User} />
 
                 <UserNameForm user={user as User} />

@@ -17,6 +17,7 @@ type SideNavProps = {
     sidebarNavIncludeIds?: string[];
     sidebarNavRemoveIds?: string[];
     showOrgSwitcher?: boolean;
+    showLogo?: boolean;
 };
 
 /**
@@ -31,6 +32,7 @@ export async function Sidebar({
     sidebarNavIncludeIds,
     sidebarNavRemoveIds,
     showOrgSwitcher = true,
+    showLogo = true,
 }: SideNavProps) {
     const user = await getUser();
 
@@ -52,17 +54,21 @@ export async function Sidebar({
 
     return (
         <aside className={cn("h-full w-full")}>
-            <div className={cn(" flex h-16 items-center justify-between")}>
-                <Link
-                    href={siteUrls.dashboard.home}
-                    className={cn("z-10 transition-transform hover:scale-90")}
-                >
-                    <Icons.logo
-                        className="text-xl"
-                        iconProps={{ className: "w-6 h-6 fill-primary" }}
-                    />
-                </Link>
-            </div>
+            {showLogo && (
+                <div className={cn("flex h-16 items-center justify-between")}>
+                    <Link
+                        href={siteUrls.dashboard.home}
+                        className={cn(
+                            "z-10 transition-transform hover:scale-90",
+                        )}
+                    >
+                        <Icons.logo
+                            className="text-xl"
+                            iconProps={{ className: "w-6 h-6 fill-primary" }}
+                        />
+                    </Link>
+                </div>
+            )}
 
             <div className="py-2">
                 <UserDropdown user={user} />
@@ -78,7 +84,7 @@ export async function Sidebar({
             )}
 
             <ScrollArea style={{ height: "calc(100vh - 10.5rem)" }}>
-                <div className="h-full w-full py-2">
+                <div className="h-full w-full py-2 pb-10">
                     <SidebarNav
                         sidebarNavIncludeIds={sidebarNavIncludeIds}
                         sidebarNavRemoveIds={sidebarNavRemoveIds}

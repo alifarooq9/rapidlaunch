@@ -26,7 +26,7 @@ export function AvailablePlans({ subscription }: AvailablePlansProps) {
                 </CardDescription>
             </CardHeader>
             <CardContent>
-                <div className="grid grid-cols-2 gap-5">
+                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                     {pricingPlans.map((plan) => (
                         <div key={plan.id} className="space-y-4">
                             <CardTitle>{plan.title}</CardTitle>
