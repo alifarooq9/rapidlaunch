@@ -11,8 +11,8 @@ import Balancer from "react-wrap-balancer";
 
 export function WebFooter() {
     return (
-        <div className="py-8">
-            <footer className="container grid grid-cols-2 gap-8 rounded-lg border border-border bg-background p-8">
+        <div className="pb-0 sm:py-8">
+            <footer className="container grid grid-cols-1 gap-8 border border-border bg-background p-8 sm:grid-cols-2 sm:rounded-lg">
                 <div className="grid place-content-between gap-2">
                     <div className="grid gap-2">
                         <Link
@@ -55,7 +55,7 @@ export function WebFooter() {
                         <ThemeToggle />
                     </div>
                 </div>
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
                     <div className="flex flex-col gap-2">
                         <h3 className="text-sm font-semibold">Resources</h3>
                         {navigation.map((item) => (
