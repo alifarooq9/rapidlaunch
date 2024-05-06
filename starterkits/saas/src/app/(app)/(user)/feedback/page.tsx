@@ -11,6 +11,7 @@ import {
 import { format } from "date-fns";
 import { Badge } from "@/components/ui/badge";
 import { FeedbackDropdown } from "@/app/(app)/(user)/feedback/_components/feedback-dropdown";
+import Balancer from "react-wrap-balancer";
 
 export default async function UserFeedbackPage() {
     const feedbacks = await getUserFeedbacksQuery();
@@ -21,7 +22,7 @@ export default async function UserFeedbackPage() {
             description={userFeedbackPageConfig.description}
         >
             <div className="flex w-full items-start justify-between">
-                <h2 className="text-lg font-medium">
+                <h2 className="text-base font-medium sm:text-lg">
                     {feedbacks.length} feedbacks you have created.
                 </h2>
 
@@ -68,10 +69,13 @@ export default async function UserFeedbackPage() {
                         <p className="font-medium text-muted-foreground">
                             No feedbacks found.
                         </p>
-                        <p className="text-muted-foreground">
+                        <Balancer
+                            as="p"
+                            className="text-center text-muted-foreground"
+                        >
                             Create a feedback using the form above, your
                             feedback is important to us. 🚀
-                        </p>
+                        </Balancer>
                     </div>
                 )}
             </div>
