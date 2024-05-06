@@ -1,3 +1,4 @@
+import { AppHeader } from "@/app/(app)/_components/app-header";
 import { Sidebar, SidebarLoading } from "@/app/(app)/_components/sidebar";
 import { Suspense } from "react";
 
@@ -26,7 +27,7 @@ export function AppLayoutShell({
 }: AppLayoutProps) {
     return (
         <div className="container flex items-start gap-8">
-            <div className="sticky left-0 top-0 hidden h-screen w-52 flex-shrink-0 md:block lg:w-60 ">
+            <div className="sticky left-0 top-0 hidden h-screen w-52 flex-shrink-0 lg:block xl:w-60 ">
                 <Suspense fallback={<SidebarLoading />}>
                     <Sidebar
                         sidebarNavIncludeIds={sideNavIncludedIds}
@@ -36,6 +37,13 @@ export function AppLayoutShell({
                 </Suspense>
             </div>
             <section className="min-h-screen w-full flex-grow">
+                <div className="block lg:hidden">
+                    <AppHeader
+                        showOrgSwitcher={showOrgSwitcher}
+                        sidebarNavIncludeIds={sideNavIncludedIds}
+                        sidebarNavRemoveIds={sideNavRemoveIds}
+                    />
+                </div>
                 {children}
             </section>
         </div>
