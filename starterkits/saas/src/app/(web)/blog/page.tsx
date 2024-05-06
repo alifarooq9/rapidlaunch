@@ -28,7 +28,7 @@ export default async function BlogsPage() {
                         All the latest news and updates from our blog
                     </CardTitle>
                 </CardHeader>
-                <CardContent className="grid grid-cols-2 gap-8">
+                <CardContent className="grid grid-cols-1 gap-8 lg:grid-cols-2">
                     {blogs?.map((blog) => (
                         <Link
                             href={`${siteUrls.blog}/${blog.metaData.slug}`}
