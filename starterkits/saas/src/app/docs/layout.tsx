@@ -11,7 +11,7 @@ export default function DocsLayout({ children }: DocsLayoutProps) {
             <DocsHeader />
 
             <main className="flex items-start gap-8">
-                <div className="sticky top-16 h-[calc(100vh-4rem)] w-56 flex-shrink-0">
+                <div className="sticky top-16  hidden h-[calc(100vh-4rem)] w-48 flex-shrink-0 md:block lg:w-56">
                     <DocsSidebar />
                 </div>
 
