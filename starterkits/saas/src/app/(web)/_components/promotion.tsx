@@ -3,11 +3,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-import { ClassValue, clsx } from "clsx";
+import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import Link from "next/link";
 import { siteUrls } from "@/config/urls";
 import { buttonVariants } from "@/components/ui/button";
+import type { ClassValue } from "clsx";
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
@@ -150,7 +151,7 @@ export const Illustration = ({ mouseEnter }: { mouseEnter: boolean }) => {
                 gap: `1px`,
             }}
         >
-            {[...Array(stars)].map((_, starIdx) => {
+            {Array.from({ length: stars }).map((_, starIdx) => {
                 const isGlowing = glowingStars.includes(starIdx);
                 const delay = (starIdx % 10) * 0.1;
                 const staticDelay = starIdx * 0.01;
