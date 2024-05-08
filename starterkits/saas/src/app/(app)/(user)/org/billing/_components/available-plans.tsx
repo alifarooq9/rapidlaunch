@@ -34,7 +34,7 @@ export function AvailablePlans({ subscription }: AvailablePlansProps) {
         },
     });
 
-    const selectedPlanId = form.watch('plan') as string;
+  const selectedPlanId = form.watch('plan')!;
     const selectedBilling = form.watch('billing');
 
     const selectedPlan = pricingPlans.find((plan) => plan.id === selectedPlanId) ?? pricingPlans[0];
