@@ -12,6 +12,7 @@ import { pricingFeatures, pricingPlans } from "@/config/pricing";
 import { cn } from "@/lib/utils";
 import type { OrgSubscription } from "@/types/org-subscription";
 import { CheckIcon, XIcon } from "lucide-react";
+import { SwitchPlanModal } from "@/app/(app)/(user)/org/billing/_components/switch-plan-modal";
 
 type AvailablePlansProps = {
     subscription: OrgSubscription;
