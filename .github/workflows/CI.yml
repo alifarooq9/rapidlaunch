@@ -1,6 +1,6 @@
 name: CI
 
-on: 
+on:
   workflow_dispatch:
   pull_request:
     branches: ["*"]
@@ -40,24 +40,23 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Create Env file
-        run: | 
+        run: |
           touch .env
           echo SKIP_ENV_VALIDATION="true" >> .env
           cat .env
-          
+
       - name: Create Env for SaaS
         working-directory: ./starterkits/saas
-        run: | 
+        run: |
           touch .env
           echo SKIP_ENV_VALIDATION="true" >> .env
           cat .env
-      
 
       - name: Install dependencies
         run: pnpm install
 
       - run: pnpm turbo run lint
-      
+
   build:
     runs-on: ubuntu-latest
     name: Build
@@ -91,14 +90,14 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Create Env file
-        run: | 
+        run: |
           touch .env
           echo SKIP_ENV_VALIDATION="true" >> .env
           cat .env
-          
+
       - name: Create Env for SaaS
         working-directory: ./starterkits/saas
-        run: | 
+        run: |
           touch .env
           echo SKIP_ENV_VALIDATION="true" >> .env
           echo NEXTAUTH_URL="http://localhost:3000" >> .env
@@ -110,4 +109,3 @@ jobs:
         run: pnpm install
 
       - run: pnpm turbo run build
-     
