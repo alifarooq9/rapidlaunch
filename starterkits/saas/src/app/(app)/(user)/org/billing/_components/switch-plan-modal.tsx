@@ -22,6 +22,7 @@ type SwitchPlanModalProps = {
     price: number;
     currencyCode: string;
     planName: string;
+    status: string;
 };
 
 export function SwitchPlanModal({
@@ -32,33 +33,44 @@ export function SwitchPlanModal({
     planName,
     price,
     variantId,
+    status
 }: SwitchPlanModalProps) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
-
     return (
         <AlertDialog open={isOpen} onOpenChange={(o) => setIsOpen(o)}>
             <AlertDialogTrigger asChild>
-                <Button variant="outline" className="w-full">
-                    Switch to {currencySymbol}
-                    {price} {currencyCode} per month
-                </Button>
+                {status === "active" ? (
+                    <Button variant="outline" className="w-full">
+                        Switch to {currencySymbol}
+                        {price} {currencyCode} per month
+                    </Button>
+                ) : (
+                    <Button variant="outline" className="w-full">
+                        Subscribe to {currencySymbol}
+                        {price} {currencyCode} per month
+                    </Button>
+                )}
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>
                     <AlertDialogTitle>
-                        Are you sure you want to switch to the {planName} plan?
+                        Are you sure you want to {status === "active" ? "switch" : "subscribe"} to{" "} {planName} plan?
                     </AlertDialogTitle>
                     <AlertDialogDescription>
-                        You will be charged the pro-rated amount for the rest of
-                        plan. Your billing card brand{" "}
-                        <strong className="capitalize">{cardBrand}</strong>{" "}
-                        ending in <strong>{lastCardDigits}</strong> will be
-                        charged.
+                        {status === "active" ? (
+                            <p>
+                                You are currently subscribed to a different plan. By switching to the <strong>{planName} plan</strong>, your {cardBrand} card ending in {lastCardDigits} will be charged <strong>{price} {currencyCode}</strong> upon confirmation.
+                            </p>
+                        ) : (
+                            <p>
+                                By subscribing to the <strong>{planName} plan</strong>, you will be charged <strong>{price} {currencyCode}</strong> upon confirmation. This will be a recurring charge until you cancel your subscription.
+                            </p>
+                        )}
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <SubscribeBtn variantId={variantId}>Continue</SubscribeBtn>
+                    <SubscribeBtn variantId={variantId}>{status === "active" ? "Switch" : "Subscribe"}</SubscribeBtn>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>
