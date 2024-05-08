@@ -5,10 +5,9 @@ Elevate your development game with Rapidlaunch! Launch your apps faster with our
 
 ## SaaS Starterkit
 
-Soon to be launch, In development, Almost completed.
-Documentation are coming soon aswell
-Want to explore by yourself? Head over to `/starterkits/saas`, and play with it!
+Soon to be launched. In development. Documentation will be available soon as well. Want to explore it yourself?
 
+Head over to `/starterkits/saas` and play with it.
 ## Roadmap 
 
 Please check the [ROADMAP.md](https://github.com/alifarooq9/rapidlaunch/blob/main/ROADMAP.md) for the complete roadmap.
