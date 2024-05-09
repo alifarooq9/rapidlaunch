@@ -15,7 +15,8 @@ export async function middleware(request: NextRequest) {
     if (
         maintenanceMode &&
         !request.nextUrl.pathname.startsWith("/maintenance") &&
-        !isAdminPath
+        !isAdminPath &&
+        !request.nextUrl.pathname.startsWith("/auth")
     ) {
         return NextResponse.redirect(getAbsoluteUrl(siteUrls.maintenance));
     }
@@ -23,7 +24,8 @@ export async function middleware(request: NextRequest) {
     if (
         waitlistMode &&
         !request.nextUrl.pathname.startsWith("/waitlist") &&
-        !isAdminPath
+        !isAdminPath &&
+        !request.nextUrl.pathname.startsWith("/auth")
     ) {
         return NextResponse.redirect(getAbsoluteUrl(siteUrls.waitlist));
     }
