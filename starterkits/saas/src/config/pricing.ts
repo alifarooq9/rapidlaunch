@@ -139,7 +139,7 @@ export const pricingPlans: PrincingPlan[] = [
             monthly: 99,
             yearly: 199,
         },
-        variantId: { monthly: 369959, yearly: 369958 },
+        variantId: { monthly: 362869, yearly: 362870 },
         currency: {
             code: "USD",
             symbol: "$",
@@ -159,7 +159,7 @@ export const pricingPlans: PrincingPlan[] = [
             monthly: 199,
             yearly: 1999,
         },
-        variantId: { monthly: 369955, yearly: 337188 },
+        variantId: { monthly: 362872, yearly: 362874 },
         currency: {
             code: "USD",
             symbol: "$",

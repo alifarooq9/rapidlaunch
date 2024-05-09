@@ -39,8 +39,7 @@ export function AvailablePlans({ subscription }: AvailablePlansProps) {
 
     const selectedPlan = pricingPlans.find((plan) => plan.id === selectedPlanId) ?? pricingPlans[0];
     const selectedVariantId = selectedBilling === 'monthly' ? selectedPlan?.variantId?.monthly : selectedPlan?.variantId?.yearly;
-
-
+    
     return (
         <form>
             <Card>
