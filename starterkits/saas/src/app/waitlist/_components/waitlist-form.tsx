@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { type z } from "zod";
 import {
     FormField,
     FormItem,
@@ -12,10 +12,15 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { waitlistUsersSchema } from "@/server/db/schema";
+import { useMutation } from "@tanstack/react-query";
+import { addUserToWaitlistMutation } from "@/server/actions/waitlist/mutations";
+import { toast } from "sonner";
+import { Icons } from "@/components/ui/icons";
 
-const waitformSchema = z.object({
-    name: z.string().min(2, "Please enter a valid name"),
-    email: z.string().email("Please enter a valid email address"),
+const waitformSchema = waitlistUsersSchema.pick({
+    name: true,
+    email: true,
 });
 
 type waitformSchemaType = z.infer<typeof waitformSchema>;
@@ -29,14 +34,31 @@ export function WaitlistForm() {
         },
     });
 
-    const onSubmit = async (data: waitformSchemaType) => {
-        console.log(data);
+    const { mutate, isPending } = useMutation({
+        mutationFn: () => addUserToWaitlistMutation(form.getValues()),
+        onSuccess: () => {
+            toast("You have been added to waitlist", {
+                description: "You will be notified when the waitlist opens",
+            });
+        },
+        onError: () => {
+            toast.error("Something went wrong", {
+                description: "Please try again later",
+            });
+        },
+    });
+
+    const onSubmit = async () => {
+        mutate();
     };
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
-                <div className="grid grid-cols-2 gap-2">
+            <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="grid w-full max-w-md gap-4"
+            >
+                <div className="grid w-full grid-cols-2 gap-2">
                     <FormField
                         control={form.control}
                         name="name"
@@ -44,7 +66,7 @@ export function WaitlistForm() {
                             <FormItem>
                                 <FormControl>
                                     <Input
-                                        className="h-10 w-full bg-background sm:w-auto"
+                                        className="h-10 w-full bg-background"
                                         placeholder="Name"
                                         {...field}
                                     />
@@ -62,7 +84,7 @@ export function WaitlistForm() {
                             <FormItem>
                                 <FormControl>
                                     <Input
-                                        className="h-10 w-full bg-background sm:w-auto"
+                                        className="h-10 w-full bg-background"
                                         placeholder="Email"
                                         {...field}
                                     />
@@ -74,8 +96,13 @@ export function WaitlistForm() {
                     />
                 </div>
 
-                <Button type="submit" className="w-full">
-                    Join the waitlist
+                <Button
+                    disabled={isPending}
+                    type="submit"
+                    className="w-full gap-2"
+                >
+                    {isPending ? <Icons.loader className="h-4 w-4" /> : null}
+                    <span>Join the waitlist</span>
                 </Button>
             </form>
         </Form>
