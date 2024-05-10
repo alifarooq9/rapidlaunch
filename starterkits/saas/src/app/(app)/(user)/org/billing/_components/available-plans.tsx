@@ -100,7 +100,7 @@ export function AvailablePlans({ subscription }: AvailablePlansProps) {
                                                     : "yearly"
                                             }
                                             {...form.register("billing")}
-                                            className="grid grid-cols-2 gap-4 sm:-mt-6"
+                                            className="grid grid-cols-2 gap-4"
                                             onValueChange={(value: string) =>
                                                 form.setValue("billing", value)
                                             }
@@ -162,7 +162,7 @@ export function AvailablePlans({ subscription }: AvailablePlansProps) {
                                                             subscription?.variant_id,
                                                 )?.id ?? pricingPlans[0]?.id
                                             }
-                                            className="space-y-4 sm:-mt-6"
+                                            className="space-y-2"
                                             {...form.register("plan")}
                                             onValueChange={(
                                                 value: string | undefined,
