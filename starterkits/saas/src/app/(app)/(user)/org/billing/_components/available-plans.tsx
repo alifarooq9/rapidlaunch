@@ -114,7 +114,8 @@ export function AvailablePlans({ subscription }: AvailablePlansProps) {
                                                 <Label
                                                     className={buttonVariants({
                                                         variant: "outline",
-                                                        className: "w-full",
+                                                        className:
+                                                            "w-full cursor-pointer peer-data-[state=checked]:border-primary",
                                                     })}
                                                     htmlFor="monthly"
                                                 >
@@ -129,7 +130,8 @@ export function AvailablePlans({ subscription }: AvailablePlansProps) {
                                                 />
                                                 <Label
                                                     className={buttonVariants({
-                                                        className: "w-full",
+                                                        className:
+                                                            "w-full cursor-pointer peer-data-[state=checked]:border-primary",
                                                         variant: "outline",
                                                     })}
                                                     htmlFor="yearly"
@@ -174,20 +176,20 @@ export function AvailablePlans({ subscription }: AvailablePlansProps) {
                                                         value={plan.id}
                                                     />
                                                     <Label
-                                                        className="flex items-center justify-between rounded-lg border border-border p-4 shadow-sm transition-colors hover:bg-muted peer-data-[state=checked]:border-primary"
+                                                        className="flex cursor-pointer items-center justify-between rounded-lg border border-border p-4 shadow-sm transition-colors hover:bg-muted peer-data-[state=checked]:border-primary"
                                                         htmlFor={plan.title}
                                                     >
                                                         <div className="space-y-1">
-                                                            <div className="text-lg font-semibold">
+                                                            <p className="font-heading font-semibold">
                                                                 {plan.title}
-                                                            </div>
+                                                            </p>
                                                             <p className="pr-2 text-xs font-light text-muted-foreground">
                                                                 {
                                                                     plan.description
                                                                 }
                                                             </p>
                                                         </div>
-                                                        <div className="text-lg font-semibold">
+                                                        <div className="font-heading text-lg font-medium">
                                                             $
                                                             {selectedBilling ===
                                                             "monthly"
@@ -207,7 +209,7 @@ export function AvailablePlans({ subscription }: AvailablePlansProps) {
                         <div className="space-y-4">
                             <Card>
                                 <CardHeader>
-                                    <CardTitle className="text-xl">
+                                    <CardTitle className="text-lg">
                                         {selectedPlan?.title} Plan
                                     </CardTitle>
                                     <CardDescription>
