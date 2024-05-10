@@ -40,7 +40,7 @@ export type PricingFeature = {
     inludedIn: string[];
 };
 
-const pricingIds = {
+export const pricingIds = {
     free: "free",
     pro: "pro",
     premium: "premium",
