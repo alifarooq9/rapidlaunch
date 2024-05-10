@@ -42,6 +42,7 @@ export const siteUrls = {
         users: "/admin/users",
         organizations: "/admin/organizations",
         settings: "/admin/settings",
+        waitlist: "/admin/waitlist",
         feedbacks: "/admin/feedbacks",
         analytics: "https://us.posthog.com/project/12312/dashboard",
     },

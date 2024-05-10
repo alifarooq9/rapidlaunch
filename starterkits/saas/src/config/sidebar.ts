@@ -2,6 +2,7 @@ import {
     BarChart4Icon,
     BookTextIcon,
     Building2Icon,
+    ClipboardListIcon,
     CreditCardIcon,
     HelpCircleIcon,
     LayoutDashboardIcon,
@@ -93,6 +94,11 @@ const navigation: SidebarNavItems[] = [
                 label: "Organizations",
                 icon: Building2Icon,
                 href: siteUrls.admin.organizations,
+            },
+            {
+                label: "Waitlist",
+                icon: ClipboardListIcon,
+                href: siteUrls.admin.waitlist,
             },
             {
                 label: "Analytics",

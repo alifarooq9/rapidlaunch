@@ -332,3 +332,18 @@ export const subscriptionsRelations = relations(subscriptions, ({ one }) => ({
         references: [organizations.id],
     }),
 }));
+
+export const waitlistUsers = createTable("waitlistUser", {
+    id: varchar("id", { length: 255 })
+        .notNull()
+        .primaryKey()
+        .default(sql`gen_random_uuid()`),
+    email: varchar("email", { length: 255 }).notNull().unique(),
+    name: varchar("name", { length: 255 }).notNull(),
+    createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
+});
+
+export const waitlistUsersSchema = createInsertSchema(waitlistUsers, {
+    email: z.string().email("Email must be a valid email address"),
+    name: z.string().min(3, "Name must be at least 3 characters long"),
+});
