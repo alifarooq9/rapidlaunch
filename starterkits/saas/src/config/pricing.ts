@@ -40,7 +40,7 @@ export type PricingFeature = {
     inludedIn: string[];
 };
 
-const pricingIds = {
+export const pricingIds = {
     free: "free",
     pro: "pro",
     premium: "premium",
@@ -137,7 +137,7 @@ export const pricingPlans: PrincingPlan[] = [
             "Advanced features to help you scale any business without limits.",
         price: {
             monthly: 99,
-            yearly: 199,
+            yearly: 999,
         },
         variantId: { monthly: 362869, yearly: 362870 },
         currency: {
