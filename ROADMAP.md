@@ -16,11 +16,9 @@
   - [x] Pricing Page - (Pricing Table, Pricing Plans, Call to Action)
   - [x] Support Page - (Support details)
   - [x] Blog - (Using Next-Remote-mdx) - (Posts, Categories, Tags)
-  - [ ] Mobile Responsive all pages   
 - [x] Dark Mode
   - [x] Theme Switcher
 - [x] Documentation - (Using Next-Remote-mdx)
-  - [ ] Mobile Responsive
 - [x] Authentication - (Using Nextauth)
   - [x] Email Provider
   - [x] Google Provider
@@ -28,7 +26,6 @@
   - [x] Email Verification
   - [x] Login Page
   - [x] Signup Page
-  - [ ] Mobile Responsive all pages
 - [x] App Site
   - [x] User Dashboard
   - [x] Sidebar Navigation
@@ -39,7 +36,6 @@
   - [x] Edit Profile
   - [x] Update Profile Picture
   - [x] Delete Account
-  - [ ] Mobile Responsive all pages
 - [x] User Feedback System
   - [x] Create Feedback
   - [x] Delete Feedback
@@ -56,24 +52,23 @@
     - [x] Update Subscription
     - [x] Change Plan
     - [x] View Plans
-  - [ ] Mobile Responsive all pages
 - [x] Payments - (Using LemonSqueezy)
   - [x] Get Subscription
   - [x] Get Checkout details
   - [x] Webhooks
 - [x] Analytics - (Using PostHog)
-- [ ] Admin Panel
+- [x] Admin Panel
   - [x] Dashboard Page
     - [x] User Analytics
     - [x] Payment Analytics
     - [x] Detail Analytics (Using PostHog)
   - [x] User Management
-  - [ ] Organisation Management
+  - [x] Organisation Management
   - [x] Feedback Management
+  - [x] Waitlist Users Management
   - [x] Application Settings - (Store application settings on redis database, Fetch on middleware and take action accordingly)
     - [x] Waitlist Mode
     - [x] Maintenance Mode
-  - [ ] Mobile Responsive all pages
 
 - If you have any other feature ideas, feel free to add it in the roadmap.
 
