@@ -4,12 +4,21 @@ import { Toaster } from "@/components/ui/sonner";
 import "@/styles/globals.css";
 import "@/styles/prism.css";
 import { fontHeading, fontSans } from "@/lib/fonts";
+import { type Metadata } from "next";
+import {
+    defaultMetadata,
+    twitterMetadata,
+    ogMetadata,
+} from "@/app/shared-metadata";
 
-export const metadata = {
-    title: "RapidLaunch - Next.js Boilerplate",
-    description:
-        "Next.js boilerplate with shadcn ui, TRPC, TailwindCSS, and Drizzle.",
-    icons: [{ rel: "icon", url: "/favicon.ico" }],
+export const metadata: Metadata = {
+    ...defaultMetadata,
+    twitter: {
+        ...twitterMetadata,
+    },
+    openGraph: {
+        ...ogMetadata,
+    },
 };
 
 export default function RootLayout({

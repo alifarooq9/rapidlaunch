@@ -13,6 +13,12 @@ import { siteConfig } from "@/config/site";
 import { getChangelogs } from "@/server/actions/changelog";
 import { format } from "date-fns";
 import Image from "next/image";
+import type { Metadata } from "next";
+import { changelogPageConfig } from "@/app/(web)/changelog/_constants/page-config";
+
+export const metadata: Metadata = {
+    title: changelogPageConfig.title,
+};
 
 export const dynamic = "force-static";
 
@@ -35,11 +41,8 @@ export default async function ChangeLogPage() {
                 </p>
             </WebPageHeader>
             <div className="grid w-full max-w-4xl gap-8">
-                {changelogs.map((changelog) => (
-                    <ChangeLogCard
-                        key={changelog.metaData.slug}
-                        {...changelog}
-                    />
+                {changelogs.map((changelog, index) => (
+                    <ChangeLogCard key={index} {...changelog} />
                 ))}
             </div>
         </WebPageWrapper>

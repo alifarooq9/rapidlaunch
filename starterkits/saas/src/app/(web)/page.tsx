@@ -11,6 +11,11 @@ import { siteUrls } from "@/config/urls";
 import Image from "next/image";
 import Link from "next/link";
 import Balancer from "react-wrap-balancer";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Build Your MVP in Days, not weeks. Next.js Starter Kit",
+};
 
 export const dynamic = "force-static";
 
@@ -19,7 +24,7 @@ export default async function HomePage() {
         <WebPageWrapper>
             <WebPageHeader
                 badge="Launch your saas in 24 hours"
-                title="Rapidly launch your MVP with Beautiful Starterkits, Blocks, and more."
+                title="Build Your MVP in Days, not weeks. Open Source Starter Kit"
             >
                 <Balancer
                     as="p"

@@ -1,6 +1,13 @@
 import { WaitlistForm } from "@/app/waitlist/_components/waitlist-form";
+import { waitlistPageConfig } from "@/app/waitlist/_constants/page-config";
 import { Icons } from "@/components/ui/icons";
 import { siteConfig } from "@/config/site";
+import { type Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: waitlistPageConfig.title,
+    description: waitlistPageConfig.description,
+};
 
 export default function Waitlist() {
     return (

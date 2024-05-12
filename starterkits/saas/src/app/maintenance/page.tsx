@@ -1,4 +1,11 @@
+import { maintenancePageConfig } from "@/app/maintenance/_constants/page-config";
 import { siteConfig } from "@/config/site";
+import { type Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: maintenancePageConfig.title,
+    description: maintenancePageConfig.description,
+};
 
 export default function Maintenance() {
     return (
