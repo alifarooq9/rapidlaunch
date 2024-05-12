@@ -65,3 +65,23 @@ export const publicRoutes: string[] = [
     siteUrls.waitlist,
     siteUrls.rapidlaunch,
 ];
+
+export const protectedRoutes: string[] = [
+    siteUrls.dashboard.home,
+    siteUrls.feedback,
+    siteUrls.organization.members.home,
+    siteUrls.organization.members.invite,
+    siteUrls.organization.settings,
+    siteUrls.organization.plansAndBilling,
+    siteUrls.auth.login,
+    siteUrls.auth.signup,
+    siteUrls.admin.dashboard,
+    siteUrls.admin.users,
+    siteUrls.admin.organizations,
+    siteUrls.admin.settings,
+    siteUrls.admin.waitlist,
+    siteUrls.admin.feedbacks,
+    siteUrls.admin.analytics,
+    siteUrls.profile.settings,
+    siteUrls.profile.billing,
+];

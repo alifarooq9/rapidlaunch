@@ -3,6 +3,8 @@ import {
     WebPageHeader,
     WebPageWrapper,
 } from "@/app/(web)/_components/general-components";
+import { type Metadata } from "next";
+import { pricingPageConfig } from "@/app/(web)/pricing/_constants/page-config";
 
 /**
  * Customize the pricing page to your needs. You can use the `PricingPlans` component to display the pricing plans.
@@ -10,6 +12,10 @@ import {
  *
  * To customize the pricing plans, you can modify the `PricingPlans` component. @see /app/(web)/pricing/components/pricing-plans.tsx
  */
+
+export const metadata: Metadata = {
+    title: pricingPageConfig.title,
+};
 
 export default function PricingPage() {
     return (

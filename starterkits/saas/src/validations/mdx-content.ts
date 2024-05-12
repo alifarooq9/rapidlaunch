@@ -3,6 +3,7 @@ import { z } from "zod";
 export const docsMetaSchema = z.object({
     title: z.string(),
     slug: z.string(),
+    publishedAt: z.date(),
     tags: z.array(z.string()).optional(),
     description: z.string().optional(),
     isDraft: z.boolean().optional(),
@@ -14,7 +15,7 @@ export const blogMetaSchema = z.object({
     title: z.string(),
     slug: z.string(),
     publishedAt: z.date(),
-    updatedAt: z.date().optional(),
+    updatedAt: z.date(),
     readTime: z.string(),
     tags: z.array(z.string()).optional(),
     description: z.string(),
@@ -27,7 +28,6 @@ export type BlogMetaData = z.infer<typeof blogMetaSchema>;
 
 export const changelogMetaSchema = z.object({
     title: z.string(),
-    slug: z.string(),
     publishedAt: z.date(),
     thumbnail: z.string().url(),
     description: z.string(),

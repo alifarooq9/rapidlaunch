@@ -12,11 +12,21 @@ import {
 import { type SupportInfo, supportInfos } from "@/config/support";
 import { ArrowRightIcon } from "lucide-react";
 import Link from "next/link";
+import { type Metadata } from "next";
+import { supportPageConfig } from "@/app/(web)/support/_constants/page-config";
+
+export const metadata: Metadata = {
+    title: supportPageConfig.title,
+    description: supportPageConfig.description,
+};
 
 export default function ContactPage() {
     return (
         <WebPageWrapper>
-            <WebPageHeader title="Support for You" badge="Get in touch with us">
+            <WebPageHeader
+                title={supportPageConfig.title}
+                badge="Get in touch with us"
+            >
                 <p>
                     If you have any questions or need help, feel free to reach
                     out to us.

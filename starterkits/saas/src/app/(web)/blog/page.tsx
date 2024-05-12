@@ -8,6 +8,12 @@ import { getBlogs } from "@/server/actions/blog";
 import { format } from "date-fns";
 import Image from "next/image";
 import Link from "next/link";
+import { type Metadata } from "next";
+import { blogPageConfig } from "@/app/(web)/blog/_constants/page-config";
+
+export const metadata: Metadata = {
+    title: blogPageConfig.title,
+};
 
 export const dynamic = "force-static";
 

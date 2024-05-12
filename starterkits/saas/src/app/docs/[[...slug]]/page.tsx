@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { Toc } from "@/components/toc";
 import { getDocs } from "@/server/actions/docs";
+import { type Metadata } from "next";
 
 export const dynamic = "force-static";
 
@@ -10,12 +11,25 @@ type DocsSlugPageProps = {
     };
 };
 
+export async function generateMetadata({
+    params,
+}: DocsSlugPageProps): Promise<Metadata> {
+    const slug = Array.isArray(params.slug) ? params.slug.join("/") : "/";
+
+    const doc = (await getDocs()).find((doc) => doc.metaData.slug === slug);
+
+    if (!doc) {
+        return notFound();
+    }
+
+    return {
+        title: doc.metaData.title,
+        description: doc.metaData.description,
+    };
+}
+
 export async function generateStaticParams() {
     const docs = await getDocs();
-
-    docs.map((doc) => {
-        console.log(doc.metaData.slug.split("/") || ["/"]);
-    });
 
     return docs.map((doc) => ({
         slug: doc.metaData.slug.split("/") || ["/"],
@@ -26,6 +40,8 @@ export default async function DocsSlugPage({ params }: DocsSlugPageProps) {
     const slug = Array.isArray(params.slug) ? params.slug.join("/") : "/";
 
     const doc = (await getDocs()).find((doc) => doc.metaData.slug === slug);
+
+    console.log(["gettings-started", "installation"].join("/"), params.slug);
 
     if (!doc) {
         return notFound();

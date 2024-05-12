@@ -5,20 +5,38 @@ import { getBlogs } from "@/server/actions/blog";
 import { format } from "date-fns";
 import Image from "next/image";
 import { notFound, redirect } from "next/navigation";
+import { type Metadata } from "next";
 
 export const dynamic = "force-static";
 
 type BlogSlugPageProps = {
     params: {
-        slug: string[];
+        slug: string;
     };
 };
+
+export async function generateMetadata({
+    params,
+}: BlogSlugPageProps): Promise<Metadata> {
+    const slug = params.slug;
+
+    const blog = (await getBlogs()).find((b) => b.metaData.slug === slug);
+
+    if (!blog) {
+        return notFound();
+    }
+
+    return {
+        title: blog.metaData.title,
+        description: blog.metaData.description,
+    };
+}
 
 export async function generateStaticParams() {
     const blogs = await getBlogs();
 
     return blogs.map((blog) => ({
-        slug: blog.metaData.slug.split("/"),
+        slug: blog.metaData.slug,
     }));
 }
 
@@ -27,7 +45,7 @@ export default async function BlogSlugPage({ params }: BlogSlugPageProps) {
         return redirect(siteUrls.blog);
     }
 
-    const slug = params.slug.join("/");
+    const slug = params.slug;
 
     const blog = (await getBlogs()).find((b) => b.metaData.slug === slug);
 
