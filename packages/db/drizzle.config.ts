@@ -1,16 +1,17 @@
-import { type Config } from "drizzle-kit";
+import { defineConfig } from "drizzle-kit";
 
 declare const process: {
-    env: {
-        DATABASE_URL: string;
-    };
+  env: {
+    DATABASE_URL: string;
+  };
 };
 
-export default {
-    schema: "./src/schema.ts",
-    driver: "pg",
-    dbCredentials: {
-        connectionString: process.env.DATABASE_URL!,
-    },
-    tablesFilter: ["rapidlaunch_*"],
-} satisfies Config;
+export default defineConfig({
+  schema: "./src/schema.ts",
+  dialect: "postgresql",
+  dbCredentials: {
+    //@ts-expect-error //@ts-ignore
+    url: process.env.DATABASE_URL!,
+  },
+  tablesFilter: ["rapidlaunch_*"],
+});
