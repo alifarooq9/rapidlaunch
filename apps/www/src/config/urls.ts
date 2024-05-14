@@ -1,10 +1,21 @@
 export const siteUrls = {
-    home: "/",
-    saasStarterkit: "/saas-starterkit",
-    components: "/components",
-    blog: "/blog",
-    docs: "/docs",
-    twitter: "https://twitter.com/AliFarooqDev",
-    github: "/gh",
-    earlyAccess: "/#early-access",
+    marketing: {
+        base: "/",
+        pricing: "/pricing",
+        blog: "/blog",
+        earlyAccess: "/#early-access",
+    },
+    saasStarterkit: {
+        base: "/saas-starterkit",
+    },
+    docs: {
+        base: "/docs",
+    },
+    blocks: {
+        base: "/blocks",
+    },
+    socials: {
+        twitter: "https://twitter.com/AliFarooqDev",
+        github: "/gh",
+    },
 } as const;

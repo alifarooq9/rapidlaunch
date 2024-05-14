@@ -10,13 +10,14 @@ import Balancer from "react-wrap-balancer";
 import { Background } from "@/components/background";
 
 export default async function HomePage() {
+    8;
     const repoStars = await getRepoStars();
 
     return (
         <>
             <section className="container flex flex-col items-center justify-center gap-4 py-20">
                 <Link
-                    href={siteUrls.twitter}
+                    href={siteUrls.socials.twitter}
                     className="flex items-center space-x-2 rounded-md bg-secondary px-3 py-2 text-sm hover:bg-secondary/80"
                 >
                     <span>🎉</span>
@@ -43,7 +44,7 @@ export default async function HomePage() {
                 </Balance>
                 <div className="flex items-center gap-4">
                     <Link
-                        href={siteUrls.earlyAccess}
+                        href={siteUrls.marketing.earlyAccess}
                         className={buttonVariants({
                             className: "flex items-center gap-2",
                         })}
@@ -51,7 +52,7 @@ export default async function HomePage() {
                         Early Access
                     </Link>
                     <Link
-                        href={siteUrls.github}
+                        href={siteUrls.socials.github}
                         className={buttonVariants({
                             className: "flex items-center",
                             variant: "outline",

@@ -28,7 +28,10 @@ export function MobileNav() {
             </SheetTrigger>
             <SheetContent side="left" className="pr-0">
                 <div className="mb-8">
-                    <Link href={siteUrls.home} className="left-4 z-10">
+                    <Link
+                        href={siteUrls.marketing.base}
+                        className="left-4 z-10"
+                    >
                         <Icons.logo
                             iconProps={{
                                 className:

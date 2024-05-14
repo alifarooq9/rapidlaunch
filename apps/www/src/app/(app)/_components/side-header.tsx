@@ -14,7 +14,10 @@ export function SiteHeader() {
                 <div className="flex items-center gap-5">
                     <MobileNav />
 
-                    <Link href={siteUrls.home} className="left-4 z-10">
+                    <Link
+                        href={siteUrls.marketing.base}
+                        className="left-4 z-10"
+                    >
                         <Icons.logo
                             classNameText="hidden sm:block"
                             iconProps={{
@@ -29,7 +32,7 @@ export function SiteHeader() {
 
                 <nav className="flex items-center gap-2">
                     <Link
-                        href={siteUrls.twitter}
+                        href={siteUrls.socials.twitter}
                         target="_blank"
                         className={buttonVariants({
                             variant: "outline",
@@ -39,7 +42,7 @@ export function SiteHeader() {
                         <Icons.twitter className="h-4 w-4 fill-foreground" />
                     </Link>
                     <Link
-                        href={siteUrls.github}
+                        href={siteUrls.socials.github}
                         target="_blank"
                         className={buttonVariants({
                             variant: "outline",
