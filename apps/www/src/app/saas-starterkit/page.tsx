@@ -1,9 +1,9 @@
 import { MarketingLayout } from "@/components/layout/marketing-layout";
 
-export default function HomePage() {
+export default function SaasStarterKitPage() {
     return (
         <MarketingLayout>
-            <h1>Marketing Page</h1>
+            <div>saas starter kit</div>
         </MarketingLayout>
     );
 }
