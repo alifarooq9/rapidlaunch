@@ -11,7 +11,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-export function MobileNav() {
+export function MarketingMobileNav() {
     const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
     return (

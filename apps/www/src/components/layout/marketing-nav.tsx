@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
-export function MainNav() {
+export function MarketingMainNav() {
     const pathname = usePathname();
 
     return (

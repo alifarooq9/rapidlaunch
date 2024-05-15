@@ -104,7 +104,7 @@ export function EarlyAccessForm() {
                         size="lg"
                     >
                         {isPending ? (
-                            <Icons.loader className="h-4 w-4" />
+                            <Icons.spinner className="h-4 w-4" />
                         ) : null}
                         <span>Join Early Access</span>
                     </Button>
