@@ -4,6 +4,7 @@
  */
 
 await import("./src/env.js");
+import createMDX from "fumadocs-mdx/config";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -35,5 +36,8 @@ const nextConfig = {
     // This is required to support PostHog trailing slash API requests
     skipTrailingSlashRedirect: true,
 };
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+const withMDX = createMDX();
 
-export default nextConfig;
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+export default withMDX(nextConfig);

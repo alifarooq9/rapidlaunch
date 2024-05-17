@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "@/components/theme-provider";
 import { PosthogProvider } from "@/components/posthog-provider";
 import { SessionProvider } from "next-auth/react";
+import { RootProvider as FumaDocsProviders } from "fumadocs-ui/provider";
 
 type ProvidersProps = {
     children: React.ReactNode;
@@ -16,7 +17,9 @@ export function Providers({ children }: ProvidersProps) {
         <SessionProvider>
             <QueryClientProvider client={queryClient}>
                 <PosthogProvider>
-                    <ThemeProvider>{children}</ThemeProvider>
+                    <FumaDocsProviders>
+                        <ThemeProvider>{children}</ThemeProvider>
+                    </FumaDocsProviders>
                 </PosthogProvider>
             </QueryClientProvider>
         </SessionProvider>
