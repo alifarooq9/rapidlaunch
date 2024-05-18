@@ -1,22 +1,16 @@
-import { DocsHeader } from "@/app/docs/_components/docs-header";
-import { DocsSidebar } from "@/app/docs/_components/sidebar";
+import { DocsLayout } from "fumadocs-ui/layout";
+import { docs } from "@/app/source";
+import type { ReactNode } from "react";
+import { Icons } from "@/components/ui/icons";
 
-type DocsLayoutProps = {
-    children: React.ReactNode;
+type RootDocsLayoutProps = {
+    children: ReactNode;
 };
 
-export default function DocsLayout({ children }: DocsLayoutProps) {
+export default function RootDocsLayout({ children }: RootDocsLayoutProps) {
     return (
-        <div className="container relative min-h-screen">
-            <DocsHeader />
-
-            <main className="flex items-start gap-8">
-                <div className="sticky top-16  hidden h-[calc(100vh-4rem)] w-48 flex-shrink-0 md:block lg:w-56">
-                    <DocsSidebar />
-                </div>
-
-                {children}
-            </main>
-        </div>
+        <DocsLayout tree={docs.pageTree} nav={{ title: <Icons.logo /> }}>
+            {children}
+        </DocsLayout>
     );
 }

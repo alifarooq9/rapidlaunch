@@ -1,71 +1,50 @@
+import { docs } from "@/app/source";
+import type { Metadata } from "next";
+import { DocsPage, DocsBody } from "fumadocs-ui/page";
 import { notFound } from "next/navigation";
-import { Toc } from "@/components/toc";
-import { getDocs } from "@/server/actions/docs";
-import { type Metadata } from "next";
+import { useMDXComponents } from "mdx-components";
+import { RollButton } from "fumadocs-ui/components/roll-button";
 
-export const dynamic = "force-static";
-
-type DocsSlugPageProps = {
-    params: {
-        slug: string[];
-    };
-};
-
-export async function generateMetadata({
+export default async function Page({
     params,
-}: DocsSlugPageProps): Promise<Metadata> {
-    const slug = Array.isArray(params.slug) ? params.slug.join("/") : "/";
+}: {
+    params: { slug?: string[] };
+}) {
+    const page = docs.getPage(params.slug);
 
-    const doc = (await getDocs()).find((doc) => doc.metaData.slug === slug);
-
-    if (!doc) {
-        return notFound();
+    if (page == null) {
+        notFound();
     }
 
-    return {
-        title: doc.metaData.title,
-        description: doc.metaData.description,
-    };
+    const MDX = page.data.exports.default;
+
+    const components = useMDXComponents();
+
+    return (
+        <DocsPage toc={page.data.exports.toc}>
+            <RollButton />
+            <DocsBody>
+                <h1>{page.data.title}</h1>
+                <p>{page.data.description}</p>
+                <MDX components={components} />
+            </DocsBody>
+        </DocsPage>
+    );
 }
 
 export async function generateStaticParams() {
-    const docs = await getDocs();
-
-    return docs.map((doc) => ({
-        slug: doc.metaData.slug.split("/") || ["/"],
+    return docs.getPages().map((page) => ({
+        slug: page.slugs,
     }));
 }
 
-export default async function DocsSlugPage({ params }: DocsSlugPageProps) {
-    const slug = Array.isArray(params.slug) ? params.slug.join("/") : "/";
+export function generateMetadata({ params }: { params: { slug?: string[] } }) {
+    const page = docs.getPage(params.slug);
 
-    const doc = (await getDocs()).find((doc) => doc.metaData.slug === slug);
+    if (page == null) notFound();
 
-    console.log(["gettings-started", "installation"].join("/"), params.slug);
-
-    if (!doc) {
-        return notFound();
-    }
-
-    return (
-        <>
-            <article className="flex-1 py-10">
-                <div className="space-y-2">
-                    <h1 className="scroll-m-20 font-heading text-4xl font-bold">
-                        {doc.metaData.title}
-                    </h1>
-                    {doc.metaData.description && (
-                        <p className="text-lg text-muted-foreground">
-                            {doc.metaData?.description}
-                        </p>
-                    )}
-                </div>
-                {doc.content}
-            </article>
-
-            <div className="sticky top-16 hidden w-full max-w-48 py-4 lg:block">
-                <Toc toc={doc.toc} wrapperClassName="w-full" />
-            </div>
-        </>
-    );
+    return {
+        title: page.data.title,
+        description: page.data.description,
+    } satisfies Metadata;
 }
