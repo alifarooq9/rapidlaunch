@@ -5,6 +5,8 @@ import { notFound } from "next/navigation";
 import { useMDXComponents } from "mdx-components";
 import { RollButton } from "fumadocs-ui/components/roll-button";
 
+export const dynamic = "force-static";
+
 export default async function Page({
     params,
 }: {

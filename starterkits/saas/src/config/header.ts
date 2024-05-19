@@ -36,7 +36,7 @@ export const navigation: NavigationItem[] = [
     },
     {
         id: "blog",
-        href: siteUrls.blog,
+        href: siteUrls.blogs,
         label: "Blog",
     },
     {

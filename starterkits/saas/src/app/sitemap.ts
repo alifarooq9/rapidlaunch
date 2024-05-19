@@ -9,7 +9,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const allBlogs = await getBlogs();
 
     const blogs = allBlogs.map((blog) => ({
-        url: addPathToBaseURL(`${siteUrls.blog}/${blog.metaData.slug}`),
+        url: addPathToBaseURL(`${siteUrls.blogs}/${blog.metaData.slug}`),
         lastModified: new Date(blog.metaData.updatedAt),
     }));
 

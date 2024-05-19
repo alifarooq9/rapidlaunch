@@ -1,97 +1,94 @@
 import { WebPageWrapper } from "@/app/(web)/_components/general-components";
 import { Badge } from "@/components/ui/badge";
-import { siteUrls } from "@/config/urls";
-import { getBlogs } from "@/server/actions/blog";
 import { format } from "date-fns";
 import Image from "next/image";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { type Metadata } from "next";
+import { blogs } from "@/app/source";
+import { useMDXComponents } from "mdx-components";
+import { DocsBody } from "fumadocs-ui/page";
 
 export const dynamic = "force-static";
 
 type BlogSlugPageProps = {
     params: {
-        slug: string;
+        slug: string[];
     };
 };
 
-export async function generateMetadata({
-    params,
-}: BlogSlugPageProps): Promise<Metadata> {
-    const slug = params.slug;
-
-    const blog = (await getBlogs()).find((b) => b.metaData.slug === slug);
-
-    if (!blog) {
-        return notFound();
-    }
-
-    return {
-        title: blog.metaData.title,
-        description: blog.metaData.description,
-    };
-}
-
-export async function generateStaticParams() {
-    const blogs = await getBlogs();
-
-    return blogs.map((blog) => ({
-        slug: blog.metaData.slug,
-    }));
-}
-
 export default async function BlogSlugPage({ params }: BlogSlugPageProps) {
-    if (!params.slug) {
-        return redirect(siteUrls.blog);
+    const blog = blogs.getPage(params.slug);
+
+    if (blog == null) {
+        notFound();
     }
 
-    const slug = params.slug;
+    const MDX = blog.data.exports.default;
 
-    const blog = (await getBlogs()).find((b) => b.metaData.slug === slug);
-
-    if (!blog) {
-        return notFound();
-    }
+    const components = useMDXComponents();
 
     return (
         <WebPageWrapper className="relative max-w-3xl flex-row items-start gap-8">
             <article className="w-full space-y-10">
                 <div className="space-y-4">
                     <h1 className="scroll-m-20 font-heading text-4xl font-bold">
-                        {blog.metaData.title}
+                        {blog.data.title}
                     </h1>
 
                     <div className="relative aspect-video max-h-[350px] w-full overflow-hidden rounded-md bg-muted/60">
                         <Image
-                            src={blog.metaData.thumbnail}
-                            alt={blog.metaData.title}
+                            src={blog.data.thumbnail}
+                            alt={blog.data.title}
                             className="rounded-md"
                             fill
                         />
                     </div>
-                    {blog.metaData?.tags && blog.metaData.tags.length > 0 && (
+                    {blog.data.tags && blog.data.tags.length > 0 && (
                         <div className="flex flex-wrap gap-2">
-                            {blog.metaData.tags.map((tag) => (
+                            {blog.data.tags.map((tag) => (
                                 <Badge variant="outline" key={tag}>
                                     {tag}
                                 </Badge>
                             ))}
                         </div>
                     )}
+
                     <p className="text-sm text-muted-foreground">
-                        {format(new Date(blog.metaData.publishedAt), "PPP")} •{" "}
-                        {blog.metaData.readTime} read
+                        {format(new Date(blog.data.publishedAt), "PPP")} •{" "}
+                        {blog.data.readTime} read
                     </p>
 
-                    {blog.metaData.updatedAt && (
+                    {blog.data.exports.lastModified && (
                         <p className="text-sm text-muted-foreground">
                             Last updated at{" "}
-                            {format(new Date(blog.metaData.updatedAt), "PPP")}
+                            {format(
+                                new Date(blog.data.exports.lastModified),
+                                "PPP",
+                            )}
                         </p>
                     )}
                 </div>
-                {blog.content}
+                <DocsBody>
+                    <MDX components={components} />
+                </DocsBody>
             </article>
         </WebPageWrapper>
     );
+}
+
+export async function generateStaticParams() {
+    return blogs.getPages().map((page) => ({
+        slug: page.slugs,
+    }));
+}
+
+export function generateMetadata({ params }: { params: { slug?: string[] } }) {
+    const page = blogs.getPage(params.slug);
+
+    if (page == null) notFound();
+
+    return {
+        title: page.data.title,
+        description: page.data.description,
+    } satisfies Metadata;
 }

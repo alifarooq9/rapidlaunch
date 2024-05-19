@@ -51,7 +51,7 @@ export const supportInfos: SupportInfo[] = [
         title: "Our Blog",
         description:
             "Read our blog to learn more about our products and the latest updates.",
-        buttonHref: `${siteUrls.blog}`,
+        buttonHref: `${siteUrls.blogs}`,
         buttonText: "Read Blog",
     },
 ];

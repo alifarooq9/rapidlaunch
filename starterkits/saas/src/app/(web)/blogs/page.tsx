@@ -3,13 +3,12 @@ import {
     WebPageWrapper,
 } from "@/app/(web)/_components/general-components";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { siteUrls } from "@/config/urls";
-import { getBlogs } from "@/server/actions/blog";
 import { format } from "date-fns";
 import Image from "next/image";
 import Link from "next/link";
 import { type Metadata } from "next";
-import { blogPageConfig } from "@/app/(web)/blog/_constants/page-config";
+import { blogPageConfig } from "@/app/(web)/blogs/_constants/page-config";
+import { blogs } from "@/app/source";
 
 export const metadata: Metadata = {
     title: blogPageConfig.title,
@@ -18,8 +17,6 @@ export const metadata: Metadata = {
 export const dynamic = "force-static";
 
 export default async function BlogsPage() {
-    const blogs = await getBlogs();
-
     return (
         <WebPageWrapper>
             <WebPageHeader title="Blog">
@@ -35,37 +32,39 @@ export default async function BlogsPage() {
                     </CardTitle>
                 </CardHeader>
                 <CardContent className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-                    {blogs?.map((blog) => (
+                    {blogs.getPages()?.map((blog) => (
                         <Link
-                            href={`${siteUrls.blog}/${blog.metaData.slug}`}
-                            key={blog.metaData.slug}
+                            href={blog.url}
+                            key={blog.url}
                             className="space-y-4"
                         >
                             <div className="relative h-screen max-h-[350px] w-full overflow-hidden rounded-md bg-muted/60">
                                 <Image
-                                    src={blog.metaData.thumbnail}
-                                    alt={blog.metaData.title}
+                                    src={blog.data.thumbnail}
+                                    alt={blog.data.title}
                                     fill
                                     className="object-cover"
                                 />
                             </div>
                             <h2 className="font-heading text-2xl font-semibold">
-                                {blog.metaData.title}
+                                {blog.data.title}
                             </h2>
-                            <p>{blog.metaData.description}</p>
+                            <p>{blog.data.description}</p>
                             <div className="grid gap-0.5 font-light">
                                 <p className="text-sm text-muted-foreground">
                                     {format(
-                                        new Date(blog.metaData.publishedAt),
+                                        new Date(blog.data.publishedAt),
                                         "PPP",
                                     )}{" "}
-                                    • {blog.metaData.readTime} read
+                                    • {blog.data.readTime} read
                                 </p>
-                                {blog.metaData.updatedAt && (
+                                {blog.data.exports.lastModified && (
                                     <p className="text-sm text-muted-foreground">
                                         Last updated at{" "}
                                         {format(
-                                            new Date(blog.metaData.updatedAt),
+                                            new Date(
+                                                blog.data.exports.lastModified,
+                                            ),
                                             "PPP",
                                         )}
                                     </p>
