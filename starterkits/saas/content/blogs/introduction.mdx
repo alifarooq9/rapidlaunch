@@ -1,8 +1,6 @@
 ---
 title: Introduction
-slug: introduction
 publishedAt: 2022-01-01
-updatedAt: 2024-05-01
 readTime: 5 min
 tags: ["introduction", "saas"]
 description: This is the introduction
@@ -52,3 +50,71 @@ This is the second step
 </Step>
 
 </Steps>
+
+```tsx
+import {useState} from "react";
+
+function Counter() {
+    const [count, setCount] = useState(0);
+
+    return (
+        <div>
+            <p>You clicked {count} times</p>
+            <button onClick={() => setCount(count + 1)}>
+                Click me
+            </button>
+        </div>
+    );
+}
+```
+
+```tsx
+import {useState} from "react";
+
+function Counter() {
+    const [count, setCount] = useState(0);
+
+    return (
+        <div>
+            <p>You clicked {count} times</p>
+            <button onClick={() => setCount(count + 1)}>
+                Click me
+            </button>
+        </div>
+    );
+}
+```
+
+```tsx title="Counter.tsx"
+import {useState} from "react";
+
+function Counter() {
+    const [count, setCount] = useState(0);
+
+    return (
+        <div>
+            <p>You clicked {count} times</p>
+            <button onClick={() => setCount(count + 1)}>
+                Click me
+            </button>
+        </div>
+    );
+}
+```
+
+```tsx
+import {useState} from "react";
+
+function Counter() {
+    const [count, setCount] = useState(0);
+
+    return (
+        <div>
+            <p>You clicked {count} times</p>
+            <button onClick={() => setCount(count + 1)}>
+                Click me
+            </button>
+        </div>
+    );
+}
+```

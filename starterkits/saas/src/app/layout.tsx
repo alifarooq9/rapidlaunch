@@ -2,7 +2,6 @@ import React from "react";
 import { Providers } from "@/components/providers";
 import { Toaster } from "@/components/ui/sonner";
 import "@/styles/globals.css";
-import "@/styles/prism.css";
 import { fontHeading, fontSans } from "@/lib/fonts";
 import { type Metadata } from "next";
 import {

@@ -35,9 +35,9 @@ export const navigation: NavigationItem[] = [
         label: "Support",
     },
     {
-        id: "blog",
-        href: siteUrls.blog,
-        label: "Blog",
+        id: "blogs",
+        href: siteUrls.blogs,
+        label: "Blogs",
     },
     {
         id: "docs",
@@ -45,8 +45,8 @@ export const navigation: NavigationItem[] = [
         label: "Docs",
     },
     {
-        id: "changelog",
-        href: siteUrls.changelog,
-        label: "Changelog",
+        id: "changelogs",
+        href: siteUrls.changelogs,
+        label: "Changelogs",
     },
 ];
