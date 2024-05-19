@@ -6,14 +6,14 @@ const addPathToBaseURL = (path: string) => `${siteUrls.publicUrl}${path}`;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const blogsSitemap = blogs.getPages().map((blog) => ({
-        url: addPathToBaseURL(`${siteUrls.blogs}${blog.url}`),
+        url: addPathToBaseURL(blog.url),
         lastModified: blog.data.exports.lastModified
             ? new Date(blog.data.exports.lastModified)
             : new Date(blog.data.publishedAt),
     }));
 
     const docsSitemap = docs.getPages().map((doc) => ({
-        url: addPathToBaseURL(`${siteUrls.docs}${doc.url}`),
+        url: addPathToBaseURL(doc.url),
         lastModified: doc.data.exports.lastModified
             ? new Date(doc.data.exports.lastModified)
             : undefined,
