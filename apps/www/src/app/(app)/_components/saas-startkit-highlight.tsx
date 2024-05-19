@@ -70,14 +70,14 @@ export function SaasStarterkitHighlight() {
                     ))}
 
                     <Link
-                        href={siteUrls.saasStarterkit.base}
+                        href={siteUrls.demo.saas}
                         className={buttonVariants({
                             variant: "ghost",
                             size: "sm",
                             className: "gap-1",
                         })}
                     >
-                        <span>View all</span>
+                        <span>View Live Demo</span>
                         <ArrowRightIcon className="h-4 w-4" />
                     </Link>
                 </TabsList>

@@ -18,4 +18,7 @@ export const siteUrls = {
         twitter: "https://twitter.com/AliFarooqDev",
         github: "/gh",
     },
+    demo: {
+        saas: "https://saasdemo.rapidlaunch.xyz",
+    },
 } as const;
