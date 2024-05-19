@@ -35,8 +35,6 @@ export default async function ChangeLogPage() {
                 Number(new Date(a.data.publishedAt)),
         );
 
-    console.log(changelogs.getPages());
-
     return (
         <WebPageWrapper>
             <WebPageHeader title="Change Log">

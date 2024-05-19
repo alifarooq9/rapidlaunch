@@ -1,25 +1,22 @@
+import { blogs, docs } from "@/app/source";
 import { publicRoutes, siteUrls } from "@/config/urls";
-import { getBlogs } from "@/server/actions/blog";
-import { getDocs } from "@/server/actions/docs";
 import type { MetadataRoute } from "next";
 
 const addPathToBaseURL = (path: string) => `${siteUrls.publicUrl}${path}`;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-    const allBlogs = await getBlogs();
-
-    const blogs = allBlogs.map((blog) => ({
-        url: addPathToBaseURL(`${siteUrls.blogs}/${blog.metaData.slug}`),
-        lastModified: new Date(blog.metaData.updatedAt),
+    const blogsSitemap = blogs.getPages().map((blog) => ({
+        url: addPathToBaseURL(`${siteUrls.blogs}${blog.url}`),
+        lastModified: blog.data.exports.lastModified
+            ? new Date(blog.data.exports.lastModified)
+            : new Date(blog.data.publishedAt),
     }));
 
-    const allDocs = await getDocs();
-
-    const docs = allDocs.map((doc) => ({
-        url: addPathToBaseURL(
-            `${siteUrls.docs}/${doc.metaData.slug === "/" ? "" : doc.metaData.slug}`,
-        ),
-        lastModified: new Date(doc.metaData.publishedAt),
+    const docsSitemap = docs.getPages().map((doc) => ({
+        url: addPathToBaseURL(`${siteUrls.docs}${doc.url}`),
+        lastModified: doc.data.exports.lastModified
+            ? new Date(doc.data.exports.lastModified)
+            : undefined,
     }));
 
     const publicRoutesWithoutPublicUrl = publicRoutes.filter(
@@ -32,5 +29,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         lastModified: new Date(),
     }));
 
-    return [...routes, ...blogs, ...docs];
+    return [...routes, ...blogsSitemap, ...docsSitemap];
 }
