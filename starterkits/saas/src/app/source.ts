@@ -23,3 +23,17 @@ export const blogs = loader({
         schema: { frontmatter: blogsFronmatterSchema },
     }),
 });
+
+const changelogsFronmatterSchema = defaultSchemas.frontmatter.extend({
+    version: z.string(),
+    publishedAt: z.date(),
+    thumbnail: z.string().url().optional(),
+});
+
+export const changelogs = loader({
+    baseUrl: "/changelog",
+    rootDir: "changelogs",
+    source: createMDXSource(map, {
+        schema: { frontmatter: changelogsFronmatterSchema },
+    }),
+});
