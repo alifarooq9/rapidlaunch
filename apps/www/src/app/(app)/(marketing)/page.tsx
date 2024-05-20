@@ -96,7 +96,8 @@ async function getRepoStars() {
         "https://api.github.com/repos/alifarooq9/rapidlaunch",
         {
             next: {
-                revalidate: 86400,
+                // run every 15 minutes
+                revalidate: 900,
             },
         },
     );
