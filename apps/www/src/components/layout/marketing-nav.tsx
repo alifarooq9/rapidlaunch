@@ -54,7 +54,7 @@ export function MarketingMainNav() {
 
                                 <span
                                     className={cn(
-                                        "flex h-5 w-5 items-center justify-center rounded-sm border-2 border-border",
+                                        "flex h-5 w-5 items-center justify-center rounded-sm border border-border",
                                         pathname === item.href
                                             ? "bg-secondary"
                                             : "",
@@ -62,7 +62,7 @@ export function MarketingMainNav() {
                                 >
                                     <Icons.circle
                                         className={cn(
-                                            "h-2.5 w-2.5 transition-all",
+                                            "h-2 w-2",
                                             pathname === item.href
                                                 ? "block"
                                                 : "hidden",
@@ -70,7 +70,7 @@ export function MarketingMainNav() {
                                     />
                                     <Icons.chevronRight
                                         className={cn(
-                                            "h-2.5 w-2.5 transition-all",
+                                            "h-2.5 w-2.5",
                                             pathname === item.href
                                                 ? "hidden"
                                                 : "block",
