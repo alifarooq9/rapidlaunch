@@ -11,7 +11,10 @@ const BentoGrid = ({
 }: React.HTMLAttributes<HTMLDivElement>) => {
     return (
         <div
-            className={cn("grid w-full grid-cols-3 gap-4", className)}
+            className={cn(
+                "grid w-full grid-cols-1 gap-4 md:grid-cols-3",
+                className,
+            )}
             {...props}
         />
     );

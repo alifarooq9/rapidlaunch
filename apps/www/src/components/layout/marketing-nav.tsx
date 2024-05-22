@@ -13,7 +13,7 @@ export function MarketingMainNav() {
     const [currentHovered, setCurrentHovered] = React.useState<string>("");
 
     return (
-        <section className="hidden gap-6 sm:flex sm:items-center">
+        <section className="hidden gap-6 lg:flex lg:items-center">
             <nav className="flex items-center gap-4">
                 <ul
                     className="flex items-center gap-6"

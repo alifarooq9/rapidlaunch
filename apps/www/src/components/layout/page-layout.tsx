@@ -1,8 +1,13 @@
+import { Balancer } from "react-wrap-balancer";
+
 export function PageHeaderHeading({ children }: { children: React.ReactNode }) {
     return (
-        <h1 className="font-heading text-center text-6xl font-bold leading-tight tracking-tighter lg:leading-[1.1]">
+        <Balancer
+            as="h1"
+            className="font-heading text-center text-4xl font-bold leading-tight tracking-tighter sm:text-5xl md:text-6xl lg:leading-[1.1]"
+        >
             {children}
-        </h1>
+        </Balancer>
     );
 }
 
@@ -11,7 +16,14 @@ export function PageHeaderDescription({
 }: {
     children: React.ReactNode;
 }) {
-    return <p className="text-center text-2xl font-medium">{children}</p>;
+    return (
+        <Balancer
+            as="p"
+            className="text-center text-lg font-medium sm:text-xl md:text-2xl"
+        >
+            {children}
+        </Balancer>
+    );
 }
 
 export function PageActions({ children }: { children: React.ReactNode }) {

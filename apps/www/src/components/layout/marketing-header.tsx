@@ -29,7 +29,7 @@ export async function MarketingHeader() {
                         href={siteUrls.socials.github}
                     >
                         <Icons.gitHub className="h-4 w-4" />
-                        <span className="text-sm text-muted-foreground">
+                        <span className="hidden text-sm text-muted-foreground sm:block">
                             {stars}
                         </span>
                     </Link>

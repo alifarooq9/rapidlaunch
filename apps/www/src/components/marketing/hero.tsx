@@ -19,7 +19,7 @@ export function Hero() {
             <section className="flex flex-col items-center justify-center gap-6 py-16">
                 <Announcment />
 
-                <div className="grid gap-2">
+                <div className="grid place-items-center gap-2">
                     <PageHeaderHeading>Copy. Build. Launch.</PageHeaderHeading>
                     <PageHeaderDescription>
                         <span className="font-bold">Open Source </span> SaaS
@@ -49,7 +49,7 @@ export function Hero() {
                         headingAs="h2"
                         title="Customizable. Extensible. Flexible."
                         description="Open Source SaaS Starterkit built using Next.js 14.2, Shadcn UI, Tailwind CSS, Typescript, NextAuth, Drizzle, and more."
-                        wrapperClassName="col-span-3 aspect-video relative"
+                        wrapperClassName="md:col-span-3 md:aspect-video relative"
                         badge="SaaS Starterkit"
                         href={siteUrls.saasStarterkit.base}
                         cta="Get it Now"
@@ -71,7 +71,7 @@ export function Hero() {
                         headingAs="h2"
                         title="Beautiful Building Blocks"
                         description="Build your SaaS app with our beautiful building blocks. We have a collection of components that you can use to build your app."
-                        wrapperClassName="col-span-2"
+                        wrapperClassName="md:col-span-2"
                         badge="Blocks"
                         href={siteUrls.saasStarterkit.base}
                         cta="Coming Soom"
@@ -82,7 +82,7 @@ export function Hero() {
                         headingAs="h2"
                         title="Guides"
                         description="Learn how to build your SaaS app with our guides. We have a collection of guides that you can use to build your app."
-                        wrapperClassName="col-span-1"
+                        wrapperClassName="md:col-span-1"
                         badge="Guides"
                         href={siteUrls.saasStarterkit.base}
                         cta="Coming Soon"

@@ -1,17 +1,23 @@
+"use client";
+
 import { Icons } from "@/components/icons";
 import { badgeVariants } from "@/components/ui/badge";
 import { BorderBeam } from "@/components/ui/border-beam";
 import { siteUrls } from "@/config/urls";
+import { useBreakpoints } from "@/hooks/use-breakpoints";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
 export function Announcment() {
+    const breakpoint = useBreakpoints();
+
     return (
         <Link
             href={siteUrls.marketing.earlyAccess}
             className={cn(
                 badgeVariants({
                     variant: "outline",
+                    size: breakpoint === "sm" ? "sm" : "default",
                     className:
                         "relative transition-all hover:border-primary/30",
                 }),
