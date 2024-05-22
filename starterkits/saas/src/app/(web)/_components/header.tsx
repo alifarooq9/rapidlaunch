@@ -19,6 +19,7 @@ export function WebHeader() {
 
                     <Link href={siteUrls.home}>
                         <Icons.logo />
+                        <span className="sr-only">Rapidlaunch logo</span>
                     </Link>
                 </div>
 
