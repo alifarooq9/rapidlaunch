@@ -3,10 +3,16 @@ import { siteUrls } from "@/config/urls";
 interface Page {
     title: string;
     description: string;
-    nav: { label: string; disabled?: boolean; href: string }[];
 }
 
-export const marketingPageConfig: Page = {
+interface MarketingPageConfig extends Page {
+    nav: {
+        label: string;
+        href: string;
+    }[];
+}
+
+export const marketingPageConfig: MarketingPageConfig = {
     title: "Marketing",
     description: "Marketing page",
     nav: [
