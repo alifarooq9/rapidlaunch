@@ -8,6 +8,3 @@ export default function HomePage() {
         </MarketingLayout>
     );
 }
-
-export const dynamic = "force-static";
-export const revalidate = 60 * 60;

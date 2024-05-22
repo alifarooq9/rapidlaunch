@@ -61,6 +61,8 @@ export function Hero() {
                                 fill
                                 objectFit="cover"
                                 objectPosition="top"
+                                placeholder="blur"
+                                blurDataURL="/saasdemo.png"
                             />
 
                             <BorderBeam size={300} duration={12} delay={16} />
