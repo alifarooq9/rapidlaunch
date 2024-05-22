@@ -9,7 +9,7 @@ export async function MarketingHeader() {
     const stars = await getGithubRepoStars();
 
     return (
-        <header className="sticky top-0 flex h-16 w-full items-center justify-center border-b border-border bg-background">
+        <header className="sticky top-0 z-50 flex h-16 w-full items-center justify-center border-b border-border bg-background">
             <div className="container flex items-center justify-between gap-6">
                 <div className="flex items-center gap-10">
                     <Link href={siteUrls.marketing.base}>
@@ -29,7 +29,7 @@ export async function MarketingHeader() {
                         href={siteUrls.socials.github}
                     >
                         <Icons.gitHub className="h-4 w-4" />
-                        <span className="text-sm text-muted-foreground">
+                        <span className="hidden text-sm text-muted-foreground sm:block">
                             {stars}
                         </span>
                     </Link>

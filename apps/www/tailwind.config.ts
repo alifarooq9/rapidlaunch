@@ -1,5 +1,4 @@
 import type { Config } from "tailwindcss";
-import { fontFamily } from "tailwindcss/defaultTheme";
 
 import baseConfig from "@rapidlaunch/tailwind-config/base";
 
@@ -10,10 +9,18 @@ export default {
     presets: [baseConfig],
     safelist: ["dark"],
     theme: {
-        extend: {},
-        fontFamily: {
-            sans: ["var(--font-sans)", ...fontFamily.sans],
-            heading: ["var(--font-heading)", ...fontFamily.sans],
+        extend: {
+            animation: {
+                "border-beam":
+                    "border-beam calc(var(--duration)*1s) infinite linear",
+            },
+            keyframes: {
+                "border-beam": {
+                    "100%": {
+                        "offset-distance": "100%",
+                    },
+                },
+            },
         },
     },
 } satisfies Config;
