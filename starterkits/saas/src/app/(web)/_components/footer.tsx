@@ -11,7 +11,7 @@ import Balancer from "react-wrap-balancer";
 
 export function WebFooter() {
     return (
-        <div className="pb-0 sm:py-8 sm:px-4">
+        <div className="pb-0 sm:px-4 sm:py-8">
             <footer className="container grid grid-cols-1 gap-8 border border-border bg-background p-8 sm:grid-cols-2 sm:rounded-lg">
                 <div className="grid place-content-between gap-2">
                     <div className="grid gap-2">
@@ -25,6 +25,7 @@ export function WebFooter() {
                                     className: "w-6 h-6 fill-primary",
                                 }}
                             />
+                            <span className="sr-only">Rapidlaunch logo</span>
                         </Link>
                         <Balancer as="p" className="text-muted-foreground">
                             {siteConfig.description}
@@ -40,6 +41,7 @@ export function WebFooter() {
                             })}
                         >
                             <BookOpenIcon className="h-4 w-4" />
+                            <span className="sr-only">Docs</span>
                         </Link>
                         <Link
                             href={siteUrls.github}
@@ -51,6 +53,7 @@ export function WebFooter() {
                             rel="noreferrer"
                         >
                             <Icons.gitHub className="h-4 w-4" />
+                            <span className="sr-only">Rapidlaunch github</span>
                         </Link>
                         <ThemeToggle />
                     </div>
