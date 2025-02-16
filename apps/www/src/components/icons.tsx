@@ -1,9 +1,8 @@
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
-import { Loader2Icon } from "lucide-react";
 import type { ElementType } from "react";
 
-export type IconProps = React.HTMLAttributes<SVGElement>;
+export type IconProps = React.SVGProps<SVGSVGElement>;
 
 export const Icons = {
     logo: ({
@@ -19,23 +18,48 @@ export const Icons = {
     }) => {
         const Comp = as ?? "div";
         return (
-            <Comp
-                className={cn(
-                    "flex items-center space-x-2 text-lg font-semibold",
-                    className,
-                )}
-            >
+            <Comp className={cn("flex items-center space-x-1", className)}>
                 <Icons.logoIcon
-                    className={cn("h-5 w-5 fill-primary", iconProps?.className)}
+                    className={cn("h-6 w-6 fill-primary", iconProps?.className)}
                     {...iconProps}
                 />
-                <span className={classNameText}>{siteConfig.name}</span>
+                <span className={cn(classNameText, "text-lg font-bold")}>
+                    {siteConfig.name}
+                </span>
             </Comp>
         );
     },
     logoIcon: (props: IconProps) => (
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
-            <path d="M8.011 6.215c-1.711-.009-3.86.918-5.499 2.557-.625.625-1.176 1.355-1.601 2.174 1.479-1.119 3.057-1.47 4.903-.434.544-1.437 1.27-2.9 2.197-4.297zm9.785 9.773c-1.516.991-3.007 1.706-4.297 2.21 1.036 1.848.686 3.424-.434 4.902.819-.424 1.549-.975 2.175-1.602 1.644-1.642 2.572-3.796 2.556-5.51zm6.152-15.946c-.412-.028-.816-.042-1.213-.042-8.602 0-13.498 6.558-15.28 11.833l4.728 4.729c5.428-1.946 11.817-6.661 11.817-15.172 0-.439-.017-.888-.052-1.348zm-9.888 9.91c-.391-.391-.391-1.023 0-1.414s1.023-.391 1.414 0 .391 1.023 0 1.414-1.024.39-1.414 0zm2.828-2.828c-.781-.78-.781-2.047 0-2.828s2.048-.781 2.828 0c.781.781.781 2.047 0 2.828s-2.047.781-2.828 0zm-8.021 8.625l1.013 1.012c-.942.954-1.907 2.083-2.287 3.637l-1.39-.34c.467-1.912 1.607-3.24 2.664-4.309zm-1.634-1.633l1.01 1.01c-1.119 1.103-2.413 2.203-4.307 2.666l-.34-1.39c1.553-.381 2.69-1.35 3.637-2.286zm2.746 6.446c.206 2.029-.946 3.265-2.48 3.421-.902.092-1.701-.205-2.356-.88-1.575.556-3.074-.047-3.864-1.172-.622-.883-.76-2.002-.382-3.074-.676-.656-.973-1.448-.88-2.356.154-1.521 1.361-2.694 3.484-2.475l.21 1.208c-.716.067-1.379.104-1.809.533-.722.723-.504 2.229.851 2.629-.899.904-.813 2.202-.137 2.914.707.747 2.057.863 2.987-.063.416 1.41 1.942 1.537 2.629.851.424-.424.465-1.075.531-1.782l1.216.246z" />
+        <svg
+            {...props}
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path
+                d="M2.5 21.5L7.5 16.5"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+            />
+            <path
+                d="M8.5 21.5L10.5 19.5"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+            />
+            <path
+                d="M2.5 15.5L4.5 13.5"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+            />
+            <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M13.2869 5.00392L11.8013 6.48949C10.5779 7.71289 10.23 8.06073 8.90297 7.80389C7.88929 7.55044 6.90767 7.30509 6.17058 8.04219C5.27646 8.9363 5.27649 9.75188 6.17058 10.646L13.354 17.8294C14.2481 18.7235 15.0637 18.7235 15.9578 17.8294C16.6949 17.0923 16.4496 16.1107 16.1961 15.097C15.9393 13.77 16.2871 13.4221 17.5105 12.1987L18.9961 10.7131C20.6688 9.04042 21.3626 6.8505 21.476 4.53289L21.476 4.53253C21.5201 3.63131 21.5422 3.18067 21.1807 2.81928C20.8193 2.45785 20.3686 2.47989 19.4671 2.52399L19.4671 2.52399C17.1495 2.63737 14.9596 3.3312 13.2869 5.00392ZM17 8C17.5523 8 18 7.55229 18 7C18 6.44772 17.5523 6 17 6C16.4477 6 16 6.44772 16 7C16 7.55229 16.4477 8 17 8Z"
+                fill="currentColor"
+            />
         </svg>
     ),
     twitter: (props: IconProps) => (
@@ -55,14 +79,65 @@ export const Icons = {
             ></path>
         </svg>
     ),
-    loader: (props: IconProps) => (
-        <Loader2Icon
+    spinner: (props: IconProps) => (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width={24}
+            height={24}
+            color={"#000000"}
+            fill={"none"}
             {...props}
-            className={cn(
-                "animate-spin transition-all duration-400",
-                props.className,
-            )}
-        />
+        >
+            <path
+                d="M12 3V6"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+            />
+            <path
+                d="M12 18V21"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+            />
+            <path
+                d="M21 12L18 12"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+            />
+            <path
+                d="M6 12L3 12"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+            />
+            <path
+                d="M18.3635 5.63672L16.2422 7.75804"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+            />
+            <path
+                d="M7.75706 16.2422L5.63574 18.3635"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+            />
+            <path
+                d="M18.3635 18.3635L16.2422 16.2422"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+            />
+            <path
+                d="M7.75706 7.75804L5.63574 5.63672"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+            />
+        </svg>
     ),
     hamburger: (props: IconProps) => (
         <svg
@@ -92,6 +167,58 @@ export const Icons = {
                 strokeLinecap="round"
                 strokeLinejoin="round"
             ></path>
+        </svg>
+    ),
+    star: (props: IconProps) => (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            color="currentColor"
+            fill="none"
+            {...props}
+        >
+            <path
+                d="M13.7276 3.44418L15.4874 6.99288C15.7274 7.48687 16.3673 7.9607 16.9073 8.05143L20.0969 8.58575C22.1367 8.92853 22.6167 10.4206 21.1468 11.8925L18.6671 14.3927C18.2471 14.8161 18.0172 15.6327 18.1471 16.2175L18.8571 19.3125C19.417 21.7623 18.1271 22.71 15.9774 21.4296L12.9877 19.6452C12.4478 19.3226 11.5579 19.3226 11.0079 19.6452L8.01827 21.4296C5.8785 22.71 4.57865 21.7522 5.13859 19.3125L5.84851 16.2175C5.97849 15.6327 5.74852 14.8161 5.32856 14.3927L2.84884 11.8925C1.389 10.4206 1.85895 8.92853 3.89872 8.58575L7.08837 8.05143C7.61831 7.9607 8.25824 7.48687 8.49821 6.99288L10.258 3.44418C11.2179 1.51861 12.7777 1.51861 13.7276 3.44418Z"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+        </svg>
+    ),
+    chevronRight: (props: IconProps) => (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            color={"currentColor"}
+            fill={"none"}
+            {...props}
+        >
+            <path
+                d="M9.00005 6C9.00005 6 15 10.4189 15 12C15 13.5812 9 18 9 18"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+        </svg>
+    ),
+    circle: (props: IconProps) => (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            color={"currentColor"}
+            fill={"none"}
+            {...props}
+        >
+            <circle
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinejoin="round"
+            />
         </svg>
     ),
 };
